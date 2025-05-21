@@ -1,9 +1,11 @@
 # So Basic - Astro Blog Template
 
-## 👉 Check out the ✨ [Live Demo](https://sobasic.netlify.app/) ✨
+Howdy! Before you read anything below, you can check out the ✨ [Live Demo](https://sobasic.netlify.app/) ✨
+
+[![Screenshot](screenshot.png)](https://sobasic.netlify.app/)
 
 ```sh
-npm create astro@latest -- --template minimal
+npm create astro@latest -- --template lukeska/sobasic
 ```
 
 [![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/lukeska/sobasic)

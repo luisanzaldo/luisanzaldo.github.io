@@ -1,7 +1,7 @@
 ---
 title: 'Working with Werewolves: Managing Agile Teams Through the Full Moon Cycle'
 description: 'Managing werewolves in agile teams? Learn how to plan sprints, avoid full moon burnout, and lead supernatural developers with empathy, humor, and lunar-aware scheduling.'
-pubDate: '2024-01-04'
+pubDate: '2025-01-04'
 heroImage: '../../images/blog-placeholder-2.jpg'
 featured: true
 ---

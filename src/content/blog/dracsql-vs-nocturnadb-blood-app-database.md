@@ -1,7 +1,7 @@
 ---
 title: 'DracSQL vs NocturnaDB: Choosing the Right Database for Your Blood App'
 description: 'Struggling to choose between DracSQL and NocturnaDB for your blood delivery app? Explore the undead pros and cons of each database option, from query performance under moonlight to coffin-safe replication. A fang-to-fang tech comparison.'
-pubDate: '2024-01-01'
+pubDate: '2025-01-01'
 heroImage: '../../images/blog-placeholder-3.jpg'
 ---
 

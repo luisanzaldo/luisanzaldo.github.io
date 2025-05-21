@@ -1,7 +1,7 @@
 ---
 title: 'Typography'
-description: 'A guide to exorcising cursed packages and legacy code that reeks.'
-pubDate: '2024-01-03'
+description: 'A lovingly kerned crypt of fonts and glyphs, where every serif has bite and every baseline haunts the eye. Explore the dark elegance of type through the eyes of an immortal who believes good typography is the true eternal life.'
+pubDate: '2025-01-03'
 heroImage: '../../images/blog-placeholder-1.jpg'
 ---
 
@@ -39,7 +39,7 @@ Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sap
 
 ### Output
 
-![blog placeholder](/blog-placeholder-about.jpg)
+![blog placeholder](/site-main-image.jpg)
 
 ## Blockquotes
 
