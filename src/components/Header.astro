@@ -46,6 +46,7 @@ const navItems = [
 					<button
 						data-open-mobile-nav
 						class="md:hidden flex-inline items-center justify-center w-10 h-10"
+						aria-label="Open main navigation"
 					>
 						<Icon
 							name="heroicons:bars-2-solid"
@@ -71,7 +72,7 @@ const navItems = [
 		class="hidden fixed z-60 inset-x-4 top-8 p-6 bg-white dark:bg-slate-800 dark:ring-white/10 dark:text-slate-200 shadow-md rounded-2xl transition starting:opacity-0 starting:scale-85 starting:-translate-y-8"
 	>
 		<div class="flex justify-end">
-			<button data-close-mobile-nav class="si">
+			<button data-close-mobile-nav aria-label="Close main navigation">
 				<Icon name="heroicons:x-mark" />
 			</button>
 		</div>
