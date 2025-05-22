@@ -116,4 +116,26 @@ const navItems = [
 
 ## 🎨 Customization
 
-The primary color of
+The primary color of this theme can be easily changed in `src/styles/global.css`.
+You can assign any Tailwind color to the various `color-primary-*` variables.
+
+```css
+@theme {
+    --color-primary-50: var(--color-purple-50);
+    --color-primary-100: var(--color-purple-100);
+    --color-primary-200: var(--color-purple-200);
+    --color-primary-300: var(--color-purple-300);
+    --color-primary-400: var(--color-purple-400);
+    --color-primary-500: var(--color-purple-500);
+    --color-primary-600: var(--color-purple-600);
+    --color-primary-700: var(--color-purple-700);
+    --color-primary-800: var(--color-purple-800);
+    --color-primary-900: var(--color-purple-900);
+    --color-primary-950: var(--color-purple-950);
+    ...
+}
+```
+
+## 👀 Want to learn more?
+
+Feel free to check [Astro's documentation](https://github.com/withastro/astro) or jump into Astro's [Discord server](https://astro.build/chat).
