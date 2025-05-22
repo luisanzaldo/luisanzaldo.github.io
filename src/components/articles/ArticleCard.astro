@@ -27,8 +27,10 @@ const { post } = Astro.props;
 
 	<div class="relative py-4 sm:px-6 rounded-lg flex-1">
 		<h2 class="text-lg sm:text-xl font-semibold my-1">
-			<a href={`/blog/${post.id}`} class="absolute inset-0"></a>
-			<span>{post.data.title}</span>
+			<a href={`/blog/${post.id}`}>
+				<div  class="absolute inset-0"></div>
+				<span>{post.data.title}</span>
+			</a>
 		</h2>
 		<time class="text-sm font-mono">
 			<FormattedDate date={post.data.pubDate} />
