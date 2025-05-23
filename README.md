@@ -139,3 +139,6 @@ You can assign any Tailwind color to the various `color-primary-*` variables.
 ## 👀 Want to learn more?
 
 Feel free to check [Astro's documentation](https://github.com/withastro/astro) or jump into Astro's [Discord server](https://astro.build/chat).
+
+## Images credits
+Photos by <a href="https://unsplash.com/@josepmartins?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Josep Martins</a> on <a href="https://unsplash.com/photos/white-smoke-0-c5T6meRuk?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
