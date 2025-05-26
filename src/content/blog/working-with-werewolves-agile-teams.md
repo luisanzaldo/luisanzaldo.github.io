@@ -98,6 +98,3 @@ But that’s the charm of supernatural tech culture.
 Managing werewolves isn’t about taming the beast—it’s about respecting the beast’s schedule and planning your kanban board accordingly. With some prep, empathy, and moon-phase awareness, you’ll have a high-performing, howlingly great team.
 
 Just, y’know... maybe skip the team-building camping trip in October.
-
----
-Photo by <a href="https://unsplash.com/@bielmorro?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Biel Morro</a> on <a href="https://unsplash.com/photos/black-string-lights-J_F_003jcEQ?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
