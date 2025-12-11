@@ -109,7 +109,7 @@ Links in the main navigation can be changed in `src/components/Header.astro` by 
 ```javascript
 const navItems = [
 	{ href: "/", text: "Home", active: currentPath === "/" },
-	{ href: "/blog", text: "Blog", active: currentPath.startsWith("/blog") },
+	{ href: "/blog", text: "Artículos", active: currentPath.startsWith("/blog") },
 	{ href: "/about", text: "About", active: currentPath.startsWith("/about") },
 ];
 ```
