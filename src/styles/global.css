@@ -19,10 +19,49 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     @apply font-headings;
 }
 
 .scroll-down #main-header {
     @apply transform -translate-y-[200px];
+}
+
+/* Scroll Reveal Animations */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.reveal-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.scale-on-scroll {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.scale-on-scroll.is-visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.chained-scale {
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+}
+
+.chained-scale.is-visible {
+    opacity: 1;
+    transform: scale(1);
 }
