@@ -143,7 +143,6 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 		});
 
 		// Helper to observe next section
-
 		const observeNext = (id, onVisible) => {
 			const el = document.getElementById(id);
 			if (!el) return;
@@ -164,13 +163,7 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 			observer.observe(el);
 		};
 
-		// Independent Sequence: Featured -> Projects
-		// Start observing Featured immediately so it's not blocked by typewriter
-		observeNext('featured-seq', () => {
-			observeNext('projects-seq');
-		});
-
-		// Hero Sequence: Typewriters -> Hero Footer
+		// Hero Sequence: Typewriters -> Hero Footer -> Featured -> Projects
 		// 1. Wait for ALL typewriters to finish (Title + Description)
 		if (promises.length > 0) {
 			await Promise.all(promises);
@@ -182,7 +175,20 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 			const footer = document.getElementById('hero-footer-seq');
 			if (footer) {
 				footer.classList.add('is-visible');
+				// Wait for footer animation (0.8s)
+				await new Promise(r => setTimeout(r, 800));
 			}
+
+			// 3. Animate Featured Section (Chain immediately after Footer)
+			const featured = document.getElementById('featured-seq');
+			if (featured) {
+				featured.classList.add('is-visible');
+				// Wait for featured animation (0.8s) before unlocking scroll observer for projects
+				await new Promise(r => setTimeout(r, 800));
+			}
+
+			// 4. Enable Projects Section (Scale on scroll) after Featured is done
+			observeNext('projects-seq');
 		}
 	};
 
