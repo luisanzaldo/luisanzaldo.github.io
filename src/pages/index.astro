@@ -191,22 +191,23 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 			observer.observe(el);
 		};
 
+
 		// Check if we've already shown the intro in this session
 		if (sessionStorage.getItem('introShown')) {
 			// Skip typewriter animation
-			// Make sure typewriter text is visible (it defaults to visible but we avoid the span-splitting)
 			elements.forEach(el => {
 				el.style.visibility = 'visible';
 			});
 
-			// Reveal sections immediately that would normally be chained
-			const footer = document.getElementById('hero-footer-seq');
-			if (footer) footer.classList.add('is-visible');
+			// Instantly reveal all animated elements to prevent "jumping" or re-animation on back navigation
+			// This specifically fixes the profile photo jump on mobile
+			const animatedElements = document.querySelectorAll('.scale-on-scroll, .reveal-on-scroll, .chained-scale');
+			animatedElements.forEach(el => {
+				el.classList.add('is-visible');
+				el.style.transition = 'none';
+			});
 
-			const featured = document.getElementById('featured-seq');
-			if (featured) featured.classList.add('is-visible');
-
-			// Enable projects scroll observer immediately
+			// Enable projects scroll observer immediately (though likely covered above, we ensure checking continues just in case)
 			observeNext('projects-seq');
 			
 			return;
