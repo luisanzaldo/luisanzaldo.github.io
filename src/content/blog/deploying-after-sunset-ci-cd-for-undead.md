@@ -3,6 +3,7 @@ title: 'Continuando After Sunset: CI/CD Pipelines for the Undead'
 description: 'Unravel the dark art of CI/CD for nocturnal developers. From moonlit builds to spectral rollbacks, discover how the undead deploy code after sunset—safely, silently, and without waking the humans.'
 pubDate: '2025-01-01'
 heroImage: '../../images/blog-placeholder-4.jpg'
+draft: false
 featured: true
 ---
 
