@@ -153,6 +153,11 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 		});
 	};
 
+	// Disable browser automatic scroll restoration to avoid the "jump"
+	if (history.scrollRestoration) {
+		history.scrollRestoration = 'manual';
+	}
+
 	let isSequenceRunning = false;
 
 	const startAnimationSequence = async () => {
