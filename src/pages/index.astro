@@ -156,11 +156,59 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 	let isSequenceRunning = false;
 
 	const startAnimationSequence = async () => {
+		// Force scroll to top on every visit to home to fix "back" button issues
+		window.scrollTo({ top: 0, behavior: 'instant' });
+
 		if (isSequenceRunning) return;
 		isSequenceRunning = true;
 
 		const elements = document.querySelectorAll('.typewriter');
 		const promises = [];
+
+		// Helper to observe next section
+		const observeNext = (id, onVisible) => {
+			const el = document.getElementById(id);
+			if (!el) return;
+			
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-visible');
+						observer.disconnect(); // Stop observing once visible
+						if (onVisible) {
+							// Wait for this animation to finish before enabling next
+							setTimeout(onVisible, 800);
+						}
+					}
+				});
+			}, { threshold: 0.1 });
+			
+			observer.observe(el);
+		};
+
+		// Check if we've already shown the intro in this session
+		if (sessionStorage.getItem('introShown')) {
+			// Skip typewriter animation
+			// Make sure typewriter text is visible (it defaults to visible but we avoid the span-splitting)
+			elements.forEach(el => {
+				el.style.visibility = 'visible';
+			});
+
+			// Reveal sections immediately that would normally be chained
+			const footer = document.getElementById('hero-footer-seq');
+			if (footer) footer.classList.add('is-visible');
+
+			const featured = document.getElementById('featured-seq');
+			if (featured) featured.classList.add('is-visible');
+
+			// Enable projects scroll observer immediately
+			observeNext('projects-seq');
+			
+			return;
+		}
+
+		// First time visit: Mark as shown
+		sessionStorage.setItem('introShown', 'true');
 
 		// Sequential Skip Handler
 		const skipHandler = (e) => {
@@ -196,27 +244,6 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 			promises.push(typeWriter(el, speed, delay));
 		});
 
-		// Helper to observe next section
-		const observeNext = (id, onVisible) => {
-			const el = document.getElementById(id);
-			if (!el) return;
-			
-			const observer = new IntersectionObserver((entries) => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						entry.target.classList.add('is-visible');
-						observer.disconnect(); // Stop observing once visible
-						if (onVisible) {
-							// Wait for this animation to finish before enabling next
-							setTimeout(onVisible, 800);
-						}
-					}
-				});
-			}, { threshold: 0.1 });
-			
-			observer.observe(el);
-		};
-
 		// Hero Sequence: Typewriters -> Hero Footer -> Featured -> Projects
 		// 1. Wait for ALL typewriters to finish (Title + Description)
 		if (promises.length > 0) {
@@ -245,7 +272,6 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 			observeNext('projects-seq');
 		}
 	};
-
 	document.addEventListener('astro:after-swap', () => {
 		isSequenceRunning = false;
 	});

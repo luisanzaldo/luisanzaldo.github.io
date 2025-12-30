@@ -14,7 +14,7 @@ const navItems = [
 <header>
 	<div
 		id="main-header"
-		class="fixed w-full z-50 transition duration-500 px-4 sm:px-10"
+		class="absolute w-full z-50 transition duration-500 px-4 sm:px-10"
 	>
 		<div
 			class="bg-white w-full md:w-2xl mx-auto flex h-12 items-center justify-between
@@ -97,42 +97,8 @@ const navItems = [
 
 <script>
 	function initNavigation() {
-		/*
-		 * Hide and show navigation on scroll
-		 */
-		const body = document.body;
-		const scrollUp = "scroll-up";
-		const scrollDown = "scroll-down";
-		let lastScroll = 0;
-		const scrollThreshold = 50;
 
-		window.addEventListener("scroll", () => {
-			const currentScroll = window.scrollY;
-			if (currentScroll <= 0) {
-				body.classList.remove(scrollUp);
-				return;
-			}
 
-			// Only apply changes if the difference in scroll position exceeds the threshold
-			if (Math.abs(currentScroll - lastScroll) > scrollThreshold) {
-				if (
-					currentScroll > lastScroll &&
-					!body.classList.contains(scrollDown)
-				) {
-					// down
-					body.classList.remove(scrollUp);
-					body.classList.add(scrollDown);
-				} else if (
-					currentScroll < lastScroll &&
-					body.classList.contains(scrollDown)
-				) {
-					// up
-					body.classList.remove(scrollDown);
-					body.classList.add(scrollUp);
-				}
-				lastScroll = currentScroll;
-			}
-		});
 
 		/*
 		 * Mobile navigation
