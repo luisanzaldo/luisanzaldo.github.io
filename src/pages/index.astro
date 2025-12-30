@@ -164,8 +164,9 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 
 		// Sequential Skip Handler
 		const skipHandler = (e) => {
-			// Check for Enter key or Touch/Click
-			if ((e.type === 'keydown' && e.key === 'Enter') || e.type === 'touchstart' || e.type === 'click') {
+			// Check for Enter key or Click
+			// We avoid 'touchstart' to prevent double-firing (ghost clicks) on mobile causing both lines to skip at once.
+			if ((e.type === 'keydown' && e.key === 'Enter') || e.type === 'click') {
 				// Find the first typewriter that isn't done yet
 				const target = Array.from(elements).find(el => el.dataset.typingDone !== "true");
 				if (target) {
@@ -173,14 +174,12 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 				} else {
 					// All done, remove listeners
 					document.removeEventListener('keydown', skipHandler);
-					document.removeEventListener('touchstart', skipHandler);
 					document.removeEventListener('click', skipHandler);
 				}
 			}
 		};
 
 		document.addEventListener('keydown', skipHandler);
-		document.addEventListener('touchstart', skipHandler);
 		document.addEventListener('click', skipHandler);
 
 		elements.forEach(el => {
