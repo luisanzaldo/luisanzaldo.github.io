@@ -94,32 +94,62 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 
 <script>
 	// Promise-based Typewriter
-	const typeWriter = (element, speed, delay = 0) => {
+	const typeWriter = async (element, speed, delay = 0) => {
+		const text = element.textContent.replace(/\s+/g, ' ').trim();
+		element.setAttribute('aria-label', text);
+		element.setAttribute('role', 'text');
+
+		element.innerHTML = text.split('').map(char => {
+			return `<span style="opacity: 0; transition: opacity 0.1s">${char}</span>`;
+		}).join('');
+
+		element.style.visibility = 'visible';
+		const spans = element.querySelectorAll('span');
+
+		// Helper to wait for delay, but break if skipped
+		const waitDelay = () => new Promise(resolve => {
+			if (delay <= 0) return resolve();
+			const start = Date.now();
+			const timer = setInterval(() => {
+				if (element.dataset.skip === "true" || Date.now() - start >= delay) {
+					clearInterval(timer);
+					resolve();
+				}
+			}, 50); // Check every 50ms
+		});
+
+		await waitDelay();
+
 		return new Promise((resolve) => {
-			const text = element.textContent.replace(/\s+/g, ' ').trim();
-			element.setAttribute('aria-label', text);
-			element.setAttribute('role', 'text');
+			// If skipped during delay or before start
+			if (element.dataset.skip === "true") {
+				spans.forEach(span => span.style.opacity = '1');
+				element.dataset.typingDone = "true";
+				resolve();
+				return;
+			}
 
-			element.innerHTML = text.split('').map(char => {
-				return `<span style="opacity: 0; transition: opacity 0.1s">${char}</span>`;
-			}).join('');
+			let i = 0;
+			const timer = setInterval(() => {
+				// Check for skip signal during typing
+				if (element.dataset.skip === "true") {
+					clearInterval(timer);
+					spans.forEach(span => span.style.opacity = '1');
+					element.dataset.typingDone = "true";
+					resolve();
+					return;
+				}
 
-			element.style.visibility = 'visible';
-			
-			setTimeout(() => {
-				const spans = element.querySelectorAll('span');
-				let i = 0;
-				const timer = setInterval(() => {
-					if (i < spans.length) {
-						spans[i].style.opacity = '1';
-						i++;
-						if (i === spans.length) {
-							clearInterval(timer);
-							resolve();
-						}
+				if (i < spans.length) {
+					spans[i].style.opacity = '1';
+					i++;
+					if (i === spans.length) {
+						clearInterval(timer);
+						element.dataset.typingDone = "true";
+						resolve();
 					}
-				}, speed);
-			}, delay);
+				}
+			}, speed);
 		});
 	};
 
@@ -132,9 +162,33 @@ import NewsletterForm from "../components/NewsletterForm.astro";
 		const elements = document.querySelectorAll('.typewriter');
 		const promises = [];
 
+		// Sequential Skip Handler
+		const skipHandler = (e) => {
+			// Check for Enter key or Touch/Click
+			if ((e.type === 'keydown' && e.key === 'Enter') || e.type === 'touchstart' || e.type === 'click') {
+				// Find the first typewriter that isn't done yet
+				const target = Array.from(elements).find(el => el.dataset.typingDone !== "true");
+				if (target) {
+					target.dataset.skip = "true";
+				} else {
+					// All done, remove listeners
+					document.removeEventListener('keydown', skipHandler);
+					document.removeEventListener('touchstart', skipHandler);
+					document.removeEventListener('click', skipHandler);
+				}
+			}
+		};
+
+		document.addEventListener('keydown', skipHandler);
+		document.addEventListener('touchstart', skipHandler);
+		document.addEventListener('click', skipHandler);
+
 		elements.forEach(el => {
 			if (el.dataset.typingStarted) return;
 			el.dataset.typingStarted = "true";
+			// Clean up any old state if swapped back
+			delete el.dataset.skip;
+			delete el.dataset.typingDone;
 			
 			const speed = parseInt(el.getAttribute('data-speed')) || 50;
 			const delay = parseInt(el.getAttribute('data-delay')) || 0;
