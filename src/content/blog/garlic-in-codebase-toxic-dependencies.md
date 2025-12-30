@@ -3,7 +3,7 @@ title: 'Garlic in the Codebase: Identifying and Removing Toxic Dependencies'
 description: 'An undead developer’s guide to spotting and removing toxic dependencies from your codebase. Learn how to identify the subtle signs, reclaim control, and keep your project garlic-free.'
 pubDate: '2025-01-02'
 heroImage: '../../images/blog-placeholder-1.jpg'
-featured: false
+draft: true
 ---
 
 There’s a certain smell that fills the room when something doesn’t belong in your codebase. It's faint at first—subtle, even masked by the usual aroma of late-night coffee and burned-out CPUs. But then it hits: acrid, stubborn, and offensive to your engineering sensibilities. I call it garlic. You might call it a toxic dependency.

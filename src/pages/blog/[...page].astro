@@ -10,7 +10,7 @@ export const getStaticPaths = (async ({ paginate }) => {
 	
 	// Filtra los posts que tienen draft: true
 	const posts = allPosts
-		.filter((post) => !post.data.draft)
+		.filter((post) => post.data.draft !== true)
 		.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
 	return paginate(posts, { pageSize: 5 });

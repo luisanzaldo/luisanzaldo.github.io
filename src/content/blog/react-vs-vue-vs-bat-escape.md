@@ -2,6 +2,8 @@
 title: 'React vs. Vue vs. Turning Into a Bat and Flying Away From the Problem'
 description: 'React or Vue? Or just transform into a bat and escape the sprint backlog entirely? An undead developer weighs modern JavaScript frameworks against ancient instincts in this darkly humorous take on frontend decision-making.'
 pubDate: '2024-01-03'
+draft: true
+
 ---
 
 Let’s be honest: choosing a JavaScript framework these nights feels less like a technical decision and more like a supernatural ritual. Candles are lit. Comparisons are drawn in blood. Ancient forums whisper conflicting advice. And somewhere, a tech lead is sacrificing a sprint to the great god of component lifecycles.
