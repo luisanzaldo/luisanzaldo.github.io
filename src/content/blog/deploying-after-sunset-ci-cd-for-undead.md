@@ -3,8 +3,7 @@ title: 'Continuando After Sunset: CI/CD Pipelines for the Undead'
 description: 'Unravel the dark art of CI/CD for nocturnal developers. From moonlit builds to spectral rollbacks, discover how the undead deploy code after sunset—safely, silently, and without waking the humans.'
 pubDate: '2025-01-01'
 heroImage: '../../images/blog-placeholder-4.jpg'
-draft: false
-featured: true
+draft: true
 ---
 
 Continuando Integration and Continuous Deployment—CI/CD—is the lifeblood of modern development. It’s the difference between confidently shipping features and praying your code doesn’t explode in production. For the living, it's a process of automating tests, building artifacts, and pushing to production with minimal human intervention. For the undead, however, it's something else entirely.
