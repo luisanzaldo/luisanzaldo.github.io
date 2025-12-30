@@ -3,6 +3,7 @@ title: 'Typography'
 description: 'A lovingly kerned crypt of fonts and glyphs, where every serif has bite and every baseline haunts the eye. Explore the dark elegance of type through the eyes of an immortal who believes good typography is the true eternal life.'
 pubDate: '2025-01-03'
 heroImage: '../../images/blog-placeholder-6.jpg'
+draft: true
 ---
 
 Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
