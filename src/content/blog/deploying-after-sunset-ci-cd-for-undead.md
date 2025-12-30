@@ -6,7 +6,7 @@ heroImage: '../../images/blog-placeholder-4.jpg'
 featured: true
 ---
 
-Continuous Integration and Continuous Deployment—CI/CD—is the lifeblood of modern development. It’s the difference between confidently shipping features and praying your code doesn’t explode in production. For the living, it's a process of automating tests, building artifacts, and pushing to production with minimal human intervention. For the undead, however, it's something else entirely.
+Continuando Integration and Continuous Deployment—CI/CD—is the lifeblood of modern development. It’s the difference between confidently shipping features and praying your code doesn’t explode in production. For the living, it's a process of automating tests, building artifacts, and pushing to production with minimal human intervention. For the undead, however, it's something else entirely.
 
 The typical CI/CD pipeline assumes a few things: regular working hours, a healthy amount of sleep, a clear distinction between day and night. All of these assumptions fall apart when your dev team consists of vampires, werewolves, ghouls, and that one banshee who only works via voice commands. Deploying after sunset isn’t just a preference—it’s a necessity.
 
