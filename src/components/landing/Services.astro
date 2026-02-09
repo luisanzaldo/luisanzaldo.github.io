@@ -1,6 +1,5 @@
 ---
 import { Image } from "astro:assets";
-import advertisingSvg from "@assets/images/services/advertising.svg?raw";
 import designSvg from "@assets/images/services/creative-designer-doing-multitasking.svg?raw";
 import mobileSvg from "@assets/images/services/mobile-app-ui-ux-design.svg?raw";
 import seoSvg from "@assets/images/services/seo-link-building.svg?raw";
@@ -33,11 +32,6 @@ const points = [
 		title: t("seo.title"),
 		content: t("seo.content"),
 		image: seoSvg,
-	},
-	{
-		title: t("advertising.title"),
-		content: t("advertising.content"),
-		image: advertisingSvg,
 	},
 ];
 ---
@@ -103,7 +97,7 @@ const points = [
 				id: "pinning",
 				markers: false,
 				snap: {
-					snapTo: [0, 0.25, 0.5, 0.7, 0.9], // snap to the closest label in the timeline
+					snapTo: 1 / (points.length - 1), // snap to the closest label in the timeline
 					duration: { min: 0.1, max: 0.1 }, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
 					delay: 1, // wait 1 seconds from the last scroll event before doing the snapping
 					inertia: false,
