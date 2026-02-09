@@ -23,6 +23,7 @@ export const ui = {
 		"hero.title.2": "FUNDACIONES",
 		"hero.title.3": "EMPRENDEDORES",
 		"hero.title.4": "PYMES",
+		"hero.title.5": "AUTÓNOMOS",
 		"hero.subtitle":
 			"Te ayudamos a crear un sitio web con herramientas de Inteligencia Artificial de acuerdo a tus necesidades. Contáctanos para tener una videollamada gratuita.",
 		"hero.scroll": "desliza para explorar más",
@@ -104,6 +105,7 @@ export const ui = {
 		"hero.title.2": "FOUNDATIONS",
 		"hero.title.3": "ENTREPRENEURS",
 		"hero.title.4": "SMEs",
+		"hero.title.5": "FREELANCERS",
 		"hero.subtitle":
 			"We help you create a website with specific Artificial Intelligence tools according to your needs. Contact us for a free video call.",
 		"hero.scroll": "scroll to explore more",
