@@ -24,7 +24,7 @@ let pages = [
 		url: "/blog/",
 	},
 	{
-		title: "Contacts",
+		title: "Contacto",
 		url: "/contact/",
 	},
 ];
@@ -103,13 +103,7 @@ const { pathname } = Astro.url;
 									</li>
 								))
 							}
-							<li data-cursor-hover>
-								<a
-									href={lang === "en" ? "/it" + path : getUrlWithoutLang(Astro.url)}
-									class="inline-block cursor-pointer px-4 py-1 font-semibold uppercase tracking-wide text-zinc-400 hover:text-white focus:text-white focus:outline-none">
-									{lang === "en" ? "EN" : "ES"}
-								</a>
-							</li>
+
 							</ul>
 					</nav>
 				</div>
@@ -219,20 +213,34 @@ const { pathname } = Astro.url;
 						const pathName = window.location.pathname;
 
 						if (pathName === "/" || pathName === "/it/") {
-							return "9.5rem";
+							return "7.8rem";
 						} else if (pathName.startsWith("/blog") || pathName.startsWith("/it/blog")) {
-							return "3.5rem";
+							return "1.6rem";
 						}
 
-						return "-3.5rem";
+						return "-6.2rem";
 					},
 				},
 				"<",
 			);
 
 		const isTouchDevice = window.matchMedia("(hover: none)").matches;
+		const isContactPage = window.location.pathname.startsWith("/contact") || window.location.pathname.startsWith("/it/contact");
 
-		if (window.innerWidth >= 768 && !isTouchDevice) {
+		function handleResize() {
+			if (window.innerWidth < 768 || isTouchDevice || isContactPage) {
+				menuCollapseTl.reverse();
+				pageLinksUl?.classList.remove("collapsed");
+				document.querySelector("header .navigation")?.classList.remove("collapsed");
+				menuCollapsed = false;
+				
+				// Clear inline styles applied by GSAP
+				gsap.set("header .nav-container", { clearProps: "width" });
+				gsap.set(pageLinksUl, { clearProps: "x" });
+			}
+		}
+
+		if (window.innerWidth >= 768 && !isTouchDevice && !isContactPage) {
 			function expandMenu() {
 				menuCollapseTl.reverse();
 				pageLinksUl?.classList.remove("collapsed");
@@ -264,6 +272,8 @@ const { pathname } = Astro.url;
 			}
 
 			function handleScroll() {
+				if (window.innerWidth < 768 || isContactPage) return;
+
 				if (window.scrollY > 200 && !isHoveringMenu && !menuCollapsed) {
 					collapseMenu();
 				} else if (window.scrollY <= 200 && menuCollapsed) {
@@ -280,6 +290,9 @@ const { pathname } = Astro.url;
 			window?.removeEventListener("scroll", handleScroll);
 			window?.addEventListener("scroll", handleScroll);
 		}
+		
+		window?.removeEventListener("resize", handleResize);
+		window?.addEventListener("resize", handleResize);
 	}
 
 	document.removeEventListener("DOMContentLoaded", init); // astro:page-load
