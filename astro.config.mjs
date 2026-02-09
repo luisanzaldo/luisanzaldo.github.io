@@ -1,30 +1,40 @@
-// @ts-check
-import {
-	defineConfig,
-	passthroughImageService,
-	sharpImageService,
-} from "astro/config";
-import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
-
-import icon from "astro-icon";
-
 import sitemap from "@astrojs/sitemap";
-
-// disable image optimization in dev mode to allow the project to work on StackBlitz
-const disableImageOptimization = process.env.NODE_ENV === "development";
+import tailwind from "@astrojs/tailwind";
+import icon from "astro-icon";
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-	trailingSlash: "never",
-	site: 'https://metarrelato.com',
 	vite: {
-		plugins: [tailwindcss()],
+		server: {
+			watch: {
+				usePolling: true,
+			},
+		},
 	},
-	integrations: [mdx(), icon(), sitemap()],
-	image: {
-		service: disableImageOptimization
-			? passthroughImageService()
-			: sharpImageService(),
+	site: "https://mintaka.co",
+	i18n: {
+		defaultLocale: "en",
+		locales: ["en", "it"],
 	},
+	markdown: {
+		drafts: true,
+		shikiConfig: {
+			theme: "css-variables",
+		},
+	},
+	shikiConfig: {
+		wrap: true,
+		skipInline: false,
+		drafts: true,
+	},
+	integrations: [
+		tailwind({
+			applyBaseStyles: false,
+		}),
+		sitemap(),
+		mdx(),
+		icon(),
+	],
 });

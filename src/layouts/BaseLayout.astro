@@ -1,76 +1,85 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import "@fontsource-variable/space-grotesk";
-import "@fontsource-variable/roboto";
+import BlobCursorFollower from "@/components/global/BlobCursorFollower.astro";
+import { AstroSeo, type AstroSeoProps } from "@astrolib/seo";
+import BaseHead from "@components/BaseHead.astro";
+import BackgroundTexture from "@components/global/BackgroundTexture.astro";
+import Footer from "@components/global/Footer.astro";
+import Navigation from "@components/global/Navigation.astro";
+import { getLangFromUrl } from "../i18n/utils";
 
-const { title, description, pubDate, updatedDate, image } = Astro.props;
+const { pathname } = Astro.url;
+
+type Props = {
+	seo?: AstroSeoProps;
+};
+
+const { seo: seoProp } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+
+const shareImage = new URL("/images/meta/mintaka_share.gif", Astro.site).toString();
+
+const defaultSeo: AstroSeoProps = {
+	title: "Web Agency Leading in Performant Web Design Solutions - Mintaka Studio",
+	description:
+		"Mintaka Studio excels in creating fast, user-friendly websites with a focus on aesthetic design and SEO optimization, ensuring a standout online presence",
+	canonical: "https://mintaka.co",
+	openGraph: {
+		url: "https://mintaka.co",
+		title: "Web Agency Leading in Performant Web Design Solutions - Mintaka Studio",
+		description:
+			"Mintaka Studio excels in creating fast, user-friendly websites with a focus on aesthetic design and SEO optimization, ensuring a standout online presence",
+		images: [
+			{
+				url: shareImage,
+				width: 1200,
+				height: 630,
+				alt: "Social open graph",
+				type: "image/gif",
+			},
+			{
+				url: shareImage,
+				width: 4096,
+				height: 4096,
+				alt: "Twitter open graph",
+				type: "image/gif",
+			},
+		],
+		site_name: "Mintaka",
+	},
+	twitter: {
+		handle: "@mintakastudio",
+		site: "@mintakastudio",
+		cardType: "summary_large_image",
+	},
+	additionalMetaTags: [
+		{
+			name: "publisher",
+			content: "Mintaka Studio",
+		},
+	],
+};
+
+const seo = {
+	...defaultSeo,
+	...seoProp,
+};
+
+function cursorFollowerActive() {
+	const paths = ["", "/", "/it/", "/it"];
+	return paths.includes(pathname);
+}
 ---
 
-<!doctype html>
-<html lang="en" class="h-full">
+<html lang={lang}>
 	<head>
-		<BaseHead
-			title={title ? `${title} | ${SITE_TITLE}` : SITE_TITLE}
-			description={description || SITE_DESCRIPTION}
-			image={image}
-		/>
+		<BaseHead />
+		<AstroSeo {...seo} />
 	</head>
-	<body
-		class="flex h-full bg-slate-50 text-slate-900 dark:bg-black dark:text-white"
-	>
-		<div class="fixed inset-0 flex justify-center sm:px-8">
-			<div class="flex w-full max-w-7xl lg:px-8">
-				<div
-					class="w-full bg-white ring-1 ring-slate-100 dark:bg-slate-900 dark:ring-slate-300/20"
-				>
-				</div>
-			</div>
-		</div>
-		<div class="relative flex w-full flex-col">
-			<Header />
-			<main class="flex-auto">
-				<div class="sm:px-8 mt-32">
-					<div class="mx-auto w-full max-w-7xl lg:px-8">
-						<div class="relative px-4 sm:px-8 lg:px-12">
-							<slot />
-						</div>
-					</div>
-				</div>
-			</main>
-			<Footer />
-		</div>
-	<script>
-		const observerOptions = {
-			root: null,
-			rootMargin: '0px',
-			threshold: 0.1
-		};
-
-		const observer = new IntersectionObserver((entries, observer) => {
-			entries.forEach(entry => {
-				if (entry.isIntersecting) {
-					entry.target.classList.add('is-visible');
-					observer.unobserve(entry.target);
-				}
-			});
-		}, observerOptions);
-
-		const observeElements = () => {
-			// Auto-apply scale-on-scroll to all images inside article prose
-			const articleImages = document.querySelectorAll('article .prose img');
-			articleImages.forEach(img => {
-				img.classList.add('scale-on-scroll');
-			});
-
-			const elements = document.querySelectorAll('.reveal-on-scroll, .scale-on-scroll');
-			elements.forEach(el => observer.observe(el));
-		};
-
-		document.addEventListener('DOMContentLoaded', observeElements);
-		document.addEventListener('astro:page-load', observeElements);
-	</script>
+	<body class="bg-slate-50">
+		<BackgroundTexture />
+		<Navigation />
+		<slot />
+		<Footer />
 	</body>
 </html>
