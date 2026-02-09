@@ -32,7 +32,7 @@ export const ui = {
 		"uiux.title": "INTEGRA HERRAMIENTAS",
 		"seo.title": "Da seguimiento a tus métricas",
 		"advertising.title": "Publicidad",
-		"websites.content": "Te proveemos de una página web atractiva para que ofrezcas servicios, productos o para que ayudes a hacer la diferencia. Nos especializamos en sitios web profesionales para emprendedores, Pymes y organizaciones sin ánimo de lucro.",
+		"websites.content": "Te proveemos de una página web atractiva para que ofrezcas servicios, productos o para que ayudes a hacer la diferencia. Nos especializamos en sitios web profesionales para emprendedores, pymes y organizaciones sin ánimo de lucro.",
 		"apps.content": "Desde tu sitio web podrás automatizar los procesos que utilizas día con día para que sea más fácil la gestión de tu negocio, emprendimiento o causa social.",
 		"uiux.content": "Convierte tu sitio web en el cerebro de todos tus movimientos. Envía correos electrónicos, revisa tus bases de datos, analiza inventarios, publica en redes sociales y más.",
 		"seo.content": "Genera reportes de forma automática por medio de Inteligencia Artificial. Sólo pídelo al cerebro de tu página web para obtener los reportes de forma sencilla.",
