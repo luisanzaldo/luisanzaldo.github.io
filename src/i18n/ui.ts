@@ -24,7 +24,7 @@ export const ui = {
 		"hero.title.3": "EMPRENDEDORES",
 		"hero.title.4": "PYMES",
 		"hero.subtitle":
-			"Te ayudamos a crear un sitio web con herramientas específicas de Inteligencia Artificial de acuerdo a tus necesidades. Contáctanos para tener una videollamada gratuita.",
+			"Te ayudamos a crear un sitio web con herramientas de Inteligencia Artificial de acuerdo a tus necesidades. Contáctanos para tener una videollamada gratuita.",
 		"hero.scroll": "desliza para explorar más",
 		"websites.title": "Sitios Web",
 		"apps.title": "Aplicaciones",
