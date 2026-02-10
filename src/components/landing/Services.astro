@@ -1,5 +1,10 @@
 ---
 import { getLangFromUrl, useTranslations, useTranslatedPath } from "@i18n/utils";
+import { Image } from "astro:assets";
+import websiteImage from "../../assets/images/services/website-ui-ux-development.svg";
+import appImage from "../../assets/images/services/mobile-app-ui-ux-design.svg";
+import uiuxImage from "../../assets/images/services/creative-designer-doing-multitasking.svg";
+import seoImage from "../../assets/images/services/seo-link-building.svg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -11,22 +16,22 @@ const points = [
 	{
 		title: t("websites.title"),
 		content: t("websites.content"),
-		lottie: "/computer.json",
+		image: websiteImage,
 	},
 	{
 		title: t("apps.title"),
 		content: t("apps.content"),
-		lottie: "/animation-ia.json",
+		image: appImage,
 	},
 	{
 		title: t("uiux.title"),
 		content: t("uiux.content"),
-		lottie: "/animation2-ia.json",
+		image: uiuxImage,
 	},
 	{
 		title: t("seo.title"),
 		content: t("seo.content"),
-		lottie: "/reports-ia.json",
+		image: seoImage,
 	},
 ];
 ---
@@ -38,12 +43,12 @@ const points = [
 			{points.map(() => <div class="indicator w-full grow bg-[#333333]" />)}
 		</div>
 		{
-			points.map(({ title, content, lottie }) => (
+			points.map(({ title, content, image }) => (
 				<div class="point flex h-screen w-full flex-col-reverse items-center justify-center gap-x-20 gap-y-12 p-16 pr-0 md:flex-row lg:gap-x-40">
-					<div class="w-full max-w-80">
-						{lottie && (
-							<div class="lottie-container w-full h-full" data-animation-path={lottie} />
-						)}
+					<div class="hidden w-full max-w-80 lg:block">
+						<div class="visual-element w-full h-full">
+							<Image src={image} alt={title} class="w-full h-full object-contain" />
+						</div>
 					</div>
 					<article class="flex flex-col gap-14">
 						<h3 class="faq font-display text-4xl uppercase md:text-5xl lg:text-6xl">{title}</h3>
@@ -59,8 +64,6 @@ const points = [
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 	import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
-	// Use lottie_light for smaller bundle size
-	import lottie from "lottie-web/build/player/lottie_light";
 
 	gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin);
 
@@ -71,40 +74,6 @@ const points = [
 		var height = 100 * points.length;
 
 		gsap.set(".indicators", { display: "flex" });
-
-		// Initialize Lottie animations with IntersectionObserver for performance
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach(entry => {
-				const container = entry.target as HTMLElement;
-				// access the lottie instance stored on the element, if possible, or manage via a map
-				// simpler: find the animation instance associated with this container
-				// However, lottie.loadAnimation returns the instance. We should store it.
-				const animationItem = (container as any)._lottieAnimation;
-				
-				if (animationItem) {
-					if (entry.isIntersecting) {
-						animationItem.play();
-					} else {
-						animationItem.pause();
-					}
-				}
-			});
-		}, { threshold: 0.1 });
-
-		document.querySelectorAll(".lottie-container").forEach((container) => {
-			const path = (container as HTMLElement).dataset.animationPath;
-			if (path) {
-				const anim = lottie.loadAnimation({
-					container: container as Element,
-					renderer: "svg",
-					loop: true,
-					autoplay: false, // Start paused, let observer play it
-					path: path,
-				});
-				(container as any)._lottieAnimation = anim;
-				observer.observe(container);
-			}
-		});
 
 		var tl = gsap.timeline({
 			duration: points.length,
@@ -146,8 +115,8 @@ const points = [
 			// https://codepen.io/zank/pen/oNVjYMM?editors=0010
 			tl.to(indicators[i], { backgroundColor: "white", duration: 0.25 }, i);
 			
-			// Select lottie-container
-			const visualElement = (elem as HTMLElement).querySelector(".lottie-container");
+			// Select visual-element
+			const visualElement = (elem as HTMLElement).querySelector(".visual-element");
 			
 			if (visualElement) {
 				tl.from(visualElement, { autoAlpha: 0 }, i);
