@@ -15,7 +15,7 @@ export const ui = {
 		services: "Servicios",
 		homepage: "Inicio",
 		tagline:
-			"Gracias a los avances en Inteligencia Artificial es posible implementar herramientas digitales profesionales en cualquier proyecto, sin importar el tamaño. Nosotros te ayudaremos a tomar las mejores decisiones y a ejecutar las integraciones en tu sitio web.",
+			"Gracias a los avances en Inteligencia Artificial es posible democratizar las herramientas digitales para obtener mejores resultados, no importa si eres emprendedor, profesionista independiente o simplemente buscas mejorar el mundo. Piensa en nosotros como tus aliados para lograr estos objetivos, así que contáctanos para poder ayudarte.",
 		"projects.yours": "Tu proyecto",
 		"projects.see": "Ver proyecto",
 		"hero.title.main": "IA PARA",
@@ -25,7 +25,7 @@ export const ui = {
 		"hero.title.4": "PYMES",
 		"hero.title.5": "AUTÓNOMOS",
 		"hero.subtitle":
-			"Te ayudamos a crear un sitio web que integre herramientas de Inteligencia Artificial de acuerdo a tus necesidades. Contáctanos para tener una videollamada gratuita.",
+			"Te ayudamos a crear un sitio web que integre herramientas de Inteligencia Artificial de acuerdo a tus necesidades. Contáctanos y platiquemos sobre tu proyecto.",
 		"hero.scroll": "desliza para explorar más",
 		"websites.title": "Implementa tu sitio web",
 		"apps.title": "Automatiza",

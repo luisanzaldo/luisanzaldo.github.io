@@ -36,23 +36,20 @@ const points = [
 ];
 ---
 
-<section id="services" class:list={["section home-dark-section services-section relative", className]}>
-	<div class="wrapper col-span-12 h-screen w-full">
+<section id="services" class:list={["section home-dark-section services-section", className]}>
+	<div class="col-span-12 flex flex-col gap-32 py-20">
 		<h2 class="sr-only">{t("services")}</h2>
-		<div class="indicators absolute left-0 top-0 mt-[10vh] hidden h-[80vh] w-1 flex-col justify-between gap-2">
-			{points.map(() => <div class="indicator w-full grow bg-[#333333]" />)}
-		</div>
 		{
-			points.map(({ title, content, image }) => (
-				<div class="point flex h-screen w-full flex-col-reverse items-center justify-center gap-x-20 gap-y-12 p-16 pr-0 md:flex-row lg:gap-x-40">
-					<div class="hidden w-full max-w-80 lg:block">
-						<div class="visual-element w-full h-full">
+			points.map(({ title, content, image }, index) => (
+				<div class={`service-item flex w-full flex-col-reverse items-center justify-center gap-12 md:gap-20 lg:gap-40 ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
+					<div class="w-full max-w-md lg:max-w-lg">
+						<div class="visual-element w-full h-auto aspect-square">
 							<Image src={image} alt={title} class="w-full h-full object-contain" />
 						</div>
 					</div>
-					<article class="flex flex-col gap-14">
-						<h3 class="faq font-display text-4xl uppercase md:text-5xl lg:text-6xl">{title}</h3>
-						<p class="max-w-2xl text-lg" set:html={content} />
+					<article class="flex flex-col gap-6 text-center md:text-left">
+						<h3 class="font-display text-4xl uppercase md:text-5xl lg:text-6xl text-balance">{title}</h3>
+						<p class="max-w-xl text-lg text-balance" set:html={content} />
 					</article>
 				</div>
 			))
@@ -63,74 +60,25 @@ const points = [
 <script>
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
-	import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
 
-	gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin);
+	gsap.registerPlugin(ScrollTrigger);
 
 	function init() {
-		var points = gsap.utils.toArray(".point") as gsap.DOMTarget[];
-		var indicators = gsap.utils.toArray(".indicator") as gsap.DOMTarget[];
-
-		var height = 100 * points.length;
-
-		gsap.set(".indicators", { display: "flex" });
-
-		var tl = gsap.timeline({
-			duration: points.length,
-			scrollTrigger: {
-				trigger: "#services",
-				start: "top center",
-				end: "+=" + height + "%",
-				scrub: 0.5,
-				markers: false,
-				id: "points",
-				immediateRender: false,
-			},
-		});
-
-		var pinner = gsap.timeline({
-			scrollTrigger: {
-				trigger: ".services-section .wrapper",
-				start: "top top",
-				end: "+=" + height + "%",
-				scrub: 0.5,
-				pin: ".services-section .wrapper",
-				pinSpacing: true,
-				id: "pinning",
-				markers: false,
-				snap: {
-					snapTo: 1 / (points.length - 1), // snap to the closest label in the timeline
-					duration: { min: 0.1, max: 0.1 }, // the snap animation should be at least 0.2 seconds, but no more than 3 seconds (determined by velocity)
-					delay: 1, // wait 1 seconds from the last scroll event before doing the snapping
-					inertia: false,
-					directional: false,
-					ease: "power1.inOut", // the ease of the snap animation ("power3" by default)
+		const services = document.querySelectorAll(".service-item");
+		
+		services.forEach((service) => {
+			gsap.from(service, {
+				scrollTrigger: {
+					trigger: service,
+					start: "top 85%", // Trigger when top of element hits 85% of viewport height
+					toggleActions: "play none none reverse", // Play animation on enter, reverse on leave back up
 				},
-			},
-		});
-
-		points.forEach(function (elem, i) {
-			gsap.set(elem, { position: "absolute", top: 0, willChange: "transform, opacity" }); // Optimize with will-change
-
-			// https://codepen.io/zank/pen/oNVjYMM?editors=0010
-			tl.to(indicators[i], { backgroundColor: "white", duration: 0.25 }, i);
-			
-			// Select visual-element
-			const visualElement = (elem as HTMLElement).querySelector(".visual-element");
-			
-			if (visualElement) {
-				tl.from(visualElement, { autoAlpha: 0 }, i);
-			}
-			
-			tl.from((elem as HTMLElement).querySelector("article"), { autoAlpha: 0, translateY: 100 }, i);
-
-			if (i != points.length - 1) {
-				tl.to(indicators[i], { backgroundColor: "#333333", duration: 0.25 }, i + 0.75);
-				tl.to((elem as HTMLElement).querySelector("article"), { autoAlpha: 0, translateY: -100 }, i + 0.75);
-				if (visualElement) {
-					tl.to(visualElement, { autoAlpha: 0 }, i + 0.75);
-				}
-			}
+				scale: 0.9,
+				autoAlpha: 0, // Using autoAlpha handles visibility: hidden automatically
+				y: 50,
+				duration: 0.8,
+				ease: "power3.out", // Smooth, natural easing
+			});
 		});
 	}
 
