@@ -1,51 +1,68 @@
 ---
-import Newsletter from "@components/blog/Newsletter.astro";
-import { getLangFromUrl, useTranslatedPath, useTranslations } from "@i18n/utils";
-import { Icon } from "astro-icon/components";
-
-const lang = getLangFromUrl(Astro.url);
-const t = useTranslations(lang);
-const translatePath = useTranslatedPath(lang);
 ---
 
-<footer class="section min-h-screen gap-y-10 py-3 lg:gap-y-32">
-	<div class="relative flex-grow"></div>
-	<div class="relative grid grid-cols-6 gap-y-20 lg:grid-cols-12 lg:text-xl">
-		<div class="col-span-6 col-start-1 grid grid-cols-6 gap-6 lg:col-span-8">
-			<div class="col-span-2 col-start-4 flex flex-col gap-2 lg:col-span-3">
-				<a href="https://twitter.com//" target="_blank">Twitter / X</a>
-				<a href="https://www.instagram.com//" target="_blank">Instagram</a>
-				<a href="https://www.linkedin.com/" target="_blank">Linkedin</a>
-				<a href="https://tiktok.com/" target="_blank">TikTok</a>
-			</div>
-			<div class="col-span-3 row-start-1 lg:col-span-2 lg:col-start-4 lg:row-start-auto">
-				<div class="flex flex-col gap-2">
-					<a href={translatePath("/")}>Home</a>
-					<a href={translatePath("/blog/")}>Blog</a>
-					<a href={translatePath("/tags/")}>Tags</a>
-					<a href={translatePath("/contact/")}>{t("contacts")}</a>
-					<a href={translatePath("/terms/")}>Terms</a>
-					<a href={translatePath("/privacy/")}>Privacy Policy</a>
-					<a href={translatePath("/rss.xml")}>RSS</a>
-				</div>
-			</div>
-			<div class="col-span-3 mt-10 lg:col-start-4">
-				<div class="relative flex flex-col overflow-hidden"></div>
-				<div class="relative mt-1 flex h-8 flex-col overflow-hidden">
-					<a href="mailto:test@mintaka.co" class="block cursor-pointer overflow-hidden">test@mintaka.co</a>
-				</div>
-			</div>
+<footer class="section relative flex min-h-[50vh] w-full flex-col items-center justify-center gap-y-10 py-10 lg:min-h-[50vh]">
+	<div class="flex flex-col items-center gap-8">
+		<!-- Social Icons -->
+		<div class="flex gap-6">
+			<!-- Instagram -->
+			<a href="https://www.instagram.com/" target="_blank" aria-label="Instagram" class="transition-colors duration-300 text-black hover:text-[#F06071]">
+				<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 800 800" fill="none" class="text-black hover:text-[#F06071]">
+					<g transform="matrix(1.81119,0,0,1.81119,-2022.75,-565.067)">
+						<path d="M1426.14,585.175C1426.14,605.011 1410.04,621.111 1390.2,621.111L1289.58,621.111C1269.75,621.111 1253.65,605.011 1253.65,585.175L1253.65,484.555C1253.65,464.719 1269.75,448.62 1289.58,448.62L1390.2,448.62C1410.04,448.62 1426.14,464.719 1426.14,484.555L1426.14,585.175ZM1393.8,430.652L1285.99,430.652C1258.21,430.652 1235.68,453.183 1235.68,480.962L1235.68,588.769C1235.68,616.547 1258.21,639.078 1285.99,639.078L1393.8,639.078C1421.57,639.078 1444.11,616.547 1444.11,588.769L1444.11,480.962C1444.11,453.183 1421.57,430.652 1393.8,430.652Z" fill="currentColor"/>
+					</g>
+					<g transform="matrix(1.81119,0,0,1.81119,-2022.75,-565.067)">
+						<path d="M1339.89,570.801C1320.09,570.801 1303.96,554.666 1303.96,534.865C1303.96,515.065 1320.09,498.93 1339.89,498.93C1359.69,498.93 1375.83,515.065 1375.83,534.865C1375.83,554.666 1359.69,570.801 1339.89,570.801ZM1339.89,480.962C1310.14,480.962 1285.99,505.11 1285.99,534.865C1285.99,564.62 1310.14,588.769 1339.89,588.769C1369.65,588.769 1393.8,564.62 1393.8,534.865C1393.8,505.11 1369.65,480.962 1339.89,480.962Z" fill="currentColor"/>
+					</g>
+					<g transform="matrix(1.81119,0,0,1.81119,-2022.75,-565.067)">
+						<path d="M1397.39,488.149C1391.44,488.149 1386.61,483.313 1386.61,477.368C1386.61,471.424 1391.44,466.588 1397.39,466.588C1403.33,466.588 1408.17,471.424 1408.17,477.368C1408.17,483.313 1403.33,488.149 1397.39,488.149Z" fill="currentColor"/>
+					</g>
+					<g transform="matrix(1.81119,0,0,1.81119,-2022.75,-565.067)">
+						<path d="M1525.59,692.18C1525.59,707.944 1512.77,720.772 1497,720.772L1182.38,720.772C1166.61,720.772 1153.78,707.944 1153.78,692.18L1153.78,377.553C1153.78,361.789 1166.61,348.961 1182.38,348.961L1497,348.961C1512.77,348.961 1525.59,361.789 1525.59,377.553L1525.59,692.18ZM1497,329.899L1182.38,329.899C1156.06,329.899 1134.72,351.239 1134.72,377.553L1134.72,692.18C1134.72,718.495 1156.06,739.834 1182.38,739.834L1497,739.834C1523.32,739.834 1544.66,718.495 1544.66,692.18L1544.66,377.553C1544.66,351.239 1523.32,329.899 1497,329.899Z" fill="currentColor"/>
+					</g>
+				</svg>
+			</a>
+			<!-- LinkedIn -->
+			<a href="https://www.linkedin.com/" target="_blank" aria-label="LinkedIn" class="transition-colors duration-300 text-black hover:text-[#F06071]">
+				<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 800 800" fill="none" class="text-black hover:text-[#F06071]">
+					<g transform="matrix(1.82126,0,0,1.82126,-2032.56,-1597.65)">
+						<path d="M1295.11,1027.5C1295.11,1041.63 1283.66,1053.09 1269.52,1053.09C1255.39,1053.09 1243.93,1041.63 1243.93,1027.5C1243.93,1013.37 1255.39,1001.91 1269.52,1001.91C1283.66,1001.91 1295.11,1013.37 1295.11,1027.5Z" fill="currentColor"/>
+						<path d="M1288.94,1198.09L1250.1,1198.09C1249.05,1198.09 1248.2,1197.24 1248.2,1196.18L1248.2,1072.05C1248.2,1071 1249.05,1070.15 1250.1,1070.15L1288.94,1070.15C1289.99,1070.15 1290.85,1071 1290.85,1072.05L1290.85,1196.18C1290.85,1197.24 1289.99,1198.09 1288.94,1198.09Z" fill="currentColor"/>
+						<path d="M1435.85,1117.06L1435.85,1189.56C1435.85,1194.25 1432.01,1198.09 1427.32,1198.09L1401.73,1198.09C1397.04,1198.09 1393.2,1194.25 1393.2,1189.56L1393.2,1129.85C1393.2,1118.08 1383.65,1108.53 1371.88,1108.53C1360.11,1108.53 1350.55,1118.08 1350.55,1129.85L1350.55,1189.56C1350.55,1194.25 1346.72,1198.09 1342.02,1198.09L1316.44,1198.09C1311.74,1198.09 1307.91,1194.25 1307.91,1189.56L1307.91,1078.68C1307.91,1073.98 1311.74,1070.15 1316.44,1070.15L1342.02,1070.15C1346.72,1070.15 1350.55,1073.98 1350.55,1078.68L1350.55,1084.13C1359.08,1073.09 1373.2,1065.88 1388.94,1065.88C1412.48,1065.88 1435.85,1082.94 1435.85,1117.06Z" fill="currentColor"/>
+						<path d="M1525.59,1257.31C1525.59,1273.08 1512.77,1285.91 1497,1285.91L1182.38,1285.91C1166.61,1285.91 1153.78,1273.08 1153.78,1257.31L1153.78,942.687C1153.78,926.923 1166.61,914.094 1182.38,914.094L1497,914.094C1512.77,914.094 1525.59,926.923 1525.59,942.687L1525.59,1257.31ZM1497,895.032L1182.38,895.032C1156.06,895.032 1134.72,916.372 1134.72,942.687L1134.72,1257.31C1134.72,1283.63 1156.06,1304.97 1182.38,1304.97L1497,1304.97C1523.32,1304.97 1544.66,1283.63 1544.66,1257.31L1544.66,942.687C1544.66,916.372 1523.32,895.032 1497,895.032Z" fill="currentColor"/>
+					</g>
+				</svg>
+			</a>
+			<!-- X (Twitter) -->
+			<a href="https://twitter.com/" target="_blank" aria-label="X (Twitter)" class="transition-colors duration-300 text-black hover:text-[#F06071]">
+				<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 800 800" fill="none" class="text-black hover:text-[#F06071]">
+					<g transform="matrix(1.79325,0,0,1.79325,-282.013,-559.148)">
+						<path d="M566.229,692.18C566.229,707.944 553.4,720.772 537.636,720.772L223.01,720.772C207.246,720.772 194.417,707.944 194.417,692.18L194.417,377.553C194.417,361.789 207.246,348.961 223.01,348.961L537.636,348.961C553.4,348.961 566.229,361.789 566.229,377.553L566.229,692.18ZM537.636,329.899L223.01,329.899C196.695,329.899 175.355,351.239 175.355,377.553L175.355,692.18C175.355,718.495 196.695,739.834 223.01,739.834L537.636,739.834C563.951,739.834 585.291,718.495 585.291,692.18L585.291,377.553C585.291,351.239 563.951,329.899 537.636,329.899Z" fill="currentColor"/>
+					</g>
+					<g transform="matrix(1.79325,0,0,1.79325,-1142.39,-559.151)">
+						<path d="M786.774,452.758L815.877,452.758L933.441,616.973L904.338,616.973L786.774,452.758ZM888.779,516.615L969.15,430.652L938.628,430.652L875.545,498.127L827.238,430.652L743.762,430.652L828.267,548.692L743.762,639.078L774.284,639.078L841.504,567.179L892.977,639.078L976.453,639.078L888.779,516.615Z" fill="currentColor"/>
+					</g>
+				</svg>
+			</a>
+			<!-- Facebook -->
+			<a href="https://www.facebook.com/" target="_blank" aria-label="Facebook" class="transition-colors duration-300 text-black hover:text-[#F06071]">
+				<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 800 800" fill="none" class="text-black hover:text-[#F06071]">
+					<g transform="matrix(1.82128,0,0,1.82128,-285.31,-568.394)">
+						<path d="M439.187,519.454L435.877,546.03C435.32,550.475 431.558,553.812 427.1,553.812L384.051,553.812L384.051,664.94C379.507,665.351 374.909,665.557 370.259,665.557C359.863,665.557 349.706,664.516 339.895,662.539L339.895,553.812L306.784,553.812C303.745,553.812 301.264,551.318 301.264,548.273L301.264,515.016C301.264,511.971 303.745,509.476 306.784,509.476L339.895,509.476L339.895,459.595C339.895,428.985 364.607,404.173 395.09,404.173L433.721,404.173C436.759,404.173 439.24,406.668 439.24,409.713L439.24,442.969C439.24,446.015 436.759,448.509 433.721,448.509L406.123,448.509C393.936,448.509 384.051,458.434 384.051,470.68L384.051,509.476L430.41,509.476C435.731,509.476 439.844,514.16 439.187,519.454Z" fill="currentColor"/>
+						<path d="M566.229,692.18C566.229,707.944 553.4,720.772 537.636,720.772L223.01,720.772C207.246,720.772 194.417,707.944 194.417,692.18L194.417,377.553C194.417,361.789 207.246,348.961 223.01,348.961L537.636,348.961C553.4,348.961 566.229,361.789 566.229,377.553L566.229,692.18ZM537.636,329.899L223.01,329.899C196.695,329.899 175.355,351.239 175.355,377.553L175.355,692.18C175.355,718.495 196.695,739.834 223.01,739.834L537.636,739.834C563.951,739.834 585.291,718.495 585.291,692.18L585.291,377.553C585.291,351.239 563.951,329.899 537.636,329.899Z" fill="currentColor"/>
+					</g>
+				</svg>
+			</a>
 		</div>
-		<div class="col-span-6 row-start-1 text-5xl leading-tight lg:col-span-4 lg:row-start-auto lg:text-6xl">
-			<!-- Newsletter Section -->
-			<div>{t("footer.newsletter")}</div>
-			<div>{t("footer.newsletter2")}</div>
-			<Newsletter />
+
+		<!-- Copyright -->
+		<div class="text-lg font-medium text-black">
+			@2026 metarrelato
 		</div>
 	</div>
-	<div class="relative mt-4 flex w-full items-end justify-between gap-y-4 text-sm lg:text-xl lg:font-normal">
-		<div>©2023 YOUR COMPANY</div>
-		<!-- https://codepen.io/fliseno1k/pen/WNboLBy -->
+
+	<!-- Scroll Top Button -->
+	<div class="absolute bottom-4 right-4 lg:bottom-10 lg:right-10">
 		<button
 			id="go-top-button"
 			aria-label="Go to Top"
@@ -53,13 +70,11 @@ const translatePath = useTranslatedPath(lang);
 			data-cursor-hover
 			data-cursor-parallax>
 			<svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
-				<g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+				<g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
 					<circle cx="12" cy="12" r="9"></circle><path d="m15 12l-3-3m0 0l-3 3m3-3v6"></path>
 				</g>
 			</svg>
 		</button>
-
-		<!-- Scroll Up Arrow -->
 	</div>
 </footer>
 

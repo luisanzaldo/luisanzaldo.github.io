@@ -15,7 +15,7 @@ export const ui = {
 		services: "Servicios",
 		homepage: "Inicio",
 		tagline:
-			"Nuestro objetivo es hacer que su sitio web sea un impulsor clave para las ventas y conversiones, combinando un diseño atractivo, una navegación fácil y un SEO sólido. Nos enfocamos en atraer visitantes y guiarlos sin esfuerzo hacia la compra, asegurando que sus productos brillen. Su éxito es nuestra misión.",
+			"Gracias a los avances en Inteligencia Artificial es posible implementar herramientas digitales profesionales en cualquier proyecto, sin importar el tamaño. Nosotros te ayudaremos a tomar las mejores decisiones y a ejecutar las integraciones en tu sitio web.",
 		"projects.yours": "Tu proyecto",
 		"projects.see": "Ver proyecto",
 		"hero.title.main": "IA PARA",
