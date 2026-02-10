@@ -17,21 +17,25 @@ const points = [
 		title: t("websites.title"),
 		content: t("websites.content"),
 		image: websiteSvg,
+		lottie: "/webmobile.json",
 	},
 	{
 		title: t("apps.title"),
 		content: t("apps.content"),
 		image: mobileSvg,
+		lottie: "/animation-ia.json",
 	},
 	{
 		title: t("uiux.title"),
 		content: t("uiux.content"),
 		image: designSvg,
+		lottie: "/animation2-ia.json",
 	},
 	{
 		title: t("seo.title"),
 		content: t("seo.content"),
 		image: seoSvg,
+		lottie: "/reports-ia.json",
 	},
 ];
 ---
@@ -43,10 +47,14 @@ const points = [
 			{points.map(() => <div class="indicator w-full grow bg-[#333333]" />)}
 		</div>
 		{
-			points.map(({ title, content, image }) => (
-				<div class="point flex h-screen w-full flex-col items-center justify-center gap-x-20 gap-y-12 p-16 pr-0 md:flex-row lg:gap-x-40">
-					<div class="hidden w-full max-w-80 lg:block">
-						<Fragment set:html={image} class="" />
+			points.map(({ title, content, image, lottie }) => (
+				<div class="point flex h-screen w-full flex-col-reverse items-center justify-center gap-x-20 gap-y-12 p-16 pr-0 md:flex-row lg:gap-x-40">
+					<div class="w-full max-w-80">
+						{lottie ? (
+							<div class="lottie-container w-full h-full" data-animation-path={lottie} />
+						) : (
+							<Fragment set:html={image} class="" />
+						)}
 					</div>
 					<article class="flex flex-col gap-14">
 						<h3 class="faq font-display text-4xl uppercase md:text-5xl lg:text-6xl">{title}</h3>
@@ -62,6 +70,7 @@ const points = [
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
 	import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
+	import lottie from "lottie-web";
 
 	gsap.registerPlugin(ScrollTrigger, MorphSVGPlugin);
 
@@ -72,6 +81,20 @@ const points = [
 		var height = 100 * points.length;
 
 		gsap.set(".indicators", { display: "flex" });
+
+		// Initialize Lottie animations
+		document.querySelectorAll(".lottie-container").forEach((container) => {
+			const path = (container as HTMLElement).dataset.animationPath;
+			if (path) {
+				lottie.loadAnimation({
+					container: container as Element,
+					renderer: "svg",
+					loop: true,
+					autoplay: true,
+					path: path,
+				});
+			}
+		});
 
 		var tl = gsap.timeline({
 			duration: points.length,
@@ -112,13 +135,22 @@ const points = [
 
 			// https://codepen.io/zank/pen/oNVjYMM?editors=0010
 			tl.to(indicators[i], { backgroundColor: "white", duration: 0.25 }, i);
-			tl.from((elem as HTMLElement).querySelector("svg"), { autoAlpha: 0 }, i);
+			
+			// Select either svg (image) or lottie-container
+			const visualElement = (elem as HTMLElement).querySelector("svg") || (elem as HTMLElement).querySelector(".lottie-container");
+			
+			if (visualElement) {
+				tl.from(visualElement, { autoAlpha: 0 }, i);
+			}
+			
 			tl.from((elem as HTMLElement).querySelector("article"), { autoAlpha: 0, translateY: 100 }, i);
 
 			if (i != points.length - 1) {
 				tl.to(indicators[i], { backgroundColor: "#333333", duration: 0.25 }, i + 0.75);
 				tl.to((elem as HTMLElement).querySelector("article"), { autoAlpha: 0, translateY: -100 }, i + 0.75);
-				tl.to((elem as HTMLElement).querySelector("svg"), { autoAlpha: 0 }, i + 0.75);
+				if (visualElement) {
+					tl.to(visualElement, { autoAlpha: 0 }, i + 0.75);
+				}
 			}
 		});
 	}
