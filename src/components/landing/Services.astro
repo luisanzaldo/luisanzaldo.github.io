@@ -1,10 +1,10 @@
 ---
 import { getLangFromUrl, useTranslations, useTranslatedPath } from "@i18n/utils";
 import { Image } from "astro:assets";
-import websiteImage from "../../assets/images/services/website-ui-ux-development.svg";
-import appImage from "../../assets/images/services/mobile-app-ui-ux-design.svg";
-import uiuxImage from "../../assets/images/services/creative-designer-doing-multitasking.svg";
-import seoImage from "../../assets/images/services/seo-link-building.svg";
+import websiteImage from "../../assets/images/services/website-ia.png";
+import appImage from "../../assets/images/services/servidor-ia.png";
+import uiuxImage from "../../assets/images/services/cerebro-ia.png";
+import seoImage from "../../assets/images/services/reportes-ia.png";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -44,7 +44,7 @@ const points = [
 				<div class={`service-item flex w-full flex-col-reverse items-center justify-center gap-12 md:gap-20 lg:gap-40 ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
 					<div class="w-full max-w-md lg:max-w-lg">
 						<div class="visual-element w-full h-auto aspect-square">
-							<Image src={image} alt={title} class="w-full h-full object-contain" />
+							<Image src={image} alt={title} class={`w-full h-full object-contain ${index === 3 ? 'scale-90 lg:scale-100' : ''} ${index === 0 ? 'scale-x-[-1]' : ''}`} />
 						</div>
 					</div>
 					<article class="flex flex-col gap-6 text-center md:text-left">
