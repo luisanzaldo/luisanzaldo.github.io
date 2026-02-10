@@ -30,7 +30,7 @@ export const ui = {
 		"websites.title": "Implementa tu sitio web",
 		"apps.title": "Automatiza",
 		"uiux.title": "INTEGRA HERRAMIENTAS",
-		"seo.title": "Da seguimiento a tus métricas",
+		"seo.title": "Genera reportes",
 		"advertising.title": "Publicidad",
 		"websites.content": "Te proveemos de una página web atractiva para que ofrezcas servicios, productos o para que ayudes a hacer la diferencia. Nos especializamos en sitios web profesionales para emprendedores, pymes y organizaciones sin ánimo de lucro.",
 		"apps.content": "Desde tu sitio web podrás automatizar los procesos que utilizas día con día para que sea más fácil la gestión de tu negocio, emprendimiento o causa social.",
