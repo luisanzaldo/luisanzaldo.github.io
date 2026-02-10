@@ -34,13 +34,13 @@
 	--astro-code-token-link: #ffffff;
 	--grid-gap: 4vw;
 	--base-padding-x: max(6vw, 60px);
-	--base-padding-y: clamp(30px, 4vw, 50px);
+	--base-padding-y: clamp(10px, 2vw, 30px);
 }
 
 @media (max-width: 812px) {
 	:root {
 		--base-padding-x: 25px;
-		--base-padding-y: 25px;
+		--base-padding-y: 15px;
 	}
 }
 
@@ -55,20 +55,25 @@ html {
 	border: none;
 	background-color: transparent;
 }
+
 ::-webkit-scrollbar {
 	width: 4px;
 	background-color: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
 	background-color: #1b1816;
 	border-radius: 2px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
 	background-color: #000;
 }
+
 .dark ::-webkit-scrollbar-thumb {
 	background-color: #e8e1e1;
 }
+
 .dark ::-webkit-scrollbar-thumb:hover {
 	background-color: #ffffff;
 }
@@ -79,14 +84,17 @@ html {
 	color: white;
 	background: orange;
 }
+
 ::selection {
 	color: white;
 	background: orange;
 }
+
 .dark ::-moz-selection {
 	color: orange;
 	background: white;
 }
+
 .dark ::selection {
 	color: orange;
 	background: white;
