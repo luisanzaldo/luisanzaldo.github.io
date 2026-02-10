@@ -210,7 +210,7 @@ const { pathname } = Astro.url;
 					x: () => {
 						const pathName = window.location.pathname;
 
-						if (pathName === "/" || pathName === "/it/") {
+						if (pathName === "/" || pathName === "/it/" || pathName.startsWith("/work") || pathName.startsWith("/it/work")) {
 							return "7.8rem";
 						} else if (pathName.startsWith("/blog") || pathName.startsWith("/it/blog")) {
 							return "1.6rem";
