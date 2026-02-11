@@ -48,7 +48,7 @@ const { pathname } = Astro.url;
 		<div class="ml-auto md:max-w-fit" data-xbind.class="{'max-w-3xl': open, 'max-w-[8rem]': !open }">
 			<div class="mx-auto w-full">
 				<div
-					class="shadow-thick resizable nav-container squircle relative mx-auto flex w-full flex-col justify-center overflow-x-hidden bg-zinc-900 backdrop-blur-xl backdrop-filter md:flex-row-reverse">
+					class="shadow-thick resizable nav-container squircle relative mx-auto flex w-full flex-col justify-center overflow-x-hidden bg-zinc-900 md:backdrop-blur-xl md:backdrop-filter md:flex-row-reverse">
 					<div class="flex flex-row items-center justify-end md:hidden">
 						<a class="px-3 py-[0.4rem] pl-4" href={translatePath("/contact/")} aria-label="Contact Page">
 							<Icon class="text-white" name="octicon:mail-16" width="20" data-xbind.class="{'hidden': open}" />
@@ -116,7 +116,7 @@ const { pathname } = Astro.url;
 		mix-blend-mode: difference;
 	}
 	.navigation.navbar-open {
-		mix-blend-mode: luminosity;
+		mix-blend-mode: normal;
 	}
 	.navigation,
 	.logo {
