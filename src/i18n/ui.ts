@@ -82,7 +82,7 @@ export const ui = {
 		"contact.agree": "Al enviar esto, aceptas nuestro",
 		"contact.send": "Enviar",
 		"blog.title": "Blog",
-		"blog.subtitle": "Tecnología, consejos y errores tipográficos.",
+		"blog.subtitle": "Análisis sobre las herramientas de Inteligencia Artificial",
 		"blog.gotoproject": "Ir al proyecto",
 		"footer.newsletter": "Suscríbete a",
 		"footer.newsletter2": "nuestro boletín",
