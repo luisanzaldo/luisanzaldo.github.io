@@ -2,6 +2,37 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { AstroSeoProps } from "@astrolib/seo";
 import Articles from "@components/blog/Articles.astro";
+import { getCollection } from "astro:content";
+import { getLangFromUrl } from "@i18n/utils";
+
+export async function getStaticPaths({ paginate }) {
+    const lang = "en"; // Or dynamically get if supporting multiple langs in one file, but usually files are separate or logic is here
+    // Since getLangFromUrl needs Astro.url which isn't available in getStaticPaths, we'll assume 'en' for this file structure 
+    // OR we need to fetch all and filter. Based on Articles.astro, it filters by lang.
+    // Let's replicate the logic: fetch all, filter by 'en' (or current locale), sort, then paginate.
+    
+    // However, looking at Articles.astro, it was doing the fetching inside itself. 
+    // To paginate, we MUST do fetching in getStaticPaths.
+    
+    // We'll fetch all 'en' posts here.
+    const allPosts = (await getCollection("posts"))
+        .filter((post) => {
+            const [postLang, ...slug] = post.slug.split("/");
+            return postLang === "en"; // Hardcoded 'en' for this route /blog/[...page] which is usually default.
+        })
+        .map((post) => {
+            const [postLang, slug] = post.slug.split("/");
+            return {
+                ...post,
+                slug: slug,
+            };
+        })
+        .sort((a, b) => Number(b.data.pubDate) - Number(a.data.pubDate));
+
+    return paginate(allPosts, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
 
 const seo: AstroSeoProps = {
 	title: "Majestico Studio Blog: Insights and Updates in Web Design, Web dev and SEO",
@@ -42,5 +73,5 @@ const seo: AstroSeoProps = {
 ---
 
 <BaseLayout seo={seo}>
-	<Articles />
+	<Articles page={page} />
 </BaseLayout>
