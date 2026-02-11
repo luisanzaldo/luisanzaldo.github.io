@@ -1,13 +1,16 @@
 ---
 const { title, subtitle, class: className } = Astro.props;
+const sizeClass = title.length > 15 
+	? "text-3xl sm:text-5xl md:text-7xl lg:text-9xl" 
+	: "text-6xl sm:text-7xl md:text-8xl lg:text-9xl";
 ---
 
-<div class:list={["flex md:justify-center", className]}>
-	<div class="inline-flex flex-col gap-4">
+<div class:list={["flex w-full justify-center text-center", className]}>
+	<div class="inline-flex flex-col gap-4 items-center text-center">
 		<div class="inline-flex items-center gap-4">
 			<div class="hidden h-1 w-20 bg-black md:block"></div>
 			<span class="font-mono text-xs font-semibold uppercase tracking-wide" set:html={subtitle} />
 		</div>
-		<h1 class="font-display text-5xl font-extrabold sm:text-6xl md:text-7xl lg:text-9xl">{title}</h1>
+		<h1 class:list={[sizeClass, "font-display font-extrabold text-balance hyphens-manual"]}>{title}</h1>
 	</div>
 </div>

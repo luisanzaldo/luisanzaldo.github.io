@@ -43,15 +43,17 @@ const readingTime = getArticleReadingTime(body);
 						.slice(0, 10)}`}
 				/>
 
-				<p class="max-w-2xl text-base text-slate-500">
+				<p class="max-w-2xl mx-auto text-center text-base text-slate-500">
 					<em>{frontmatter.description}</em>
 				</p>
 
 				{
 					frontmatter?.link && (
-						<a class="font-mono text-xl font-bold" href={frontmatter?.link} target="_blank">
-							<Icon name="iconamoon:link-external-thin" class="inline" /> {t("blog.gotoproject")}
-						</a>
+						<div class="mx-auto text-center">
+							<a class="font-mono text-xl font-bold" href={frontmatter?.link} target="_blank">
+								<Icon name="iconamoon:link-external-thin" class="inline" /> {t("blog.gotoproject")}
+							</a>
+						</div>
 					)
 				}
 			</div>
