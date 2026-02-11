@@ -80,7 +80,11 @@ function cursorFollowerActive() {
 		<BackgroundTexture />
 		<Navigation />
 		<slot />
-		<Footer />
+		{
+			!pathname.includes('/blog') && !pathname.includes('/posts') && !pathname.includes('/contact') && (
+				<Footer />
+			)
+		}
 	<script is:inline>
 		// Force page to start at top on refresh/reload
 		if (history.scrollRestoration) {
