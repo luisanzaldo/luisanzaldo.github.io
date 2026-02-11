@@ -30,6 +30,13 @@ function getArticleReadingTime(body: string): number {
 }
 
 const readingTime = getArticleReadingTime(body);
+
+const dateObj = new Date(frontmatter.pubDate);
+const formattedDate = new Intl.DateTimeFormat('es-ES', {
+	day: 'numeric',
+	month: 'short',
+	year: '2-digit'
+}).format(dateObj).replace('.', '');
 ---
 
 <BaseLayout seo={seo}>
@@ -38,9 +45,7 @@ const readingTime = getArticleReadingTime(body);
 			<div class="flex flex-col gap-6 pt-20">
 				<Title
 					title={frontmatter.title}
-					subtitle={`Written by: <a href="${frontmatter.author.link}" rel="author">${frontmatter.author.name}</a> on ${frontmatter.pubDate
-						.toString()
-						.slice(0, 10)}`}
+					subtitle={`Escrito por ${frontmatter.author.name} - ${formattedDate}`}
 				/>
 
 				<p class="max-w-2xl mx-auto text-center text-base text-slate-500">

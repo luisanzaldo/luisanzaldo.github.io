@@ -1,8 +1,7 @@
 ---
 pubDate: 2024-03-15
 author:
-    name: Luis Anzaldo
-    link: /author/luis-anzaldo
+    name: Fernando Rubio
 title: "Democratización de la IA"
 description: "Descubre cómo la inteligencia artificial está transformando vidas alrededor del mundo, desde aulas en India hasta hospitales en Brasil, poniendo la tecnología al servicio de la justicia social y los derechos humanos."
 image:

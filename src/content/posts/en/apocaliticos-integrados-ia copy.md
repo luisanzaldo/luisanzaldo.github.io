@@ -2,7 +2,7 @@
 pubDate: 2026-02-11
 author:
     name: Luis Anzaldo
-    link: /author/fernando-rubio
+    link: /author/luis-anzaldo
 title: "Los nuevos apocalípticos e integrados"
 description: "Un análisis sobre la dualidad actual frente a la Inteligencia Artificial: desde la promesa de convertir a cualquiera en creador hasta los riesgos de la desinformación y el sesgo."
 image:
