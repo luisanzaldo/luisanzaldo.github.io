@@ -6,7 +6,7 @@ author:
 title: "Los nuevos apocalípticos e integrados"
 description: "Un análisis sobre la dualidad actual frente a la Inteligencia Artificial: desde la promesa de convertir a cualquiera en creador hasta los riesgos de la desinformación y el sesgo."
 image:
-    source: "@assets/images/blog/ia-social.jpg"
+    source: "@assets/images/blog/idea-ia.jpg"
     alt: "Cada día más cerca de democratizar las herramientas de IA"
 tags: ["inteligencia artificial", "sociedad"]
 ---
