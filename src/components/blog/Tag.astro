@@ -25,7 +25,7 @@ const { tag, posts } = Astro.props as Props;
 						title={post.data.title}
 						description={post.data.description}
 						alt={post.data.title}
-						pubDate={post.data.pubDate.toString().slice(0, 10)}
+						pubDate={post.data.pubDate}
 						author={post.data.author}
 						image={post.data.image.source}
 					/>

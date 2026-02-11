@@ -44,12 +44,12 @@ if (page) {
 		<Title title={t("blog.title")} subtitle={t("blog.subtitle")} class="pb-10 pt-20 uppercase" />
 		{
 			postsToDisplay && postsToDisplay[0] && (
-				<Entry
+					<Entry
 					url={"/blog/" + postsToDisplay[0].slug}
 					title={postsToDisplay[0].data.title}
 					description={postsToDisplay[0].data.description}
 					alt={postsToDisplay[0].data.title}
-					pubDate={postsToDisplay[0].data.pubDate.toString().slice(0, 10)}
+					pubDate={postsToDisplay[0].data.pubDate}
 					author={postsToDisplay[0].data.author}
 					image={postsToDisplay[0].data.image.source}
 					titleInside={false}
@@ -67,7 +67,7 @@ if (page) {
 							title={post.data.title}
 							description={post.data.description}
 							alt={post.data.title}
-							pubDate={post.data.pubDate.toString().slice(0, 10)}
+							pubDate={post.data.pubDate}
 							author={post.data.author}
 							image={post.data.image.source}
 						/>
