@@ -6,7 +6,7 @@ const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 const translatePath = useTranslatedPath(lang);
 
-const { title, url, author, pubDate, description, image, titleInside = false } = Astro.props;
+const { title, url, author, pubDate, description, image, titleInside = false, loading = "lazy", fetchpriority = "auto" } = Astro.props;
 
 const dateObj = new Date(pubDate);
 const isoDate = dateObj.toISOString().slice(0, 10);
@@ -24,7 +24,13 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 				"article-overlay relative block w-full overflow-hidden lg:col-span-2",
 				titleInside ? "article-gradient-overlay-bottom" : "article-gradient-overlay",
 			]}>
-			<Image class="relative aspect-[384/246] h-full w-full bg-center object-cover" src={image} alt={title} />
+			<Image 
+				class="relative aspect-[384/246] h-full w-full bg-center object-cover" 
+				src={image} 
+				alt={title} 
+				loading={loading}
+				fetchpriority={fetchpriority}
+			/>
 		</div>
 		<div
 			class={`flex w-full flex-1 flex-col items-start justify-between  ${

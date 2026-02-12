@@ -53,6 +53,8 @@ if (page) {
 					author={postsToDisplay[0].data.author}
 					image={postsToDisplay[0].data.image.source}
 					titleInside={false}
+					loading="eager"
+					fetchpriority="high"
 				/>
 			)
 		}
