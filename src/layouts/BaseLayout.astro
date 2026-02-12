@@ -81,7 +81,7 @@ function cursorFollowerActive() {
 		<Navigation />
 		<slot />
 		{
-			!pathname.includes('/blog') && !pathname.includes('/posts') && !pathname.includes('/contact') && (
+			!pathname.includes('/blog') && !pathname.includes('/posts') && !pathname.includes('/contact') && !pathname.includes('/work') && (
 				<Footer />
 			)
 		}

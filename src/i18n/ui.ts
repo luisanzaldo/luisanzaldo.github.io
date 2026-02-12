@@ -88,7 +88,7 @@ export const ui = {
 		"blog.gotoproject": "Ir al proyecto",
 		"footer.newsletter": "Suscríbete a",
 		"footer.newsletter2": "nuestro boletín",
-		"footer.yourmail": "Tu correo electrónico",
+		"footer.yourmail": "Tu e-mail",
 	},
 	it: {
 		or: "or",
@@ -172,7 +172,7 @@ export const ui = {
 		"blog.gotoproject": "Go to project",
 		"footer.newsletter": "Subscribe to",
 		"footer.newsletter2": "our newsletter",
-		"footer.yourmail": "Your email",
+		"footer.yourmail": "Your e-mail",
 	},
 } as const;
 
