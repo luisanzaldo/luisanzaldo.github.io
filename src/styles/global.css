@@ -114,6 +114,13 @@ html {
 	@apply prose mx-auto max-w-3xl text-slate-500 prose-headings:font-bold prose-headings:tracking-tighter prose-headings:text-black prose-headings:text-balance prose-headings:hyphens-manual prose-headings:text-center prose-a:text-slate-500 hover:prose-a:text-black prose-blockquote:border-l-slate-950 prose-blockquote:text-slate-500 prose-code:text-black prose-pre:rounded-lg prose-li:marker:text-slate-500;
 }
 
+.prose-styles img {
+	@apply rounded-2xl shadow-xl;
+	transform: scale(0);
+	opacity: 0;
+	transition: opacity 0.5s ease-out;
+}
+
 .section {
 	position: relative;
 	width: 100%;

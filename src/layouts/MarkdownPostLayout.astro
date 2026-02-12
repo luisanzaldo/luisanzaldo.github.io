@@ -87,3 +87,38 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 	</section>
 	<Cta />
 </BaseLayout>
+
+<script>
+	import { gsap } from "gsap";
+	import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+	gsap.registerPlugin(ScrollTrigger);
+
+	const initImages = () => {
+		const internalImages = document.querySelectorAll(".prose-styles img");
+		internalImages.forEach((img) => {
+			// Ensure image is ready
+			if (img.complete) {
+				animateImage(img);
+			} else {
+				img.onload = () => animateImage(img);
+			}
+		});
+	};
+
+	function animateImage(img) {
+		gsap.to(img, {
+			scale: 1,
+			opacity: 1,
+			duration: 1.2,
+			ease: "elastic.out(1, 0.8)",
+			scrollTrigger: {
+				trigger: img,
+				start: "top 90%",
+				toggleActions: "play none none none",
+			},
+		});
+	}
+
+	document.addEventListener("DOMContentLoaded", initImages);
+</script>
