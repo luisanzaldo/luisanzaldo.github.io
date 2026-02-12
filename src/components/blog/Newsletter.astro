@@ -8,14 +8,14 @@ const translatePath = useTranslatedPath(lang);
 ---
 
 <div class:list={["relative mt-8 h-20 max-w-[30rem] leading-6 lg:max-w-[35rem]", className]}>
-	<div class="origin-left-center squircle-bg-light absolute h-full w-full scale-100 transform rounded-xl bg-slate-200"></div>
+	<div class="origin-left-center squircle-bg-light absolute h-full w-full scale-100 transform rounded-xl"></div>
 	<form class="h-full">
 		<input
 			type="email"
 			name="EMAIL"
 			autocomplete="email"
 			placeholder={t("footer.yourmail")}
-			class="pointer-events-auto relative m-0 h-full w-full cursor-text border-0 bg-transparent px-5 py-2 text-xl font-normal not-italic outline-none placeholder:text-gray-400 focus:ring-transparent"
+			class="pointer-events-auto relative m-0 h-full w-full cursor-text border-0 bg-transparent px-5 py-2 text-xl font-normal not-italic outline-none placeholder:text-black/50 text-black focus:ring-transparent"
 		/>
 		<button
 			type="submit"
@@ -36,7 +36,7 @@ const translatePath = useTranslatedPath(lang);
 
 <style>
 	.squircle-bg-light {
-		background: rgb(226 232 240 / 1);
+		background: #d4eb28;
 		--squircle-smooth: 1;
 		--squircle-radius: 10px;
 		mask-image: paint(squircle);
