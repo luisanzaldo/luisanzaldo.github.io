@@ -31,7 +31,7 @@ En la otra orilla, los apocalípticos observan el mismo fenómeno con horror. Pa
 
 El argumento más contundente de este grupo gira en torno a la **verdad**. Si cualquiera puede generar contenido realista, ¿cómo distinguimos lo real de lo fabricado? El artículo académico [_Los riesgos de los deepfakes para la democracia y las perspectivas de la regulación_](https://philpapers.org/rec/LPELRD-7) escrito por **Efraín Fandiño López** advierte que estas manipulaciones digitales erosionan la confianza pública, interfieren en elecciones y generan polarización. No se trata solo de la famosa imagen falsa del Papa Francisco con un abrigo moderno, se trata de audios falsos de candidatos políticos o videos fabricados que pueden desestabilizar gobiernos antes de que la verdad tenga tiempo de ponerse las botas.
 
-![Papa Francisco víctima de la IA](../../../assets/images/blog/papa-francisco.avif "Papa Francisco víctima de la IA")
+![Papa Francisco víctima de la IA](../../../assets/images/interiors/papa-francisco.avif "Papa Francisco víctima de la IA")
 
 Además, está el fantasma del sesgo. La democratización de la herramienta no implica la democratización de la justicia. Como señala la investigadora **María Olga Sánchez Martínez** en su trabajo para el [Ministerio de Ciencia, Innovación y Universidades de España](https://e-revistas.uc3m.es/index.php/UNIV/es/article/view/9573/7284), los algoritmos pueden perpetuar e incluso amplificar discriminaciones preexistentes. Si democratizamos el uso de una IA entrenada con datos sesgados, simplemente estamos escalando el prejuicio a velocidad industrial.
 
