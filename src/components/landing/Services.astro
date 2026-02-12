@@ -43,8 +43,16 @@ const points = [
 			points.map(({ title, content, image }, index) => (
 				<div class={`service-item flex w-full flex-col-reverse items-center justify-center gap-12 md:gap-20 lg:gap-40 ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'}`}>
 					<div class="w-full max-w-md lg:max-w-lg">
-						<div class="visual-element w-full h-auto aspect-square">
-							<Image src={image} alt={title} class={`w-full h-full object-contain ${index === 3 ? 'scale-90 lg:scale-100' : ''} ${index === 0 ? 'scale-x-[-1]' : ''}`} />
+						<div class="visual-element w-full h-auto aspect-square flex items-center justify-center">
+							<Image 
+								src={image} 
+								alt={title} 
+								class={`w-full h-full object-contain ${index === 3 ? 'scale-90 lg:scale-100' : ''} ${index === 0 ? 'scale-x-[-1]' : ''}`}
+								widths={[300, 600, 900]}
+								sizes="(max-width: 768px) 100vw, 500px"
+								format="avif"
+								quality={80}
+							/>
 						</div>
 					</div>
 					<article class="flex flex-col gap-6 text-center md:text-left">
@@ -67,17 +75,31 @@ const points = [
 		const services = document.querySelectorAll(".service-item");
 		
 		services.forEach((service) => {
-			gsap.from(service, {
+			const visual = service.querySelector(".visual-element");
+			const content = service.querySelector("article");
+
+			gsap.from(visual, {
 				scrollTrigger: {
 					trigger: service,
-					start: "top 85%", // Trigger when top of element hits 85% of viewport height
-					toggleActions: "play none none reverse", // Play animation on enter, reverse on leave back up
+					start: "top 85%",
+					toggleActions: "play none none reverse",
 				},
-				scale: 0.9,
-				autoAlpha: 0, // Using autoAlpha handles visibility: hidden automatically
-				y: 50,
+				scale: 0.8,
+				autoAlpha: 0,
+				duration: 1,
+				ease: "back.out(1.7)",
+			});
+
+			gsap.from(content, {
+				scrollTrigger: {
+					trigger: service,
+					start: "top 80%",
+					toggleActions: "play none none reverse",
+				},
+				x: 50,
+				autoAlpha: 0,
 				duration: 0.8,
-				ease: "power3.out", // Smooth, natural easing
+				ease: "power3.out",
 			});
 		});
 	}
