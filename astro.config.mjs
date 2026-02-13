@@ -13,7 +13,7 @@ export default defineConfig({
 			},
 		},
 	},
-	site: "https://luisanzaldo.github.io",
+	site: "https://metarrelato.com",
 	i18n: {
 		defaultLocale: "en",
 		locales: ["en", "it"],

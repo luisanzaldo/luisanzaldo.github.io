@@ -4,7 +4,7 @@ import rss from "@astrojs/rss";
 export async function GET(context: any) {
 	const blog = await getCollection("posts");
 	return rss({
-		title: "Mintaka's Blog",
+		title: "Metarrelato's Blog",
 		description: "A humble Astronaut's guide to the stars",
 		site: context.site,
 		items: blog.map((post) => ({
