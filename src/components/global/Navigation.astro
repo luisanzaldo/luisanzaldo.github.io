@@ -51,14 +51,14 @@ const { pathname } = Astro.url;
 				<div
 					class="shadow-thick resizable nav-container squircle relative mx-auto flex w-full flex-col justify-center overflow-x-hidden bg-zinc-900 md:backdrop-blur-xl md:backdrop-filter md:flex-row-reverse">
 					<div class="flex flex-row items-center justify-end md:hidden">
-						<a class="px-3 py-[0.4rem] pl-4" href={translatePath("/contact/")} aria-label="Contact Page">
-							<Icon class="text-white" name="octicon:mail-16" width="20" data-xbind.class="{'hidden': open}" />
+						<a class="px-3 py-[0.4rem] pl-4 text-white transition-colors hover:text-[#F06071]" href={translatePath("/contact/")} aria-label="Contact Page">
+							<Icon name="octicon:mail-16" width="20" data-xbind.class="{'hidden': open}" />
 						</a>
 						<button
 							data-xon.click="open = !open"
 							data-xbind.style="{'padding-top': open ? '1rem' : '0.4rem'}"
 							aria-label="Open navbar"
-							class="inline-flex items-center justify-center px-3 py-[0.4rem] pr-4 text-white hover:text-blue-300 focus:text-white focus:outline-none">
+							class="inline-flex items-center justify-center px-3 py-[0.4rem] pr-4 text-white hover:text-[#F06071] focus:text-white focus:outline-none transition-colors">
 							<svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
 								<path
 									data-xbind.class="{'hidden': open, 'inline-flex': !open }"
@@ -164,20 +164,11 @@ const { pathname } = Astro.url;
 		}
 	}
 	.resizable:before {
-		content: "|";
-		position: absolute;
-		left: 0.4rem;
-		top: 0.36rem;
-		font-size: 12px;
-		line-height: 23px;
-		color: #8e8e8e;
-		opacity: 0; /* Hidden by default */
-		text-shadow: 4px 0 #8e8e8e;
-		transition: all 0.5s ease;
+		display: none;
 	}
 
 	.collapsed .resizable:before {
-		opacity: 1;
+		display: none;
 	}
 	nav a .menu-item-container {
 		border-radius: 0.45rem;
