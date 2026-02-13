@@ -17,6 +17,8 @@ export async function getStaticPaths() {
 const entry = Astro.props;
 const { Content } = await entry.render();
 
+const ogImageUrl = new URL(entry.data.image.source.src, Astro.site).toString();
+
 const seo: AstroSeoProps = {
 	title: `Project ${entry.data.title} - Majestico`,
 	description: entry.data.description,
@@ -24,30 +26,21 @@ const seo: AstroSeoProps = {
 	openGraph: {
 		url: entry.slug,
 		title: entry.data.title,
-		description: "{frontmatter.description}",
+		description: entry.data.description,
 		images: [
 			{
-				url: "https://mintaka.co/opengraph/social-og.jpg",
+				url: ogImageUrl,
 				width: 1200,
 				height: 630,
-				alt: "Social open graph",
+				alt: entry.data.image.alt,
 				type: "image/jpeg",
 			},
-			{
-				url: "https://mintaka.co/opengraph/twitter-og.jpg",
-				width: 4096,
-				height: 4096,
-				alt: "Twitter open graph",
-				type: "image/jpeg",
-			},
-			{ url: "https://mintaka.co/opengraph/social-og.jpg" },
-			{ url: "https://mintaka.co/opengraph/twitter-og.jpg" },
 		],
-		site_name: "YourSitesName",
+		site_name: "Metarrelato",
 	},
 	twitter: {
-		handle: "@TwitterHandle",
-		site: "@site",
+		handle: "@metarrelato",
+		site: "@metarrelato",
 		cardType: "summary_large_image",
 	},
 };
