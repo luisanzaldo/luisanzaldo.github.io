@@ -1,4 +1,5 @@
 ---
+import { getImage } from "astro:assets";
 import { getCollection } from "astro:content";
 import type { AstroSeoProps } from "@astrolib/seo";
 import MarkdownPostLayout from "../../layouts/MarkdownPostLayout.astro";
@@ -17,10 +18,17 @@ export async function getStaticPaths() {
 const entry = Astro.props;
 const { Content } = await entry.render();
 
-const ogImageUrl = new URL(entry.data.image.source.src, Astro.site).toString();
+const ogImage = await getImage({
+	src: entry.data.image.source,
+	format: "jpg",
+	width: 1200,
+	height: 630,
+});
+
+const ogImageUrl = new URL(ogImage.src, Astro.site).toString();
 
 const seo: AstroSeoProps = {
-	title: `Project ${entry.data.title} - Majestico`,
+	title: `Project ${entry.data.title} - Metarrelato`,
 	description: entry.data.description,
 	canonical: `https://metarrelato.com/work/${entry.slug}/`,
 	openGraph: {
