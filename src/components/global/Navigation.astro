@@ -42,7 +42,7 @@ const { pathname } = Astro.url;
 ---
 
 <header>
-	<a href={translatePath("/")} aria-label="Home" class="logo absolute z-50 flex h-[4.5rem] items-center gap-1 md:h-[5.9rem]">
+	<a href={translatePath("/")} aria-label="Home" class="logo absolute z-[60] flex h-[4.5rem] items-center gap-1 md:h-[5.9rem]">
 		<Image src={logoFull} alt="metarrelato" class="h-7 w-auto md:h-9" />
 	</a>
 	<div data-xdata="{ open: false }" class="navigation fixed right-0 top-0 z-50 w-full" data-xbind.class="{'h-full navbar-open !p-0': open}">
@@ -52,14 +52,14 @@ const { pathname } = Astro.url;
 					data-xbind.class="{'!h-full !w-full !rounded-none !m-0 !bg-slate-50': open}"
 					class="shadow-thick resizable nav-container squircle relative mx-auto flex w-full flex-col justify-center overflow-x-hidden bg-zinc-900 md:backdrop-blur-xl md:backdrop-filter md:flex-row-reverse">
 					<div class="flex flex-row items-center justify-end md:hidden">
-						<a class="px-3 py-[0.4rem] pl-4" href={translatePath("/contact/")} aria-label="Contact Page">
-							<Icon class="text-white" name="octicon:mail-16" width="20" data-xbind.class="{'hidden': open}" />
+						<a class="px-3 py-[0.4rem] pl-4 text-white transition-colors duration-300 hover:text-[#d4eb28]" href={translatePath("/contact/")} aria-label="Contact Page">
+							<Icon name="octicon:mail-16" width="20" data-xbind.class="{'hidden': open}" />
 						</a>
 						<button
 							data-xon.click="open = !open"
 							data-xbind.style="{'padding-top': open ? '1rem' : '0.4rem'}"
 							aria-label="Open navbar"
-							class="inline-flex items-center justify-center px-3 py-[0.4rem] pr-4 transition-colors duration-300 hover:text-blue-300 focus:outline-none"
+							class="inline-flex items-center justify-center px-3 py-[0.4rem] pr-4 transition-colors duration-300 hover:text-[#d4eb28] focus:outline-none"
 							data-xbind.class="{'text-zinc-900': open, 'text-white': !open}">
 							<svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
 								<path
