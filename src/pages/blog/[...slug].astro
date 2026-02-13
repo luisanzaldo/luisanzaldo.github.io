@@ -20,7 +20,7 @@ const { Content } = await entry.render();
 
 const ogImage = await getImage({
 	src: entry.data.image.source,
-	format: "png",
+	format: "jpg",
 	width: 1200,
 	height: 630,
 });
@@ -41,7 +41,7 @@ const seo: AstroSeoProps = {
 				width: 1200,
 				height: 630,
 				alt: entry.data.image.alt,
-				type: "image/png",
+				type: "image/jpeg",
 			},
 		],
 		site_name: "Metarrelato",
