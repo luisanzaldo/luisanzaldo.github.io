@@ -3,17 +3,13 @@
   "short_name": "metarrelato",
   "icons": [
     {
-      "src": "/my-favicon/pwa-192x192.png",
+      "src": "/my-favicon/web-app-manifest-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
-      "src": "/my-favicon/pwa-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "/my-favicon/maskable-icon-512x512.png",
+      "src": "/my-favicon/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
