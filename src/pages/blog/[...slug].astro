@@ -22,10 +22,10 @@ const ogImageUrl = new URL(entry.data.image.source.src, Astro.site).toString();
 const seo: AstroSeoProps = {
 	title: entry.data.title,
 	description: entry.data.description,
-	canonical: `https://mintaka.co/blog/${entry.slug}/`,
+	canonical: `https://luisanzaldo.github.io/blog/${entry.slug}/`,
 	openGraph: {
 		type: "article",
-		url: `https://mintaka.co/blog/${entry.slug}/`,
+		url: `https://luisanzaldo.github.io/blog/${entry.slug}/`,
 		title: entry.data.title,
 		description: entry.data.description,
 		images: [
