@@ -29,10 +29,10 @@ export const ui = {
 		"hero.subtitle":
 			"Te ayudamos a crear un sitio web que integre herramientas de Inteligencia Artificial de acuerdo a tus necesidades. Contáctanos y platiquemos sobre tu proyecto.",
 		"hero.scroll": "desliza para explorar más",
-		"websites.title": "Implementa tu sitio web",
+		"websites.title": "Implementa tu <br /> sitio web",
 		"apps.title": "Automatiza",
-		"uiux.title": "INTEGRA HERRAMIENTAS",
-		"seo.title": "Genera reportes",
+		"uiux.title": "INTEGRA <br /> HERRAMIENTAS",
+		"seo.title": "Genera <br /> reportes",
 		"advertising.title": "Publicidad",
 		"websites.content": "Te proveemos de una página web atractiva para que ofrezcas servicios, productos o para que ayudes a hacer la diferencia. Nos especializamos en sitios web profesionales para emprendedores, pymes y organizaciones sin ánimo de lucro.",
 		"apps.content": "Desde tu sitio web podrás automatizar los procesos que utilizas día con día para que sea más fácil la gestión de tu negocio, emprendimiento o causa social.",

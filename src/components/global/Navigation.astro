@@ -45,7 +45,7 @@ const { pathname } = Astro.url;
 	<a href={translatePath("/")} aria-label="Home" class="logo absolute z-50 flex h-[4.5rem] items-center gap-1 md:h-[5.9rem]">
 		<Image src={logoFull} alt="metarrelato" class="h-7 w-auto md:h-9" />
 	</a>
-	<div data-xdata="{ open: false }" class="navigation fixed right-0 top-0 z-50 w-full" data-xbind.class="{'h-full navbar-open': open}">
+	<div data-xdata="{ open: false }" class="navigation fixed right-0 top-0 z-50 w-full" data-xbind.class="{'h-full navbar-open !p-0': open}">
 		<div class="ml-auto md:max-w-fit" data-xbind.class="{'!max-w-full !h-full': open, 'max-w-fit': !open }">
 			<div class="mx-auto w-full h-full">
 				<div
