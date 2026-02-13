@@ -45,11 +45,11 @@ const { pathname } = Astro.url;
 	<a href={translatePath("/")} aria-label="Home" class="logo absolute z-50 flex h-[4.5rem] items-center gap-1 md:h-[5.9rem]">
 		<Image src={logoFull} alt="metarrelato" class="h-7 w-auto md:h-9" />
 	</a>
-	<div data-xdata="{ open: false }" class="navigation fixed right-0 top-0 z-50" data-xbind.class="{'w-full h-full navbar-open': open}">
-		<div class="ml-auto md:max-w-fit" data-xbind.class="{'!max-w-full !h-full': open, 'max-w-[8rem]': !open }">
+	<div data-xdata="{ open: false }" class="navigation fixed right-0 top-0 z-50 w-full" data-xbind.class="{'h-full navbar-open': open}">
+		<div class="ml-auto md:max-w-fit" data-xbind.class="{'!max-w-full !h-full': open, 'max-w-fit': !open }">
 			<div class="mx-auto w-full h-full">
 				<div
-					data-xbind.class="{'!h-full !w-full !rounded-none !m-0 bg-slate-50/95 backdrop-blur-xl': open}"
+					data-xbind.class="{'!h-full !w-full !rounded-none !m-0 !bg-slate-50': open}"
 					class="shadow-thick resizable nav-container squircle relative mx-auto flex w-full flex-col justify-center overflow-x-hidden bg-zinc-900 md:backdrop-blur-xl md:backdrop-filter md:flex-row-reverse">
 					<div class="flex flex-row items-center justify-end md:hidden">
 						<a class="px-3 py-[0.4rem] pl-4" href={translatePath("/contact/")} aria-label="Contact Page">
@@ -72,7 +72,7 @@ const { pathname } = Astro.url;
 								</path>
 								<path
 									data-xbind.class="{'hidden': !open, 'inline-flex': open }"
-									class="hidden"
+									class="hidden text-zinc-900"
 									stroke-linecap="round"
 									stroke-linejoin="round"
 									stroke-width="2"
@@ -140,9 +140,14 @@ const { pathname } = Astro.url;
 		font-size: 12px;
 		line-height: 23px;
 		color: #8e8e8e;
-		opacity: 0;
+		opacity: 0; /* Hidden by default */
 		text-shadow: 4px 0 #8e8e8e;
 		transition: all 0.5s ease;
+	}
+	@media (max-width: 768px) {
+		.resizable:before {
+			display: none;
+		}
 	}
 	.collapsed .resizable:before {
 		opacity: 1;
