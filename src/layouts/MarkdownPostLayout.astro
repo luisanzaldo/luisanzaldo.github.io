@@ -79,7 +79,7 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 							{
 								frontmatter?.tags?.map((tag: string) => (
 									<li class="inline-flex items-center rounded-full px-1 py-3 font-medium uppercase tracking-widest">
-										<a href={`/tags/${tag}`}>{tag}</a>
+										<a href={`/tags/${tag}`} class="transition-colors duration-200 hover:text-[#F06071]">{tag}</a>
 									</li>
 								))
 							}
