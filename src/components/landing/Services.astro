@@ -37,7 +37,7 @@ const points = [
 ---
 
 <section id="services" class:list={["section home-dark-section services-section", className]}>
-	<div class="col-span-12 flex flex-col gap-32 py-20 lg:pt-8">
+	<div class="col-span-12 flex flex-col gap-32 py-20 lg:pt-4">
 		<h2 class="sr-only">{t("services")}</h2>
 		{
 			points.map(({ title, content, image }, index) => (
@@ -78,28 +78,31 @@ const points = [
 			const visual = service.querySelector(".visual-element");
 			const content = service.querySelector("article");
 
+			// Illustration Animation: More scale and delay trigger
 			gsap.from(visual, {
 				scrollTrigger: {
 					trigger: service,
-					start: "top 85%",
+					start: "top 65%", // Trigger later so it's visible
 					toggleActions: "play none none reverse",
 				},
-				scale: 0.8,
+				scale: 0.3,
+				y: 60,
 				autoAlpha: 0,
-				duration: 1,
-				ease: "back.out(1.7)",
+				duration: 1.5,
+				ease: "back.out(2)",
 			});
 
+			// Text Content Animation: More displacement and delay trigger
 			gsap.from(content, {
 				scrollTrigger: {
 					trigger: service,
-					start: "top 80%",
+					start: "top 60%", // Slightly after the visual to create flow
 					toggleActions: "play none none reverse",
 				},
-				x: 50,
+				y: 100,
 				autoAlpha: 0,
-				duration: 0.8,
-				ease: "power3.out",
+				duration: 1.2,
+				ease: "power4.out",
 			});
 		});
 	}
