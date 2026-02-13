@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import { getLangFromUrl, getUrlWithoutLang, useTranslations, useTranslatedPath } from "@i18n/utils";
 import logoFull from "@assets/images/global/logoFull.svg"; // Updated logo asset
+import logo from "@assets/images/global/logo.svg";
 
 const isDev = import.meta.env.DEV;
 
@@ -44,10 +45,11 @@ const { pathname } = Astro.url;
 	<a href={translatePath("/")} aria-label="Home" class="logo absolute z-50 flex h-[4.5rem] items-center gap-1 md:h-[5.9rem]">
 		<Image src={logoFull} alt="metarrelato" class="h-7 w-auto md:h-9" />
 	</a>
-	<div data-xdata="{ open: false }" class="navigation fixed right-0 top-0 z-50" data-xbind.class="{'w-full navbar-open': open}">
-		<div class="ml-auto md:max-w-fit" data-xbind.class="{'max-w-3xl': open, 'max-w-[8rem]': !open }">
-			<div class="mx-auto w-full">
+	<div data-xdata="{ open: false }" class="navigation fixed right-0 top-0 z-50" data-xbind.class="{'w-full h-full navbar-open': open}">
+		<div class="ml-auto md:max-w-fit" data-xbind.class="{'!max-w-full !h-full': open, 'max-w-[8rem]': !open }">
+			<div class="mx-auto w-full h-full">
 				<div
+					data-xbind.class="{'!h-full !w-full !rounded-none !m-0 bg-slate-50/95 backdrop-blur-xl': open}"
 					class="shadow-thick resizable nav-container squircle relative mx-auto flex w-full flex-col justify-center overflow-x-hidden bg-zinc-900 md:backdrop-blur-xl md:backdrop-filter md:flex-row-reverse">
 					<div class="flex flex-row items-center justify-end md:hidden">
 						<a class="px-3 py-[0.4rem] pl-4" href={translatePath("/contact/")} aria-label="Contact Page">
@@ -57,7 +59,8 @@ const { pathname } = Astro.url;
 							data-xon.click="open = !open"
 							data-xbind.style="{'padding-top': open ? '1rem' : '0.4rem'}"
 							aria-label="Open navbar"
-							class="inline-flex items-center justify-center px-3 py-[0.4rem] pr-4 text-white hover:text-blue-300 focus:text-white focus:outline-none">
+							class="inline-flex items-center justify-center px-3 py-[0.4rem] pr-4 transition-colors duration-300 hover:text-blue-300 focus:outline-none"
+							data-xbind.class="{'text-zinc-900': open, 'text-white': !open}">
 							<svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
 								<path
 									data-xbind.class="{'hidden': open, 'inline-flex': !open }"
@@ -69,7 +72,7 @@ const { pathname } = Astro.url;
 								</path>
 								<path
 									data-xbind.class="{'hidden': !open, 'inline-flex': open }"
-									class="hidden text-[#6cf901]"
+									class="hidden"
 									stroke-linecap="round"
 									stroke-linejoin="round"
 									stroke-width="2"
@@ -78,15 +81,16 @@ const { pathname } = Astro.url;
 							</svg>
 						</button>
 					</div>
-					<nav data-xbind.class="{'flex': open, 'hidden': !open}" class="hidden flex-grow flex-col justify-center py-12 md:flex md:py-0">
+					<nav data-xbind.class="{'flex': open, 'hidden': !open}" class="hidden flex-grow flex-col items-center justify-center py-12 md:flex md:py-0">
+						<Image src={logo} alt="Logo" class="mb-12 h-20 w-auto md:hidden" />
 						<ul
-							class="flex list-none flex-col items-end justify-center gap-2 px-2 text-center text-3xl md:flex-row md:items-center md:text-base">
+							class="flex list-none flex-col items-center justify-center gap-8 px-2 text-center text-3xl md:flex-row md:items-center md:gap-2 md:text-base">
 							{
 								pages.map((page) => (
 									<li data-cursor-hover>
 										<a
 											href={translatePath(page.url)}
-											class={`inline-block cursor-pointer px-1 py-[0.33rem] ${
+											class={`inline-block cursor-pointer px-1 py-[0.33rem] group ${
 												page.url === pathname ||
 												page.url === pathname.replace(/^\/it|\/$/, "") ||
 												(page.url === "/blog" && (pathname.startsWith("/blog") || pathname.startsWith("/it/blog")))
@@ -94,7 +98,7 @@ const { pathname } = Astro.url;
 													: ""
 											}`}>
 											<span class="menu-item-container inline-block">
-												<span class="menu-item px-4 py-1 font-semibold uppercase tracking-wide text-zinc-400 hover:text-white focus:text-white focus:shadow-none focus:outline-none">
+												<span class="menu-item px-4 py-1 font-semibold uppercase tracking-wide text-zinc-900 group-hover:text-zinc-500 md:bg-transparent md:text-sm lg:text-base md:font-semibold md:text-zinc-400 md:group-hover:text-white font-display text-5xl md:font-sans">
 													{page.title}
 												</span>
 											</span>
