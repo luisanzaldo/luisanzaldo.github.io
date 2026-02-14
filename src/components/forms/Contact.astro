@@ -14,43 +14,84 @@ const translatePath = useTranslatedPath(lang);
 	</div>
 	<div class="mx-auto">
 		<Title class="pb-10 pt-20 uppercase" title={t("contact.title")} subtitle={t("contact.subtitle")} />
-		<form data-static-form-name="contact" class="mx-auto max-w-2xl pt-12 lg:pt-20">
-			<div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-				<div class="form-field sm:col-span-2">
-					<label for="name" class="form-label">{t("contact.name")}*</label>
-					<input type="text" name="name" id="name" autocomplete="given-name" required />
+		
+		<!-- Chatbot Interface -->
+		<div class="mx-auto max-w-2xl pt-12 lg:pt-20">
+			<div class="bg-white/50 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/20">
+				<!-- Chat History -->
+				<div id="chat-history" class="h-[400px] overflow-y-auto p-6 space-y-4 bg-slate-50/50">
+					<div class="flex flex-col gap-2">
+						<div class="self-start bg-slate-200 rounded-lg rounded-tl-none px-4 py-2 max-w-[80%] text-slate-800">
+							{lang === 'en' 
+								? "Hola, soy el asistente de IA de Metarrelato. Puedo ayudarte a agendar una cita o enviar un correo. ¿En qué puedo ayudarte hoy?" 
+								: "Hello, I am Metarrelato's AI assistant. I can help you schedule an appointment or send an email. How can I help you today?"}
+						</div>
+					</div>
 				</div>
-				<div class="form-field sm:col-span-2">
-					<label for="email" class="form-label">{t("contact.email")}*</label>
-					<input type="email" name="email" id="email" autocomplete="email" required />
-				</div>
-				<div class="form-field sm:col-span-2">
-					<label for="company" class="form-label">{t("contact.company")}</label>
-					<input type="text" name="company" id="company" autocomplete="organization" />
-				</div>
-				<div class="form-field sm:col-span-2">
-					<label for="message" class="form-label">{t("contact.message")}*</label>
-					<textarea name="message" id="message" rows="4" required></textarea>
-				</div>
-				<div class="flex gap-x-4 sm:col-span-2">
-					<label class="text-sm leading-6 text-gray-600" id="switch-1-label">
-						{t("contact.agree")}
-						<a href="/privacy" class="font-semibold text-slate-800">privacy policy</a>.
-					</label>
+
+				<!-- Input Area -->
+				<div class="p-4 bg-white border-t border-slate-100">
+					<div class="flex gap-4">
+						<input 
+							type="text" 
+							id="chat-input"
+							class="flex-1 bg-slate-100 border-0 rounded-xl px-4 py-3 text-slate-800 focus:ring-2 focus:ring-purple-500 outline-none transition-all placeholder:text-slate-400"
+							placeholder={t("contact.message")}
+						/>
+						<button 
+							id="send-button"
+							class="bg-[#F06071] text-white p-3 rounded-xl hover:bg-[#F06071]/80 transition-colors flex items-center justify-center aspect-square shadow-lg hover:shadow-xl transform hover:scale-105"
+							aria-label={t("contact.send")}
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+								<path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+							</svg>
+						</button>
+					</div>
+					<div class="text-center mt-3">
+						 <p class="text-xs text-slate-400">
+							{t("contact.agree")} <a href="/privacy" class="font-semibold text-slate-600 hover:text-purple-600 transition-colors">privacy policy</a>.
+						</p>
+					</div>
 				</div>
 			</div>
-			<div class="flex pt-10">
-				<div class="squircle-bg rounded-lg bg-zinc-900">
-					<button
-						type="submit"
-						class="flex h-10 w-full max-w-52 flex-1 items-center justify-center px-4 py-2 text-xl text-slate-200 transition-all hover:text-white sm:w-auto md:font-bold lg:h-10">
-						{t("contact.send")}
-					</button>
-				</div>
-			</div>
-		</form>
+		</div>
 	</div>
 </section>
+
+<script>
+	const chatInput = document.getElementById('chat-input') as HTMLInputElement;
+	const sendButton = document.getElementById('send-button');
+	const chatHistory = document.getElementById('chat-history');
+
+	function addMessage(text: string, isUser: boolean) {
+		if (!chatHistory) return;
+		
+		const wrapper = document.createElement('div');
+		wrapper.className = `flex flex-col gap-2 ${isUser ? 'items-end' : ''}`;
+		
+		const message = document.createElement('div');
+		message.className = `px-4 py-2 max-w-[80%] rounded-lg ${isUser ? 'bg-zinc-900 text-white rounded-tr-none shadow-md' : 'self-start bg-slate-200 text-slate-800 rounded-tl-none shadow-sm'}`;
+		message.textContent = text;
+		
+		wrapper.appendChild(message);
+		chatHistory.appendChild(wrapper);
+		chatHistory.scrollTop = chatHistory.scrollHeight;
+	}
+
+	function handleSend() {
+		if (!chatInput || !chatInput.value.trim()) return;
+		
+		const text = chatInput.value;
+		addMessage(text, true);
+		chatInput.value = '';
+	}
+
+	sendButton?.addEventListener('click', handleSend);
+	chatInput?.addEventListener('keypress', (e) => {
+		if (e.key === 'Enter') handleSend();
+	});
+</script>
 
 <style>
 	.gradient-element {
@@ -73,18 +114,5 @@ const translatePath = useTranslatedPath(lang);
 			76.1% 97.7%,
 			74.1% 44.1%
 		);
-	}
-
-	.form-field {
-		@apply block;
-	}
-
-	.form-label {
-		@apply flex pl-1 text-sm font-semibold leading-6 text-gray-900;
-	}
-
-	input,
-	textarea {
-		@apply pointer-events-auto relative m-0 w-full cursor-text rounded-lg border-0 bg-slate-200 px-5 py-2 text-xl font-normal not-italic outline-none placeholder:text-gray-400 focus:ring-slate-500;
 	}
 </style>
