@@ -113,36 +113,39 @@ const { pathname } = Astro.url;
 	<!-- Mobile full-screen overlay -->
 	<div
 		data-xbind.class="{'flex': open, 'hidden': !open}"
-		class="hidden fixed inset-0 z-[100] bg-white flex-col items-center justify-center md:hidden">
-		<button data-xon.click="open = false" class="absolute top-6 right-6 text-zinc-900 hover:text-zinc-500 transition-colors" aria-label="Close menu">
+		class="hidden fixed inset-0 z-[100] bg-white flex-col items-center justify-center px-6 md:hidden h-dvh">
+		<button data-xon.click="open = false" class="absolute top-8 right-8 text-zinc-900 hover:text-zinc-500 transition-colors" aria-label="Close menu">
 			<svg class="h-8 w-8" stroke="currentColor" fill="none" viewBox="0 0 24 24">
 				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
 			</svg>
 		</button>
-		<Image src={logo} alt="Logo" class="mb-12 h-[5.5rem] w-auto mx-auto" />
-		<ul class="flex list-none flex-col items-center justify-center gap-8 text-center">
-			{
-				pages.map((page) => {
-					const isActive =
-						page.url === pathname ||
-						page.url === pathname.replace(/^\/it|\/$/, "") ||
-						(page.url === "/blog" && (pathname.startsWith("/blog") || pathname.startsWith("/it/blog")));
-					return (
-						<li>
-							<a
-								href={translatePath(page.url)}
-								class={`inline-block cursor-pointer font-display font-extrabold uppercase tracking-wide text-5xl transition-colors duration-200 text-black ${
-									isActive
-										? "bg-zinc-200 px-6 py-2 rounded-xl"
-										: "hover:text-zinc-500"
-								}`}>
-								{page.title}
-							</a>
-						</li>
-					);
-				})
-			}
-		</ul>
+		
+		<div class="flex flex-col items-center justify-center w-full -mt-10">
+			<Image src={logo} alt="Logo" class="mb-14 h-[6.5rem] w-auto mx-auto" />
+			<ul class="flex list-none flex-col items-center justify-center gap-10 text-center">
+				{
+					pages.map((page) => {
+						const isActive =
+							page.url === pathname ||
+							page.url === pathname.replace(/^\/it|\/$/, "") ||
+							(page.url === "/blog" && (pathname.startsWith("/blog") || pathname.startsWith("/it/blog")));
+						return (
+							<li>
+								<a
+									href={translatePath(page.url)}
+									class={`inline-block cursor-pointer font-display font-extrabold uppercase tracking-wide text-5xl transition-colors duration-200 text-black ${
+										isActive
+											? "bg-zinc-100 px-6 py-2 rounded-2xl"
+											: "hover:text-zinc-500"
+									}`}>
+									{page.title}
+								</a>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</div>
 	</div>
 </header>
 
