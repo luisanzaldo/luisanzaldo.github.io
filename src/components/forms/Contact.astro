@@ -23,8 +23,12 @@ const translatePath = useTranslatedPath(lang);
 					<div class="flex flex-col gap-2">
 						<div class="self-start bg-slate-200 rounded-lg rounded-tl-none px-4 py-2 max-w-[80%] text-slate-800 shadow-sm prose prose-slate prose-sm max-w-none">
 							{lang === 'en' 
-								? "Hola, soy el asistente de IA de Metarrelato. Puedo ayudarte a agendar una cita o enviar un correo. ¿En qué puedo ayudarte hoy?" 
-								: "Hello, I am Metarrelato's AI assistant. I can help you schedule an appointment or send an email. How can I help you today?"}
+								? (
+									<p>¡Hola! Si deseas agendar un videollamada, con gusto puedo ayudarte. Solo compárteme tu nombre, correo electrónico, el día y hora en que deseas platicar con nosotros y el tema que te gustaría abordar.<br /><br />También puedo brindarte información sobre los servicios que <strong>metarrelato</strong> ofrece.</p>
+								)
+								: (
+									<p>Hello! If you'd like to schedule a video call, I'd be happy to help. Just share your name, email, the day and time you'd like to talk with us, and the topic you'd like to discuss.<br /><br />I can also provide information about the services <strong>metarrelato</strong> offers.</p>
+								)}
 						</div>
 					</div>
 				</div>
