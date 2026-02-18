@@ -32,7 +32,7 @@ const translatePath = useTranslatedPath(lang);
 
 				<!-- Input Area -->
 				<div class="p-4 bg-white border-t border-slate-100">
-					<div class="flex gap-4">
+					<div class="flex gap-4 items-end">
 						<textarea
 							id="chat-input"
 							class="flex-1 bg-slate-100 border-0 rounded-xl px-4 py-3 text-slate-800 focus:ring-2 focus:ring-purple-500 outline-none transition-all placeholder:text-slate-400 resize-none max-h-32 min-h-[48px]"
@@ -41,7 +41,7 @@ const translatePath = useTranslatedPath(lang);
 						></textarea>
 						<button 
 							id="send-button"
-							class="bg-[#F06071] text-white p-3 rounded-xl hover:bg-[#F06071]/80 transition-colors flex items-center justify-center aspect-square shadow-lg hover:shadow-xl transform hover:scale-105"
+							class="bg-[#F06071] text-white p-3 rounded-xl hover:bg-[#F06071]/80 transition-colors flex items-center justify-center aspect-square shadow-lg hover:shadow-xl transform hover:scale-105 shrink-0"
 							aria-label={t("contact.send")}
 						>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
