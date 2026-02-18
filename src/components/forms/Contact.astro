@@ -125,6 +125,7 @@ const translatePath = useTranslatedPath(lang);
 					chatInput: text,
 					sessionId: sessionId
 				}),
+				keepalive: true,
 			});
 
 			if (typingIndicator) typingIndicator.remove();
