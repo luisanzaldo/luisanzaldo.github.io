@@ -26,17 +26,16 @@ const {
 </dotlottie-player>
 
 <script>
-	import { DotLottie } from "@lottiefiles/dotlottie-web";
 
 	class DotLottiePlayerElement extends HTMLElement {
-		private dotLottieInstance: DotLottie | null = null;
+		private dotLottieInstance: any = null;
 		private canvas: HTMLCanvasElement | null = null;
 
 		constructor() {
 			super();
 		}
 
-		connectedCallback() {
+		async connectedCallback() {
 			const src = this.dataset.src;
 			const autoplay = this.dataset.autoplay === "true";
 			const loop = this.dataset.loop === "true";
@@ -52,6 +51,9 @@ const {
 			this.canvas.height = (this.clientHeight || 300) * dpr;
 			
 			this.appendChild(this.canvas);
+
+			// Dynamically load to drastically reduce the main JS bundle weight
+			const { DotLottie } = await import("@lottiefiles/dotlottie-web");
 
 			this.dotLottieInstance = new DotLottie({
 				canvas: this.canvas,
