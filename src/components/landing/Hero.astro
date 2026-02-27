@@ -1,5 +1,6 @@
 ---
 import LinkBlend from "@components/global/LinkBlend.astro";
+import DotLottie from "@components/global/DotLottie.astro";
 import { getLangFromUrl, useTranslations, useTranslatedPath } from "@i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
@@ -11,7 +12,7 @@ const translatePath = useTranslatedPath(lang);
 	<div class="mx-auto flex h-full flex-col py-4 lg:py-10">
 		<div class="relative flex flex-1 flex-col justify-start lg:justify-center gap-8 lg:gap-12 rounded-lg pb-10 pt-20 lg:rounded-2xl lg:pt-20">
 			<div class="flex flex-col items-center justify-center">
-				<div id="hero-lottie" class="h-60 w-60 md:h-80 md:w-80"></div>
+				<DotLottie id="hero-lottie" class="h-60 w-60 md:h-80 md:w-80" src="/animation2-ia.lottie" width="100%" height="100%" />
 				<h1 class="hero-title text-center font-display">
 					<span class="inline-block">{t("hero.title.main")}</span>
 					<span class="rotator relative inline-flex w-full justify-center">
@@ -103,32 +104,23 @@ const translatePath = useTranslatedPath(lang);
 <script>
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
-	import lottie from "lottie-web/build/player/lottie_light";
 	// import { SplitText } from "gsap/SplitText";
 	import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 	gsap.registerPlugin(ScrollTrigger, /* SplitText, */ ScrollToPlugin);
 
 	function init() {
+		const heroTl = gsap.timeline();
+
 		const lottieContainer = document.getElementById("hero-lottie");
 		if (lottieContainer) {
-			setTimeout(() => {
-				lottie.loadAnimation({
-					container: lottieContainer,
-					renderer: "svg",
-					loop: true,
-					autoplay: true,
-					path: "/animation2-ia.json",
-				});
-				
-				// Animation for Lottie illustration only
-				gsap.set(lottieContainer, { scale: 0 });
-				gsap.to(lottieContainer, {
-					scale: 1,
-					duration: 1.5,
-					ease: "elastic.out(1, 0.75)",
-				});
-			}, 100); // Deferred explicitly to allow GSAP initialization without a 9MB JSON blockage
+			// Animation for Lottie illustration only
+			gsap.set(lottieContainer, { scale: 0 });
+			heroTl.to(lottieContainer, {
+				scale: 1,
+				duration: 1.5,
+				ease: "elastic.out(1, 0.75)",
+			}, 0);
 		}
 
 		/* const childSplit = new SplitText(".hero h1", {
@@ -139,14 +131,13 @@ const translatePath = useTranslatedPath(lang);
 			linesClass: "split-parent",
 		}); */
 
-		gsap.timeline()
+		heroTl.set(".hero h1", { visibility: "visible" }, 0)
 			.from(".hero h1 > span", {
 				duration: 1.5,
 				yPercent: 100,
 				ease: "power4",
 				stagger: 0.1,
-			})
-			.set(".hero h1", { visibility: "visible" }, "<")
+			}, 0)
 			.then(() => {
 				const words = document.querySelectorAll(".hero .rotator > span");
 

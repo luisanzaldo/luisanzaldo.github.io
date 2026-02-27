@@ -27,6 +27,7 @@
 		"@astrojs/sitemap": "^3.7.0",
 		"@astrojs/tailwind": "^6.0.2",
 		"@cloudflare/pages-plugin-mailchannels": "0.1.5",
+		"@lottiefiles/dotlottie-web": "^0.65.0",
 		"astro": "^5.18.0",
 		"gsap": "^3.12.7",
 		"lottie-web": "^5.13.0",
