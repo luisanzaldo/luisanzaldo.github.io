@@ -128,5 +128,9 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 		});
 	}
 
-	document.addEventListener("DOMContentLoaded", initImages);
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initImages);
+	} else {
+		initImages();
+	}
 </script>

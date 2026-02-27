@@ -122,6 +122,9 @@ const goTopColor = isBlog ? "text-zinc-900 hover:fill-zinc-900 hover:text-white"
 		});
 	}
 
-	document.removeEventListener("DOMContentLoaded", init); // astro:page-load
-	document.addEventListener("DOMContentLoaded", init); // astro:page-load
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", init);
+	} else {
+		init();
+	}
 </script>
