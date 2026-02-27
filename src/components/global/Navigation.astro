@@ -43,7 +43,7 @@ const { pathname } = Astro.url;
 
 <header data-xdata="{ open: false }" data-xinit="$watch('open', v => document.body.classList.toggle('overflow-hidden', v)); window.addEventListener('resize', () => { if (window.innerWidth >= 768) { open = false; } })">
 	<a href={translatePath("/")} aria-label="Home" class="logo absolute z-50 flex h-[4.5rem] items-center gap-1 md:h-[5.9rem]">
-		<Image src={logoFull} alt="metarrelato" class="h-7 w-auto md:h-9" />
+		<Image src={logoFull} alt="metarrelato" loading="eager" fetchpriority="high" class="h-7 w-auto md:h-9" />
 	</a>
 	<div class="navigation fixed right-0 top-0 z-50" data-xbind.class="{'w-full navbar-open': open}">
 		<div class="ml-auto md:max-w-fit" data-xbind.class="{'max-w-3xl': open, 'max-w-[8rem]': !open }">
