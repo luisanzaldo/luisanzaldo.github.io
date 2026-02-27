@@ -110,6 +110,9 @@ const allProjects = (await getCollection("projects"))
 		}
 	}
 
-	document.removeEventListener("DOMContentLoaded", init); // astro:page-load
-	document.addEventListener("DOMContentLoaded", init); // astro:page-load
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", init);
+	} else {
+		init();
+	}
 </script>
