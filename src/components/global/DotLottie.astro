@@ -37,38 +37,38 @@ const {
 		}
 
 		connectedCallback() {
-			// Allow a small tick so dimensions are resolved, preventing zero-width canvas
-			setTimeout(() => {
-				const src = this.dataset.src;
-				const autoplay = this.dataset.autoplay === "true";
-				const loop = this.dataset.loop === "true";
+			const src = this.dataset.src;
+			const autoplay = this.dataset.autoplay === "true";
+			const loop = this.dataset.loop === "true";
 
-				if (!src) return;
+			if (!src) return;
 
-				this.canvas = document.createElement("canvas");
-				this.canvas.style.width = "100%";
-				this.canvas.style.height = "100%";
-				// Set initial internal resolution to match container (helps prevent blur)
-				this.canvas.width = this.clientWidth || 300;
-				this.canvas.height = this.clientHeight || 300;
-				
-				this.appendChild(this.canvas);
+			this.canvas = document.createElement("canvas");
+			this.canvas.style.width = "100%";
+			this.canvas.style.height = "100%";
+			
+			const dpr = window.devicePixelRatio || 1;
+			this.canvas.width = (this.clientWidth || 300) * dpr;
+			this.canvas.height = (this.clientHeight || 300) * dpr;
+			
+			this.appendChild(this.canvas);
 
-				this.dotLottieInstance = new DotLottie({
-					canvas: this.canvas,
-					src,
-					autoplay,
-					loop,
-				});
-				
-				// Handle resize
-				const resizeObserver = new ResizeObserver(() => {
-					if (this.dotLottieInstance && this.canvas) {
-						this.dotLottieInstance.resize();
-					}
-				});
-				resizeObserver.observe(this);
-			}, 100);
+			this.dotLottieInstance = new DotLottie({
+				canvas: this.canvas,
+				src,
+				autoplay,
+				loop,
+			});
+			
+			const resizeObserver = new ResizeObserver(() => {
+				if (this.dotLottieInstance && this.canvas) {
+					const currentDpr = window.devicePixelRatio || 1;
+					this.canvas.width = (this.clientWidth || 300) * currentDpr;
+					this.canvas.height = (this.clientHeight || 300) * currentDpr;
+					this.dotLottieInstance.resize();
+				}
+			});
+			resizeObserver.observe(this);
 		}
 
 		disconnectedCallback() {
