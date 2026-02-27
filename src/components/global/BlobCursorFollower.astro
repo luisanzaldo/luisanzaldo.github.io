@@ -25,7 +25,7 @@
 		function updatePosition() {
 			pos.x += (mouse.x - pos.x) * ratio;
 			pos.y += (mouse.y - pos.y) * ratio;
-			gsap.to(blob, { duration: 0.5, x: pos.x, y: pos.y });
+			gsap.set(blob, { x: pos.x, y: pos.y });
 		}
 
 		function mouseMove(e: MouseEvent) {
