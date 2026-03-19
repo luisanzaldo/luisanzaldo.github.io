@@ -68,12 +68,8 @@ const translatePath = useTranslatedPath(lang);
 	const chatHistory = document.getElementById('chat-history');
 	let isSending = false;
 
-	// Generate or retrieve a session ID for n8n
-	let sessionId = sessionStorage.getItem('chat_session_id');
-	if (!sessionId) {
-		sessionId = Math.random().toString(36).substring(7) + Date.now();
-		sessionStorage.setItem('chat_session_id', sessionId);
-	}
+	// Maintain conversation history locally
+	let conversationHistory: { role: string, content: string }[] = [];
 
 	function addMessage(text: string, isUser: boolean) {
 		if (!chatHistory) return;
@@ -113,33 +109,43 @@ const translatePath = useTranslatedPath(lang);
 			sendButton.style.opacity = '0.5';
 		}
 		
-		const typingIndicator = addMessage('...', false);
+		const typingIndicator = addMessage('Escribiendo...', false);
 		
 		try {
-			const response = await fetch('https://n8n-5q3b.onrender.com/webhook/1cdb800c-94c3-4d7c-a219-a69dc8e0ebcd/chat', {
+			const controller = new AbortController();
+			const timeoutId = setTimeout(() => controller.abort(), 30000);
+			
+			const backendUrl = import.meta.env.PUBLIC_BACKEND_URL || 'https://metarrelato-chatbot-backend-luisanzaldo3578-r1lzkm7i.leapcell.dev';
+
+			const response = await fetch(`${backendUrl}/chat`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify({ 
-					chatInput: text,
-					sessionId: sessionId
+					message: text,
+					history: conversationHistory
 				}),
-				keepalive: true,
+				signal: controller.signal
 			});
 
+			clearTimeout(timeoutId);
 			if (typingIndicator) typingIndicator.remove();
 
 			if (!response.ok) throw new Error('Failed to get response');
 
 			const data = await response.json();
-			// Handle different possible n8n response structures
-			const botMessage = typeof data === 'string' ? data : (data.output || data.message || data.response || "Lo siento, no pude procesar la respuesta.");
+			const botMessage = data.reply || "Lo siento, no pude procesar la respuesta.";
+			
+			// Save in local history for subsequent requests
+			conversationHistory.push({ role: 'user', content: text });
+			conversationHistory.push({ role: 'assistant', content: botMessage });
+			
 			addMessage(botMessage, false);
 		} catch (error) {
 			console.error('Chat error:', error);
 			if (typingIndicator) typingIndicator.remove();
-			addMessage("Lo siento, tuve un problema al conectarme con el asistente. Por favor, intenta de nuevo más tarde.", false);
+			addMessage("Hubo un problema al conectar. Por favor intenta de nuevo en un momento.", false);
 		} finally {
 			isSending = false;
 			if (sendButton) {
