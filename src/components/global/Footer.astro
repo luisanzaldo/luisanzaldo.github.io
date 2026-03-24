@@ -123,8 +123,8 @@ const goTopColor = isBlog ? "text-zinc-900 hover:fill-zinc-900 hover:text-white"
 	}
 
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", init);
+		document.addEventListener("DOMContentLoaded", () => requestAnimationFrame(init));
 	} else {
-		init();
+		requestAnimationFrame(init);
 	}
 </script>

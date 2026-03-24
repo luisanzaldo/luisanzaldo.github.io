@@ -23,8 +23,12 @@ import "../styles/global.css";
 <link rel="preconnect" href="https://rsms.me/" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" />
+<!-- Fonts loaded asynchronously to avoid render blocking -->
+<link rel="preload" href="https://rsms.me/inter/inter.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://rsms.me/inter/inter.css" /></noscript>
+
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" /></noscript>
 
 <!-- Scripts -->
 <script defer src="https://unpkg.com/alpinejs@3.13.3/dist/cdn.min.js"></script>

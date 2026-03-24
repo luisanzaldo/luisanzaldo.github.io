@@ -61,8 +61,8 @@ const { class: className } = Astro.props;
 	}
 
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", init);
+		document.addEventListener("DOMContentLoaded", () => requestAnimationFrame(init));
 	} else {
-		init();
+		requestAnimationFrame(init);
 	}
 </script>
