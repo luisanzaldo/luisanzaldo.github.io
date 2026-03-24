@@ -103,7 +103,7 @@ const translatePath = useTranslatedPath(lang);
 <script>
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
-	import lottie from "lottie-web/build/player/lottie_light";
+	import lottie from "lottie-web/build/player/lottie_light_canvas";
 	// import { SplitText } from "gsap/SplitText";
 	import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
@@ -116,7 +116,7 @@ const translatePath = useTranslatedPath(lang);
 		if (lottieContainer) {
 			lottie.loadAnimation({
 				container: lottieContainer,
-				renderer: "svg",
+				renderer: "canvas",
 				loop: true,
 				autoplay: true,
 				path: "/animation2-ia.json", // Load the lightweight JSON here
@@ -178,8 +178,8 @@ const translatePath = useTranslatedPath(lang);
 	}
 
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", () => requestAnimationFrame(init));
+		document.addEventListener("DOMContentLoaded", () => setTimeout(() => requestAnimationFrame(init), 100));
 	} else {
-		requestAnimationFrame(init);
+		setTimeout(() => requestAnimationFrame(init), 100);
 	}
 </script>
