@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+<meta name="robots" content="noindex, nofollow"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FastArt — Generador de Miniaturas</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script is:inline src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script is:inline id="tailwind-config">
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-error": "#ffffff",
+        "on-primary-container": "#fdfcff",
+        "on-tertiary-container": "#fffbff",
+        "error-container": "#ffdad6",
+        "surface-container": "#eeeeef",
+        "surface": "#f9f9fa",
+        "on-surface": "#1a1c1d",
+        "outline-variant": "#c0c7d2",
+        "on-tertiary": "#ffffff",
+        "tertiary-fixed": "#e3e1ef",
+        "surface-variant": "#e2e2e3",
+        "secondary-container": "#fd8861",
+        "on-error-container": "#93000a",
+        "on-secondary-fixed": "#390b00",
+        "tertiary": "#5b5b67",
+        "on-background": "#1a1c1d",
+        "surface-dim": "#dadadb",
+        "error": "#ba1a1a",
+        "secondary": "#9f4120",
+        "on-tertiary-fixed-variant": "#464651",
+        "on-secondary-container": "#732102",
+        "inverse-on-surface": "#f1f0f1",
+        "surface-container-highest": "#e2e2e3",
+        "surface-tint": "#0062a1",
+        "on-tertiary-fixed": "#1a1b25",
+        "primary-fixed-dim": "#9ccaff",
+        "on-primary-fixed-variant": "#00497a",
+        "secondary-fixed": "#ffdbd0",
+        "on-secondary-fixed-variant": "#7f2a0a",
+        "primary": "#005f9d",
+        "secondary-fixed-dim": "#ffb59d",
+        "outline": "#717881",
+        "background": "#f9f9fa",
+        "on-primary": "#ffffff",
+        "surface-bright": "#f9f9fa",
+        "surface-container-high": "#e8e8e9",
+        "inverse-surface": "#2f3132",
+        "on-secondary": "#ffffff",
+        "surface-container-lowest": "#ffffff",
+        "on-surface-variant": "#414750",
+        "primary-fixed": "#d0e4ff",
+        "on-primary-fixed": "#001d35",
+        "inverse-primary": "#9ccaff",
+        "tertiary-container": "#747380",
+        "tertiary-fixed-dim": "#c7c5d3",
+        "primary-container": "#2678bc",
+        "surface-container-low": "#f4f3f4"
+      },
+      borderRadius: {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      fontFamily: {
+        "headline": ["Noto Serif"],
+        "body": ["Manrope"],
+        "label": ["Manrope"]
+      }
+    }
+  }
+}
+</script>
+<style is:global>
+  body { font-family: 'Manrope', sans-serif; }
+  .font-serif { font-family: 'Noto Serif', serif; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+  .bg-gradient-primary { background: linear-gradient(135deg, #005f9d 0%, #2678bc 100%); }
+  .glass-header { background: rgba(249, 249, 250, 0.85); backdrop-filter: blur(24px); }
+
+  #cropRect {
+    border: 2px dashed #005f9d;
+    box-shadow: 0 0 0 9999px rgba(26, 28, 29, 0.5);
+    cursor: grab;
+    user-select: none;
+  }
+  #cropRect:active { cursor: grabbing; }
+
+  input[type="color"] {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
+  }
+
+  .align-btn.active {
+    background: rgba(0,95,157,0.1);
+    border-color: #005f9d;
+    color: #005f9d;
+  }
+
+  .preview-title-main {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 0.82;
+    letter-spacing: -0.01em;
+    display: block;
+  }
+  .preview-title-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    display: block;
+  }
+  .preview-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    display: block;
+  }
+
+  #generateBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  #canvasWrapper {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #previewImg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  #cropRect {
+    position: absolute;
+    touch-action: none;
+  }
+
+  #previewTextBlock {
+    position: absolute;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+
+<!-- TopAppBar -->
+<header class="w-full top-0 sticky z-50 glass-header border-b border-outline-variant/20">
+  <div class="flex justify-between items-center h-16 px-8 w-full mx-auto max-w-[1920px]">
+    <div class="flex items-center gap-8">
+      <span class="font-serif italic text-2xl font-bold tracking-tighter text-on-surface">FastArt</span>
+      <nav class="hidden md:flex gap-8">
+        <a class="font-sans uppercase tracking-widest text-[11px] text-primary font-semibold border-b-2 border-primary pb-1" href="#">Miniaturas</a>
+      </nav>
+    </div>
+    <div class="flex items-center gap-4">
+      <button class="material-symbols-outlined text-on-surface-variant hover:bg-slate-200/50 p-2 rounded-full transition-all">settings</button>
+      <button class="material-symbols-outlined text-on-surface-variant hover:bg-slate-200/50 p-2 rounded-full transition-all">help_outline</button>
+    </div>
+  </div>
+</header>
+
+<main class="flex-grow flex flex-col items-center px-8 py-10 max-w-[1920px] mx-auto w-full">
+
+  <!-- Hero -->
+  <div class="w-full mb-10">
+    <h1 class="font-serif italic text-4xl md:text-5xl text-on-surface leading-tight max-w-3xl">
+      Crea tus miniaturas de forma rápida y automatizada
+    </h1>
+    <div class="mt-3 w-20 h-0.5 bg-primary"></div>
+  </div>
+
+  <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+
+    <!-- Canvas Section -->
+    <section class="lg:col-span-8">
+      <div class="bg-surface-container-low p-4 rounded-xl">
+
+        <!-- Upload state -->
+        <div id="uploadState" class="aspect-[16/10] flex items-center justify-center border-2 border-dashed border-outline-variant rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors cursor-pointer" id="dropZoneOuter">
+          <div class="flex flex-col items-center gap-4 text-on-surface-variant">
+            <span class="material-symbols-outlined text-5xl">add_photo_alternate</span>
+            <div class="text-center">
+              <p class="text-sm font-semibold text-on-surface">Arrastra tu imagen aquí</p>
+              <p class="text-xs text-on-surface-variant mt-1">o haz clic para seleccionar un archivo</p>
+            </div>
+            <span class="font-sans uppercase tracking-widest text-[10px] text-on-surface-variant border border-outline-variant/40 px-3 py-1 rounded-full">JPG, PNG, WEBP</span>
+          </div>
+        </div>
+
+        <!-- Canvas state (hidden until image loaded) -->
+        <div id="canvasState" class="hidden aspect-[16/10] rounded-lg overflow-hidden" id="canvasWrapper">
+          <div id="canvasWrapper" style="position:relative; width:100%; height:100%; overflow:hidden;">
+            <img id="previewImg" alt="Preview"/>
+            <div id="cropRect">
+              <div id="previewTextBlock"></div>
+              <div class="absolute top-3 left-3 z-10">
+                <span class="font-sans uppercase tracking-widest text-[9px] text-white bg-primary/80 backdrop-blur-sm px-2 py-1 rounded">1080 × 1920</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <p class="mt-3 font-sans uppercase tracking-widest text-[10px] text-slate-400 text-center">
+        Arrastra el rectángulo para ajustar el encuadre vertical
+      </p>
+
+      <!-- Template selector -->
+      <div class="mt-8">
+        <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-4 block">Plantilla</label>
+        <div class="flex gap-4 overflow-x-auto pb-2">
+
+          <div class="flex-shrink-0 flex flex-col gap-2">
+            <button class="template-btn relative w-36 rounded-xl border-2 border-primary overflow-hidden text-left transition-all shadow-md" data-template="rutadorada">
+              <img src="/fastart/_miniatura_sundance.png" alt="RutaDorada Films" class="w-full aspect-[9/16] object-cover block"/>
+              <div class="absolute top-2 left-2">
+                <span class="font-sans uppercase tracking-widest text-[8px] font-bold text-white bg-primary px-2 py-0.5 rounded-full">Activa</span>
+              </div>
+            </button>
+            <span class="font-sans text-[10px] font-semibold text-primary text-center">RutaDorada Films</span>
+          </div>
+
+          <div class="flex-shrink-0 flex flex-col gap-2">
+            <button class="template-btn relative w-36 rounded-xl border-2 border-dashed border-outline-variant/40 overflow-hidden opacity-50 cursor-not-allowed" disabled title="Próximamente">
+              <div class="w-full aspect-[9/16] bg-surface-container flex flex-col items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-outline text-3xl">add</span>
+              </div>
+            </button>
+            <span class="font-sans text-[10px] font-semibold text-on-surface-variant text-center opacity-50">Nueva plantilla</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Control Panel -->
+    <section class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden">
+      <div class="p-8 flex flex-col gap-8">
+
+        <!-- Upload -->
+        <div>
+          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Imagen de origen</label>
+          <button id="changeImageBtn" class="w-full py-5 border-2 border-dashed border-outline-variant rounded-lg flex items-center justify-center gap-3 hover:bg-surface-container-low hover:border-primary/40 transition-all text-on-surface-variant text-sm">
+            <span class="material-symbols-outlined text-xl">cloud_upload</span>
+            <span class="font-semibold text-xs uppercase tracking-wider">Subir imagen</span>
+          </button>
+          <input type="file" id="fileInput" accept="image/*" class="hidden"/>
+        </div>
+
+        <!-- Title -->
+        <div>
+          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Título</label>
+          <div class="flex gap-3 items-center">
+            <input id="titleInput"
+              class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm"
+              placeholder="Ej. Sundance" type="text"/>
+            <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
+              <div id="titleColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#E8B800"></div>
+              <span id="titleColorHex" class="font-mono text-[10px] text-on-surface-variant">#E8B800</span>
+              <input type="color" id="titleColorInput" value="#E8B800"/>
+            </label>
+          </div>
+        </div>
+
+        <!-- Second title line -->
+        <div>
+          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Segunda línea de título</label>
+          <div class="flex gap-3 items-center">
+            <input id="titleLine2Input"
+              class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm"
+              placeholder="Ej. Film Festival" type="text"/>
+            <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
+              <div id="titleLine2ColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#ffffff"></div>
+              <span id="titleLine2ColorHex" class="font-mono text-[10px] text-on-surface-variant">#FFFFFF</span>
+              <input type="color" id="titleLine2ColorInput" value="#ffffff"/>
+            </label>
+          </div>
+        </div>
+
+        <!-- Subtitle -->
+        <div>
+          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Subtítulo</label>
+          <div class="flex gap-3 items-center">
+            <input id="subtitleInput"
+              class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm"
+              placeholder="Ej. CDMX 2026" type="text"/>
+            <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
+              <div id="subtitleColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#E8B800"></div>
+              <span id="subtitleColorHex" class="font-mono text-[10px] text-on-surface-variant">#E8B800</span>
+              <input type="color" id="subtitleColorInput" value="#E8B800"/>
+            </label>
+          </div>
+        </div>
+
+        <!-- Alignment -->
+        <div>
+          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Alineación del texto</label>
+          <div class="grid grid-cols-2 gap-2">
+            <button class="align-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="left">
+              <span class="material-symbols-outlined text-base">format_align_left</span>
+              Izquierda
+            </button>
+            <button class="align-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="right">
+              <span class="material-symbols-outlined text-base">format_align_right</span>
+              Derecha
+            </button>
+            <button class="align-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="top">
+              <span class="material-symbols-outlined text-base">vertical_align_top</span>
+              Arriba
+            </button>
+            <button class="align-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="bottom">
+              <span class="material-symbols-outlined text-base">vertical_align_bottom</span>
+              Abajo
+            </button>
+          </div>
+        </div>
+
+        <!-- Generate -->
+        <button id="generateBtn" class="w-full bg-gradient-primary text-white py-5 rounded-lg font-bold tracking-widest shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 uppercase text-xs">
+          <span class="material-symbols-outlined text-lg">image</span>
+          Generar y descargar
+        </button>
+
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="w-full py-6 border-t border-slate-200/40 bg-surface mt-auto">
+  <div class="flex flex-col md:flex-row justify-between items-center px-8 w-full mx-auto max-w-[1920px]">
+    <p class="font-sans text-xs tracking-tight text-slate-400">©2026 FastArt. Diseñado por metarrelato studio</p>
+    <div class="flex gap-6 mt-3 md:mt-0">
+      <a class="font-sans text-xs tracking-tight text-slate-400 hover:text-slate-600 transition-all" href="#">Privacy Policy</a>
+      <a class="font-sans text-xs tracking-tight text-slate-400 hover:text-slate-600 transition-all" href="#">Terms of Service</a>
+    </div>
+  </div>
+</footer>
+
+<script is:inline>
+// ============================================================
+// STATE
+// ============================================================
+const state = {
+  image: null,
+  imgW: 0,
+  imgH: 0,
+  cropOffsetX: 0,
+  cropOffsetY: 0,
+  align: { h: 'left', v: 'bottom' },
+  title: '',
+  titleColor: '#E8B800',
+  titleLine2: '',
+  titleLine2Color: '#ffffff',
+  subtitle: '',
+  subtitleColor: '#E8B800',
+};
+
+// ============================================================
+// DOM REFS
+// ============================================================
+const fileInput        = document.getElementById('fileInput');
+const changeImageBtn   = document.getElementById('changeImageBtn');
+const uploadState      = document.getElementById('uploadState');
+const canvasState      = document.getElementById('canvasState');
+const canvasWrapper    = document.getElementById('canvasWrapper');
+const previewImg       = document.getElementById('previewImg');
+const cropRect         = document.getElementById('cropRect');
+const previewTextBlock = document.getElementById('previewTextBlock');
+
+const titleInput            = document.getElementById('titleInput');
+const titleColorInput       = document.getElementById('titleColorInput');
+const titleColorSwatch      = document.getElementById('titleColorSwatch');
+const titleColorHex         = document.getElementById('titleColorHex');
+
+const titleLine2Input       = document.getElementById('titleLine2Input');
+const titleLine2ColorInput  = document.getElementById('titleLine2ColorInput');
+const titleLine2ColorSwatch = document.getElementById('titleLine2ColorSwatch');
+const titleLine2ColorHex    = document.getElementById('titleLine2ColorHex');
+
+const subtitleInput         = document.getElementById('subtitleInput');
+const subtitleColorInput    = document.getElementById('subtitleColorInput');
+const subtitleColorSwatch   = document.getElementById('subtitleColorSwatch');
+const subtitleColorHex      = document.getElementById('subtitleColorHex');
+
+const generateBtn  = document.getElementById('generateBtn');
+const alignBtns    = document.querySelectorAll('.align-btn');
+
+// ============================================================
+// IMAGE UPLOAD
+// ============================================================
+function setupUpload() {
+  uploadState.addEventListener('click', () => fileInput.click());
+  changeImageBtn.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', (e) => {
+    if (e.target.files[0]) loadImage(e.target.files[0]);
+  });
+
+  uploadState.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    uploadState.classList.add('border-primary', 'bg-primary/5');
+  });
+  uploadState.addEventListener('dragleave', () => {
+    uploadState.classList.remove('border-primary', 'bg-primary/5');
+  });
+  uploadState.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadState.classList.remove('border-primary', 'bg-primary/5');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadImage(file);
+  });
+}
+
+function loadImage(file) {
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.onload = () => {
+    state.image = img;
+    state.imgW = img.naturalWidth;
+    state.imgH = img.naturalHeight;
+    state.cropOffsetX = 0;
+    state.cropOffsetY = 0;
+    resetGenerateBtn();
+
+    previewImg.src = url;
+    uploadState.classList.add('hidden');
+    canvasState.classList.remove('hidden');
+
+    // Wait a frame for layout
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setupCropRect();
+        updatePreview();
+      });
+    });
+  };
+  img.src = url;
+}
+
+// ============================================================
+// CROP GEOMETRY
+// ============================================================
+function getImageDisplayBounds() {
+  const cW = canvasWrapper.clientWidth;
+  const cH = canvasWrapper.clientHeight;
+  const imgAspect = state.imgW / state.imgH;
+  const cAspect = cW / cH;
+
+  let dispW, dispH, dispX, dispY;
+  if (imgAspect > cAspect) {
+    dispW = cW;
+    dispH = cW / imgAspect;
+    dispX = 0;
+    dispY = (cH - dispH) / 2;
+  } else {
+    dispH = cH;
+    dispW = cH * imgAspect;
+    dispX = (cW - dispW) / 2;
+    dispY = 0;
+  }
+  return { dispW, dispH, dispX, dispY };
+}
+
+function getCropDisplaySize() {
+  const { dispW, dispH } = getImageDisplayBounds();
+  const CROP_ASPECT = 9 / 16;
+  const imgAspect = state.imgW / state.imgH;
+
+  let cropW, cropH;
+  if (imgAspect >= CROP_ASPECT) {
+    // Image wider than 9:16 → crop height = full image height
+    cropH = dispH;
+    cropW = dispH * CROP_ASPECT;
+  } else {
+    // Image taller → crop width = full image width
+    cropW = dispW;
+    cropH = dispW / CROP_ASPECT;
+    if (cropH > dispH) {
+      cropH = dispH;
+      cropW = dispH * CROP_ASPECT;
+    }
+  }
+  return { cropW, cropH };
+}
+
+function clampCropOffset() {
+  const { dispW, dispH } = getImageDisplayBounds();
+  const { cropW, cropH } = getCropDisplaySize();
+  state.cropOffsetX = Math.max(0, Math.min(state.cropOffsetX, dispW - cropW));
+  state.cropOffsetY = Math.max(0, Math.min(state.cropOffsetY, dispH - cropH));
+}
+
+function setupCropRect() {
+  const { dispX, dispY } = getImageDisplayBounds();
+  const { cropW, cropH } = getCropDisplaySize();
+  clampCropOffset();
+  cropRect.style.width  = `${cropW}px`;
+  cropRect.style.height = `${cropH}px`;
+  cropRect.style.left   = `${dispX + state.cropOffsetX}px`;
+  cropRect.style.top    = `${dispY + state.cropOffsetY}px`;
+}
+
+// ============================================================
+// CROP DRAG
+// ============================================================
+let dragging = false;
+let dragStartX, dragStartY, dragStartOffX, dragStartOffY;
+
+function setupCropDrag() {
+  cropRect.addEventListener('mousedown', (e) => {
+    dragging = true;
+    dragStartX = e.clientX;
+    dragStartY = e.clientY;
+    dragStartOffX = state.cropOffsetX;
+    dragStartOffY = state.cropOffsetY;
+    e.preventDefault();
+  });
+
+  cropRect.addEventListener('touchstart', (e) => {
+    const t = e.touches[0];
+    dragging = true;
+    dragStartX = t.clientX;
+    dragStartY = t.clientY;
+    dragStartOffX = state.cropOffsetX;
+    dragStartOffY = state.cropOffsetY;
+    e.preventDefault();
+  }, { passive: false });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    state.cropOffsetX = dragStartOffX + (e.clientX - dragStartX);
+    state.cropOffsetY = dragStartOffY + (e.clientY - dragStartY);
+    clampCropOffset();
+    setupCropRect();
+  });
+
+  document.addEventListener('touchmove', (e) => {
+    if (!dragging) return;
+    const t = e.touches[0];
+    state.cropOffsetX = dragStartOffX + (t.clientX - dragStartX);
+    state.cropOffsetY = dragStartOffY + (t.clientY - dragStartY);
+    clampCropOffset();
+    setupCropRect();
+  }, { passive: false });
+
+  document.addEventListener('mouseup',  () => { dragging = false; });
+  document.addEventListener('touchend', () => { dragging = false; });
+}
+
+// ============================================================
+// PREVIEW TEXT
+// ============================================================
+function escapeHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function updatePreview() {
+  if (!state.image) return;
+
+  const { cropW, cropH } = getCropDisplaySize();
+  const scale = cropW / 1080;
+
+  const isLeft   = state.align.h === 'left';
+  const isBottom = state.align.v === 'bottom';
+
+  const padX = 72 * scale;
+  const padY = 180 * scale;
+
+  // Position text block
+  const tb = previewTextBlock;
+  tb.style.left      = isLeft   ? `${padX}px` : 'auto';
+  tb.style.right     = isLeft   ? 'auto' : `${padX}px`;
+  tb.style.bottom    = isBottom ? `${padY}px` : 'auto';
+  tb.style.top       = isBottom ? 'auto' : `${padY}px`;
+  tb.style.textAlign = isLeft   ? 'left' : 'right';
+  tb.style.maxWidth  = `calc(100% - ${padX * 2}px)`;
+
+  const divDir = isLeft ? 'to right' : 'to left';
+  const hasAny = state.title || state.titleLine2 || state.subtitle;
+
+  let html = '';
+
+  if (state.title) {
+    html += `<span class="preview-title-main" style="font-size:${196*scale}px;color:${state.titleColor}">${escapeHtml(state.title)}</span>`;
+  }
+
+  if (state.titleLine2) {
+    html += `<span class="preview-title-sub" style="font-size:${96*scale}px;color:${state.titleLine2Color};margin-bottom:${28*scale}px;display:block">${escapeHtml(state.titleLine2)}</span>`;
+  } else if (state.title) {
+    html += `<div style="height:${28*scale}px"></div>`;
+  }
+
+  if (hasAny) {
+    html += `<div style="height:${2*scale}px;background:linear-gradient(${divDir},#E8B800,rgba(232,184,0,0.2),transparent);margin-bottom:${24*scale}px"></div>`;
+  }
+
+  if (state.subtitle) {
+    html += `<span class="preview-subtitle" style="font-size:${72*scale}px;color:${state.subtitleColor}">${escapeHtml(state.subtitle)}</span>`;
+  }
+
+  tb.innerHTML = html;
+}
+
+// ============================================================
+// COLOR PICKERS
+// ============================================================
+function setupColorPicker(prefix) {
+  const input  = document.getElementById(`${prefix}ColorInput`);
+  const swatch = document.getElementById(`${prefix}ColorSwatch`);
+  const hexEl  = document.getElementById(`${prefix}ColorHex`);
+  const key    = `${prefix}Color`;
+
+  input.addEventListener('input', () => {
+    const c = input.value;
+    swatch.style.background = c;
+    hexEl.textContent = c.toUpperCase();
+    state[key] = c;
+    updatePreview();
+  });
+}
+
+// ============================================================
+// ALIGNMENT BUTTONS
+// ============================================================
+function setupAlignment() {
+  alignBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const a = btn.dataset.align;
+      const isH = a === 'left' || a === 'right';
+
+      alignBtns.forEach(b => {
+        const bIsH = b.dataset.align === 'left' || b.dataset.align === 'right';
+        if (bIsH === isH) b.classList.remove('active');
+      });
+      btn.classList.add('active');
+
+      if (isH) state.align.h = a;
+      else      state.align.v = a;
+
+      updatePreview();
+    });
+  });
+}
+
+// ============================================================
+// IMAGE GENERATION
+// ============================================================
+async function generateImage() {
+  if (!state.image) {
+    alert('Por favor sube una imagen primero.');
+    return;
+  }
+
+  generateBtn.disabled = true;
+  generateBtn.innerHTML = '<span class="material-symbols-outlined text-lg animate-spin">progress_activity</span><span class="uppercase text-xs tracking-widest">Generando...</span>';
+
+  try {
+    await document.fonts.ready;
+
+    const canvas = document.createElement('canvas');
+    canvas.width  = 1080;
+    canvas.height = 1920;
+    const ctx = canvas.getContext('2d');
+
+    // --- Crop coordinates in image space ---
+    const { dispW, dispH } = getImageDisplayBounds();
+    const { cropW, cropH } = getCropDisplaySize();
+    const scaleX = state.imgW / dispW;
+    const scaleY = state.imgH / dispH;
+    const cropImgX = state.cropOffsetX * scaleX;
+    const cropImgY = state.cropOffsetY * scaleY;
+    const cropImgW = cropW * scaleX;
+    const cropImgH = cropH * scaleY;
+
+    // 1. Draw image with cinematic filter
+    ctx.filter = 'contrast(1.1) brightness(0.85)';
+    ctx.drawImage(state.image, cropImgX, cropImgY, cropImgW, cropImgH, 0, 0, 1080, 1920);
+    ctx.filter = 'none';
+
+    // 2. Vignette — dark side follows text position
+    const vigTop = state.align.v === 'top';
+    const vig = ctx.createLinearGradient(0, vigTop ? 1920 : 0, 0, vigTop ? 0 : 1920);
+    vig.addColorStop(0.25, 'rgba(0,0,0,0)');
+    vig.addColorStop(0.50, 'rgba(0,0,0,0.15)');
+    vig.addColorStop(0.68, 'rgba(0,0,0,0.70)');
+    vig.addColorStop(0.84, 'rgba(0,0,0,0.93)');
+    vig.addColorStop(1.00, '#000000');
+    ctx.fillStyle = vig;
+    ctx.fillRect(0, 0, 1080, 1920);
+
+    // 3. Cinematic color bleed
+    const bleed = ctx.createRadialGradient(162, 768, 0, 162, 768, 594);
+    bleed.addColorStop(0, 'rgba(180,20,20,0.18)');
+    bleed.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.globalCompositeOperation = 'screen';
+    ctx.fillStyle = bleed;
+    ctx.fillRect(0, 0, 1080, 1920);
+    ctx.globalCompositeOperation = 'source-over';
+
+    // 4. Film grain
+    drawGrain(ctx);
+
+    // 5. Text
+    drawPosterText(ctx);
+
+    // 6. Download
+    canvas.toBlob((blob) => {
+      const url  = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'miniatura.png';
+      link.href = url;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }, 'image/png');
+
+  } catch (err) {
+    console.error(err);
+    alert('Error al generar la imagen: ' + err.message);
+  } finally {
+    generateBtn.disabled = false;
+    generateBtn.innerHTML = '<span class="material-symbols-outlined text-lg">image</span><span class="uppercase text-xs tracking-widest">Generar y descargar</span>';
+  }
+}
+
+function drawGrain(ctx) {
+  const tile = 256;
+  const off  = document.createElement('canvas');
+  off.width  = tile;
+  off.height = tile;
+  const octx = off.getContext('2d');
+  const id   = octx.createImageData(tile, tile);
+  const d    = id.data;
+  for (let i = 0; i < d.length; i += 4) {
+    const n = Math.floor(Math.random() * 255);
+    d[i] = d[i+1] = d[i+2] = n;
+    d[i+3] = 255;
+  }
+  octx.putImageData(id, 0, 0);
+
+  ctx.globalCompositeOperation = 'overlay';
+  ctx.globalAlpha = 0.35;
+  for (let x = 0; x < 1080; x += tile)
+    for (let y = 0; y < 1920; y += tile)
+      ctx.drawImage(off, x, y);
+
+  ctx.globalCompositeOperation = 'source-over';
+  ctx.globalAlpha = 1;
+}
+
+function drawPosterText(ctx) {
+  const { title, titleColor, titleLine2, titleLine2Color, subtitle, subtitleColor, align } = state;
+  if (!title && !titleLine2 && !subtitle) return;
+
+  const isLeft   = align.h === 'left';
+  const isBottom = align.v === 'bottom';
+
+  const PAD_X   = 72;
+  const PAD_Y   = 180;
+  const T_SIZE  = 196;
+  const L2_SIZE = 96;
+  const S_SIZE  = 72;
+  const T_LH    = T_SIZE * 0.82;
+  const L2_LH   = L2_SIZE * 0.9;
+  const L2_MB   = 28;  // margin-bottom between line2 and divider
+  const DIV_H   = 2;
+  const DIV_GAP = 24;  // gap after divider before subtitle
+
+  ctx.textAlign = isLeft ? 'left' : 'right';
+  const x = isLeft ? PAD_X : (1080 - PAD_X);
+
+  // Set letter spacing (modern browsers)
+  const setLS = (px) => { try { ctx.letterSpacing = `${px}px`; } catch(e) {} };
+
+  if (isBottom) {
+    // Build from bottom up
+    ctx.textBaseline = 'bottom';
+    let y = 1920 - PAD_Y;
+
+    // Subtitle
+    if (subtitle) {
+      ctx.font = `900 ${S_SIZE}px "Barlow Condensed"`;
+      ctx.fillStyle = subtitleColor;
+      setLS(S_SIZE * 0.12);
+      ctx.fillText(subtitle.toUpperCase(), x, y);
+      y -= S_SIZE;
+    }
+
+    // Gap + divider
+    y -= DIV_GAP;
+    drawDivider(ctx, y, isLeft, PAD_X, DIV_H);
+    y -= DIV_H;
+
+    // Margin before line2
+    y -= L2_MB;
+
+    // Second title line
+    if (titleLine2) {
+      ctx.font = `800 ${L2_SIZE}px "Barlow Condensed"`;
+      ctx.fillStyle = titleLine2Color;
+      setLS(L2_SIZE * 0.02);
+      ctx.fillText(titleLine2.toUpperCase(), x, y);
+      y -= L2_LH;
+    }
+
+    // Title
+    if (title) {
+      ctx.font = `900 ${T_SIZE}px "Barlow Condensed"`;
+      ctx.fillStyle = titleColor;
+      setLS(T_SIZE * -0.01);
+      ctx.fillText(title.toUpperCase(), x, y);
+    }
+
+  } else {
+    // Build from top down
+    ctx.textBaseline = 'top';
+    let y = PAD_Y;
+
+    // Title
+    if (title) {
+      ctx.font = `900 ${T_SIZE}px "Barlow Condensed"`;
+      ctx.fillStyle = titleColor;
+      setLS(T_SIZE * -0.01);
+      ctx.fillText(title.toUpperCase(), x, y);
+      y += T_LH;
+    }
+
+    // Second title line
+    if (titleLine2) {
+      ctx.font = `800 ${L2_SIZE}px "Barlow Condensed"`;
+      ctx.fillStyle = titleLine2Color;
+      setLS(L2_SIZE * 0.02);
+      ctx.fillText(titleLine2.toUpperCase(), x, y);
+      y += L2_LH;
+    }
+
+    // Margin + divider
+    y += L2_MB;
+    drawDivider(ctx, y, isLeft, PAD_X, DIV_H);
+    y += DIV_H + DIV_GAP;
+
+    // Subtitle
+    if (subtitle) {
+      ctx.font = `900 ${S_SIZE}px "Barlow Condensed"`;
+      ctx.fillStyle = subtitleColor;
+      setLS(S_SIZE * 0.12);
+      ctx.fillText(subtitle.toUpperCase(), x, y);
+    }
+  }
+
+  // Reset
+  try { ctx.letterSpacing = '0px'; } catch(e) {}
+}
+
+function drawDivider(ctx, y, isLeft, padX, h) {
+  const divW  = 1080 - 2 * padX;
+  const x1    = isLeft ? padX : (1080 - padX);
+  const x2    = isLeft ? (padX + divW) : padX;
+  const grad  = ctx.createLinearGradient(x1, y, x2, y);
+  grad.addColorStop(0,   '#E8B800');
+  grad.addColorStop(0.5, 'rgba(232,184,0,0.2)');
+  grad.addColorStop(1,   'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(padX, y, divW, h);
+}
+
+// ============================================================
+// INIT
+function resetGenerateBtn() {
+  generateBtn.innerHTML = '<span class="material-symbols-outlined text-lg">image</span><span class="uppercase text-xs tracking-widest">Generar y descargar</span>';
+}
+
+// ============================================================
+function init() {
+  setupUpload();
+  setupCropDrag();
+  setupColorPicker('title');
+  setupColorPicker('titleLine2');
+  setupColorPicker('subtitle');
+  setupAlignment();
+
+  titleInput.addEventListener('input', () => { state.title = titleInput.value; updatePreview(); resetGenerateBtn(); });
+  titleLine2Input.addEventListener('input', () => { state.titleLine2 = titleLine2Input.value; updatePreview(); resetGenerateBtn(); });
+  subtitleInput.addEventListener('input', () => { state.subtitle = subtitleInput.value; updatePreview(); resetGenerateBtn(); });
+
+  generateBtn.addEventListener('click', generateImage);
+
+  window.addEventListener('resize', () => {
+    if (state.image) { setupCropRect(); updatePreview(); }
+  });
+}
+
+init();
+</script>
+</body>
+</html>
