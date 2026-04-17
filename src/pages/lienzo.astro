@@ -4,8 +4,8 @@
 <meta name="robots" content="noindex, nofollow"/>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>FastArt — Generador de Miniaturas</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet"/>
+<title>lienzo — Generador de Miniaturas</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Cormorant+Garamond:ital,wght@1,300;1,500;1,600&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@300;400;600;800&family=Roboto:wght@400;900&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script is:inline src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script is:inline id="tailwind-config">
@@ -80,6 +80,17 @@ tailwind.config = {
 <style is:global>
   body { font-family: 'Manrope', sans-serif; }
   .font-serif { font-family: 'Noto Serif', serif; }
+  .lienzo-logo { display: flex; align-items: center; gap: 0.05rem; text-decoration: none; }
+  .lienzo-logo-icon { width: 2.2rem; height: 2.2rem; flex-shrink: 0; }
+  .lienzo-logo-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.65rem;
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--color-on-surface, #1a1c1d);
+  }
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
   .bg-gradient-primary { background: linear-gradient(135deg, #F06071 0%, #c93050 100%); }
   .glass-header { background: rgba(249, 249, 250, 0.85); backdrop-filter: blur(24px); }
@@ -165,7 +176,10 @@ tailwind.config = {
 <header class="w-full top-0 sticky z-50 glass-header border-b border-outline-variant/20">
   <div class="flex justify-between items-center h-16 px-8 w-full mx-auto max-w-[1920px]">
     <div class="flex items-center gap-8">
-      <span class="font-serif italic text-2xl font-bold tracking-tighter text-on-surface">FastArt</span>
+      <a href="/lienzo" class="lienzo-logo">
+        <img src="/lienzo/lienzo.svg" alt="lienzo" class="lienzo-logo-icon"/>
+        <span class="lienzo-logo-text">lienzo</span>
+      </a>
       <nav class="hidden md:flex gap-8">
         <a class="font-sans uppercase tracking-widest text-[11px] text-primary font-semibold border-b-2 border-primary pb-1" href="#">Miniaturas</a>
       </nav>
@@ -211,6 +225,7 @@ tailwind.config = {
             <img id="previewImg" alt="Preview"/>
             <div id="cropRect">
               <div id="previewTextBlock"></div>
+              <div id="previewLogoBlock" class="absolute pointer-events-none" style="display:none"></div>
               <div class="absolute top-3 left-3 z-10">
                 <span class="font-sans uppercase tracking-widest text-[9px] text-white bg-primary/80 backdrop-blur-sm px-2 py-1 rounded">1080 × 1920</span>
               </div>
@@ -230,22 +245,22 @@ tailwind.config = {
 
           <div class="flex-shrink-0 flex flex-col gap-2">
             <button class="template-btn relative w-36 rounded-xl border-2 border-primary overflow-hidden text-left transition-all shadow-md" data-template="rutadorada">
-              <img src="/fastart/_miniatura_sundance.png" alt="RutaDorada Films" class="w-full aspect-[9/16] object-cover block"/>
+              <img src="/lienzo/_miniatura_sundance.png" alt="RutaDorada Films" class="w-full aspect-[9/16] object-cover block"/>
               <div class="absolute top-2 left-2 tpl-badge">
                 <span class="font-sans uppercase tracking-widest text-[8px] font-bold text-white bg-primary px-2 py-0.5 rounded-full">Activa</span>
               </div>
             </button>
-            <span class="font-sans text-[10px] font-semibold text-primary text-center">RutaDorada Films</span>
+            <span class="font-sans text-[10px] font-semibold text-primary text-center" data-tpl-label="rutadorada">RutaDorada Films</span>
           </div>
 
           <div class="flex-shrink-0 flex flex-col gap-2">
             <button class="template-btn relative w-36 rounded-xl border-2 border-outline-variant/30 overflow-hidden text-left transition-all" data-template="metarrelato">
-              <img src="/fastart/_miniatura_metarrelato.png" alt="metarrelato" class="w-full aspect-[9/16] object-cover block"/>
+              <img src="/lienzo/_miniatura_metarrelato.png" alt="metarrelato" class="w-full aspect-[9/16] object-cover block"/>
               <div class="absolute top-2 left-2 tpl-badge hidden">
                 <span class="font-sans uppercase tracking-widest text-[8px] font-bold text-white bg-primary px-2 py-0.5 rounded-full">Activa</span>
               </div>
             </button>
-            <span class="font-sans text-[10px] font-semibold text-on-surface-variant text-center">metarrelato</span>
+            <span class="font-sans text-[10px] font-semibold text-on-surface-variant text-center" data-tpl-label="metarrelato">metarrelato</span>
           </div>
 
         </div>
@@ -256,7 +271,7 @@ tailwind.config = {
     <section class="lg:col-span-4 bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden">
       <div class="p-8 flex flex-col gap-8">
 
-        <!-- Upload -->
+        <!-- Upload (shared) -->
         <div>
           <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Imagen de origen</label>
           <button id="changeImageBtn" class="w-full py-5 border-2 border-dashed border-outline-variant rounded-lg flex items-center justify-center gap-3 hover:bg-surface-container-low hover:border-primary/40 transition-all text-on-surface-variant text-sm">
@@ -266,75 +281,117 @@ tailwind.config = {
           <input type="file" id="fileInput" accept="image/*" class="hidden"/>
         </div>
 
-        <!-- Title -->
-        <div>
-          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Título</label>
-          <div class="flex gap-3 items-center">
-            <input id="titleInput"
-              class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm"
-              placeholder="Ej. Sundance" type="text"/>
-            <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
-              <div id="titleColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#E8B800"></div>
-              <span id="titleColorHex" class="font-mono text-[10px] text-on-surface-variant">#E8B800</span>
-              <input type="color" id="titleColorInput" value="#E8B800"/>
-            </label>
-          </div>
-        </div>
+        <!-- RutaDorada controls -->
+        <div id="controls-rutadorada" class="flex flex-col gap-8">
 
-        <!-- Second title line -->
-        <div>
-          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Segunda línea de título</label>
-          <div class="flex gap-3 items-center">
-            <input id="titleLine2Input"
-              class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm"
-              placeholder="Ej. Film Festival" type="text"/>
-            <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
-              <div id="titleLine2ColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#ffffff"></div>
-              <span id="titleLine2ColorHex" class="font-mono text-[10px] text-on-surface-variant">#FFFFFF</span>
-              <input type="color" id="titleLine2ColorInput" value="#ffffff"/>
-            </label>
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Título</label>
+            <div class="flex gap-3 items-center">
+              <input id="titleInput" class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm" placeholder="Ej. Sundance" type="text"/>
+              <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
+                <div id="titleColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#E8B800"></div>
+                <span id="titleColorHex" class="font-mono text-[10px] text-on-surface-variant">#E8B800</span>
+                <input type="color" id="titleColorInput" value="#E8B800"/>
+              </label>
+            </div>
           </div>
-        </div>
 
-        <!-- Subtitle -->
-        <div>
-          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Subtítulo</label>
-          <div class="flex gap-3 items-center">
-            <input id="subtitleInput"
-              class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm"
-              placeholder="Ej. CDMX 2026" type="text"/>
-            <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
-              <div id="subtitleColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#E8B800"></div>
-              <span id="subtitleColorHex" class="font-mono text-[10px] text-on-surface-variant">#E8B800</span>
-              <input type="color" id="subtitleColorInput" value="#E8B800"/>
-            </label>
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Segunda línea de título</label>
+            <div class="flex gap-3 items-center">
+              <input id="titleLine2Input" class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm" placeholder="Ej. Film Festival" type="text"/>
+              <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
+                <div id="titleLine2ColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#ffffff"></div>
+                <span id="titleLine2ColorHex" class="font-mono text-[10px] text-on-surface-variant">#FFFFFF</span>
+                <input type="color" id="titleLine2ColorInput" value="#ffffff"/>
+              </label>
+            </div>
           </div>
-        </div>
 
-        <!-- Alignment -->
-        <div>
-          <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Alineación del texto</label>
-          <div class="grid grid-cols-2 gap-2">
-            <button class="align-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="left">
-              <span class="material-symbols-outlined text-base">format_align_left</span>
-              Izquierda
-            </button>
-            <button class="align-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="right">
-              <span class="material-symbols-outlined text-base">format_align_right</span>
-              Derecha
-            </button>
-            <button class="align-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="top">
-              <span class="material-symbols-outlined text-base">vertical_align_top</span>
-              Arriba
-            </button>
-            <button class="align-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="bottom">
-              <span class="material-symbols-outlined text-base">vertical_align_bottom</span>
-              Abajo
-            </button>
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Subtítulo</label>
+            <div class="flex gap-3 items-center">
+              <input id="subtitleInput" class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm" placeholder="Ej. CDMX 2026" type="text"/>
+              <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
+                <div id="subtitleColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#E8B800"></div>
+                <span id="subtitleColorHex" class="font-mono text-[10px] text-on-surface-variant">#E8B800</span>
+                <input type="color" id="subtitleColorInput" value="#E8B800"/>
+              </label>
+            </div>
           </div>
-        </div>
 
-        <!-- Generate -->
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Alineación del texto</label>
+            <div class="grid grid-cols-2 gap-2" id="rd-align-btns">
+              <button class="align-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="left" data-panel="rd"><span class="material-symbols-outlined text-base">format_align_left</span>Izquierda</button>
+              <button class="align-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="right" data-panel="rd"><span class="material-symbols-outlined text-base">format_align_right</span>Derecha</button>
+              <button class="align-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="top" data-panel="rd"><span class="material-symbols-outlined text-base">vertical_align_top</span>Arriba</button>
+              <button class="align-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="bottom" data-panel="rd"><span class="material-symbols-outlined text-base">vertical_align_bottom</span>Abajo</button>
+            </div>
+          </div>
+
+        </div><!-- /controls-rutadorada -->
+
+        <!-- Metarrelato controls -->
+        <div id="controls-metarrelato" class="hidden flex-col gap-8">
+
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Título</label>
+            <div class="flex gap-3 items-center">
+              <input id="metaTitleInput" class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm" placeholder="Ej. metarrelato" type="text"/>
+              <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0">
+                <div id="metaTitleColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#CCFF00"></div>
+                <span id="metaTitleColorHex" class="font-mono text-[10px] text-on-surface-variant">#CCFF00</span>
+                <input type="color" id="metaTitleColorInput" value="#CCFF00"/>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Contenido</label>
+            <div class="flex gap-3 items-start">
+              <textarea id="metaBodyInput" rows="4" class="flex-grow bg-surface-container-low border-b-2 border-outline-variant focus:border-primary transition-all px-3 py-2 text-on-surface placeholder-slate-400 outline-none text-sm resize-none" placeholder="Escribe el contenido de la publicación…"></textarea>
+              <label class="flex items-center gap-2 bg-surface-container-low px-3 py-2 rounded-lg border border-outline-variant/30 cursor-pointer relative flex-shrink-0 self-start mt-0.5">
+                <div id="metaBodyColorSwatch" class="w-5 h-5 rounded-sm shadow-sm border border-black/10" style="background:#CCFF00"></div>
+                <span id="metaBodyColorHex" class="font-mono text-[10px] text-on-surface-variant">#CCFF00</span>
+                <input type="color" id="metaBodyColorInput" value="#CCFF00"/>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Alineación del texto</label>
+            <div class="grid grid-cols-2 gap-2" id="meta-align-btns">
+              <button class="align-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="left" data-panel="meta"><span class="material-symbols-outlined text-base">format_align_left</span>Izquierda</button>
+              <button class="align-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="right" data-panel="meta"><span class="material-symbols-outlined text-base">format_align_right</span>Derecha</button>
+              <button class="align-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="top" data-panel="meta"><span class="material-symbols-outlined text-base">vertical_align_top</span>Arriba</button>
+              <button class="align-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-align="bottom" data-panel="meta"><span class="material-symbols-outlined text-base">vertical_align_bottom</span>Abajo</button>
+            </div>
+          </div>
+
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Color del logo</label>
+            <div class="flex gap-3 items-center">
+              <button class="logo-color-btn ring-2 ring-primary ring-offset-1 ring-offset-surface-container-lowest w-9 h-9 rounded-full border border-white/20 transition-all" data-color="#CCFF00" style="background:#CCFF00" title="Verde fosforescente"></button>
+              <button class="logo-color-btn w-9 h-9 rounded-full border border-black/20 transition-all" data-color="#ffffff" style="background:#ffffff" title="Blanco"></button>
+              <button class="logo-color-btn w-9 h-9 rounded-full border border-white/10 transition-all" data-color="#000000" style="background:#000000" title="Negro"></button>
+              <button class="logo-color-btn w-9 h-9 rounded-full border border-white/20 transition-all" data-color="#F43F5E" style="background:#F43F5E" title="Rosa"></button>
+            </div>
+          </div>
+
+          <div>
+            <label class="font-sans uppercase tracking-widest text-[10px] text-slate-500 mb-3 block">Ubicación del logotipo</label>
+            <div class="grid grid-cols-2 gap-2">
+              <button class="logo-pos-btn active flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-pos="top-left"><span class="material-symbols-outlined text-base">north_west</span>Superior izq.</button>
+              <button class="logo-pos-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-pos="top-right"><span class="material-symbols-outlined text-base">north_east</span>Superior der.</button>
+              <button class="logo-pos-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-pos="bottom-left"><span class="material-symbols-outlined text-base">south_west</span>Inferior izq.</button>
+              <button class="logo-pos-btn flex items-center justify-center gap-2 px-3 py-3 rounded-lg border border-outline-variant/30 text-on-surface-variant hover:border-primary/50 transition-all text-[10px] font-semibold uppercase tracking-wider" data-pos="bottom-right"><span class="material-symbols-outlined text-base">south_east</span>Inferior der.</button>
+            </div>
+          </div>
+
+        </div><!-- /controls-metarrelato -->
+
+        <!-- Generate (shared) -->
         <button id="generateBtn" class="w-full bg-gradient-primary text-white py-5 rounded-lg font-bold tracking-widest shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3 uppercase text-xs">
           <span class="material-symbols-outlined text-lg">image</span>
           Generar y descargar
@@ -348,7 +405,7 @@ tailwind.config = {
 <footer class="w-full py-6 border-t border-slate-200/40 bg-surface mt-auto">
   <div class="flex justify-end items-center px-8 w-full mx-auto max-w-[1920px]">
     <p class="font-sans text-xs tracking-tight text-slate-400 flex items-center gap-1.5">
-      ©2026 FastArt. Creado por metarrelato
+      ©2026 lienzo. Creado por metarrelato
       <img src="/logo.svg" alt="metarrelato" class="inline-block w-4 h-4 opacity-80"/>
     </p>
   </div>
@@ -359,8 +416,8 @@ tailwind.config = {
 // STATE
 // ============================================================
 const TEMPLATES = {
-  rutadorada: { titleColor: '#E8B800', titleLine2Color: '#ffffff', subtitleColor: '#E8B800', dividerColor: '#E8B800' },
-  metarrelato: { titleColor: '#C7F801', titleLine2Color: '#ffffff', subtitleColor: '#C7F801', dividerColor: '#C7F801' },
+  rutadorada:  { titleColor: '#E8B800', titleLine2Color: '#ffffff', subtitleColor: '#E8B800', dividerColor: '#E8B800' },
+  metarrelato: { metaTitleColor: '#CCFF00', metaBodyColor: '#CCFF00', logoColor: '#CCFF00', logoPosition: 'top-left' },
 };
 
 const state = {
@@ -378,6 +435,13 @@ const state = {
   subtitle: '',
   subtitleColor: '#E8B800',
   dividerColor: '#E8B800',
+  // metarrelato-specific
+  metaTitle: '',
+  metaTitleColor: '#CCFF00',
+  metaBody: '',
+  metaBodyColor: '#CCFF00',
+  logoColor: '#CCFF00',
+  logoPosition: 'top-left',
 };
 
 // ============================================================
@@ -391,24 +455,34 @@ const canvasWrapper    = document.getElementById('canvasWrapper');
 const previewImg       = document.getElementById('previewImg');
 const cropRect         = document.getElementById('cropRect');
 const previewTextBlock = document.getElementById('previewTextBlock');
+const previewLogoBlock = document.getElementById('previewLogoBlock');
 
+// RutaDorada inputs
 const titleInput            = document.getElementById('titleInput');
 const titleColorInput       = document.getElementById('titleColorInput');
 const titleColorSwatch      = document.getElementById('titleColorSwatch');
 const titleColorHex         = document.getElementById('titleColorHex');
-
 const titleLine2Input       = document.getElementById('titleLine2Input');
 const titleLine2ColorInput  = document.getElementById('titleLine2ColorInput');
 const titleLine2ColorSwatch = document.getElementById('titleLine2ColorSwatch');
 const titleLine2ColorHex    = document.getElementById('titleLine2ColorHex');
-
 const subtitleInput         = document.getElementById('subtitleInput');
 const subtitleColorInput    = document.getElementById('subtitleColorInput');
 const subtitleColorSwatch   = document.getElementById('subtitleColorSwatch');
 const subtitleColorHex      = document.getElementById('subtitleColorHex');
 
-const generateBtn  = document.getElementById('generateBtn');
-const alignBtns    = document.querySelectorAll('.align-btn');
+// Metarrelato inputs
+const metaTitleInput       = document.getElementById('metaTitleInput');
+const metaTitleColorInput  = document.getElementById('metaTitleColorInput');
+const metaTitleColorSwatch = document.getElementById('metaTitleColorSwatch');
+const metaTitleColorHex    = document.getElementById('metaTitleColorHex');
+const metaBodyInput        = document.getElementById('metaBodyInput');
+const metaBodyColorInput   = document.getElementById('metaBodyColorInput');
+const metaBodyColorSwatch  = document.getElementById('metaBodyColorSwatch');
+const metaBodyColorHex     = document.getElementById('metaBodyColorHex');
+
+const generateBtn = document.getElementById('generateBtn');
+const alignBtns   = document.querySelectorAll('.align-btn');
 
 // ============================================================
 // IMAGE UPLOAD
@@ -578,18 +652,25 @@ function escapeHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+
 function updatePreview() {
   if (!state.image) return;
 
   const { cropW, cropH } = getCropDisplaySize();
   const scale = cropW / 1080;
 
+  if (state.activeTemplate === 'metarrelato') {
+    updatePreviewMetarrelato(scale, cropW, cropH);
+  } else {
+    updatePreviewRutadorada(scale);
+  }
+}
+
+function updatePreviewRutadorada(scale) {
   const isLeft   = state.align.h === 'left';
   const isBottom = state.align.v === 'bottom';
-
   const padX = 72 * scale;
   const padY = 180 * scale;
-
   const tb = previewTextBlock;
   tb.style.left      = isLeft   ? `${padX}px` : 'auto';
   tb.style.right     = isLeft   ? 'auto' : `${padX}px`;
@@ -600,30 +681,72 @@ function updatePreview() {
 
   const divDir = isLeft ? 'to right' : 'to left';
   const hasAny = state.title || state.titleLine2 || state.subtitle;
-
   let html = '';
-
   if (state.title) {
     html += `<span class="preview-title-main" style="font-size:${196*scale}px;color:${state.titleColor};margin-bottom:${12*scale}px">${escapeHtml(state.title)}</span>`;
   }
-
   if (state.titleLine2) {
     html += `<span class="preview-title-sub" style="font-size:${96*scale}px;color:${state.titleLine2Color};margin-bottom:${28*scale}px;display:block">${escapeHtml(state.titleLine2)}</span>`;
   } else if (state.title) {
     html += `<div style="height:${28*scale}px"></div>`;
   }
-
   if (hasAny) {
     const dc = state.dividerColor;
     const dcAlpha = hexToRgba(dc, 0.2);
     html += `<div style="height:${2*scale}px;background:linear-gradient(${divDir},${dc},${dcAlpha},transparent);margin-bottom:${24*scale}px"></div>`;
   }
-
   if (state.subtitle) {
     html += `<span class="preview-subtitle" style="font-size:${72*scale}px;color:${state.subtitleColor}">${escapeHtml(state.subtitle)}</span>`;
   }
-
   tb.innerHTML = html;
+  previewLogoBlock.style.display = 'none';
+}
+
+function updatePreviewMetarrelato(scale, cropW, cropH) {
+  const isLeft   = state.align.h === 'left';
+  const isBottom = state.align.v === 'bottom';
+  const padLeft   = 80 * scale;
+  const padRight  = 120 * scale;
+  const padBottom = 160 * scale;
+  const padTop    = 50 * scale;
+
+  // Text block
+  const tb = previewTextBlock;
+  tb.style.left      = isLeft ? `${padLeft}px` : 'auto';
+  tb.style.right     = isLeft ? 'auto' : `${padRight}px`;
+  tb.style.bottom    = isBottom ? `${padBottom}px` : 'auto';
+  tb.style.top       = isBottom ? 'auto' : `${padTop + 144 * scale + 24 * scale}px`;
+  tb.style.textAlign = isLeft ? 'left' : 'right';
+  tb.style.maxWidth  = `${cropW - padLeft - padRight}px`;
+
+  const TITLE_SIZE = 148 * scale;
+  const BODY_SIZE  = 44  * scale;
+  const BODY_LH    = BODY_SIZE * 1.53;
+
+  let html = '';
+  if (state.metaTitle) {
+    html += `<div style="font-family:'Roboto',sans-serif;font-weight:900;font-size:${TITLE_SIZE}px;line-height:0.92;letter-spacing:-${2*scale}px;color:${state.metaTitleColor};text-transform:lowercase;margin-bottom:${16*scale}px">${escapeHtml(state.metaTitle)}</div>`;
+  }
+  if (state.metaBody) {
+    html += `<div style="font-family:'Roboto',sans-serif;font-weight:400;font-size:${BODY_SIZE}px;line-height:${BODY_LH}px;letter-spacing:${0.5*scale}px;color:${state.metaBodyColor};word-break:break-word">${escapeHtml(state.metaBody)}</div>`;
+  }
+  tb.innerHTML = html;
+
+  // Logo
+  const LOGO_H = 144 * scale;
+  const LOGO_W = LOGO_H; // square viewBox
+  const lb = previewLogoBlock;
+  lb.style.display = 'block';
+  lb.style.width   = `${LOGO_W}px`;
+  lb.style.height  = `${LOGO_H}px`;
+
+  switch (state.logoPosition) {
+    case 'top-left':     lb.style.left = `${80*scale}px`;  lb.style.top = `${50*scale}px`;  lb.style.right = 'auto'; lb.style.bottom = 'auto'; break;
+    case 'top-right':    lb.style.right = `${80*scale}px`; lb.style.top = `${50*scale}px`;  lb.style.left = 'auto';  lb.style.bottom = 'auto'; break;
+    case 'bottom-left':  lb.style.left = `${80*scale}px`;  lb.style.bottom = `${80*scale}px`; lb.style.right = 'auto'; lb.style.top = 'auto';   break;
+    case 'bottom-right': lb.style.right = `${80*scale}px`; lb.style.bottom = `${80*scale}px`; lb.style.left = 'auto';  lb.style.top = 'auto';   break;
+  }
+  lb.innerHTML = `<div style="width:${LOGO_W}px;height:${LOGO_H}px;background-color:${state.logoColor};-webkit-mask-image:url('/lienzo/metarrelato-future.svg');mask-image:url('/lienzo/metarrelato-future.svg');-webkit-mask-size:contain;mask-size:contain;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;"></div>`;
 }
 
 // ============================================================
@@ -683,22 +806,50 @@ function applyTemplate(id) {
   const tpl = TEMPLATES[id];
   if (!tpl) return;
   state.activeTemplate = id;
-  state.titleColor     = tpl.titleColor;
-  state.titleLine2Color = tpl.titleLine2Color;
-  state.subtitleColor  = tpl.subtitleColor;
-  state.dividerColor   = tpl.dividerColor;
 
-  // Sync color pickers UI
-  ['title', 'titleLine2', 'subtitle'].forEach(prefix => {
-    const key    = `${prefix}Color`;
-    const input  = document.getElementById(`${prefix}ColorInput`);
-    const swatch = document.getElementById(`${prefix}ColorSwatch`);
-    const hexEl  = document.getElementById(`${prefix}ColorHex`);
-    if (!input) return;
-    input.value = state[key];
-    swatch.style.background = state[key];
-    hexEl.textContent = state[key].toUpperCase();
-  });
+  const rdPanel   = document.getElementById('controls-rutadorada');
+  const metaPanel = document.getElementById('controls-metarrelato');
+
+  if (id === 'metarrelato') {
+    // Apply metarrelato defaults to state
+    state.metaTitleColor = tpl.metaTitleColor;
+    state.metaBodyColor  = tpl.metaBodyColor;
+    state.logoColor      = tpl.logoColor;
+    state.logoPosition   = tpl.logoPosition;
+    // Sync metarrelato color pickers
+    metaTitleColorInput.value           = state.metaTitleColor;
+    metaTitleColorSwatch.style.background = state.metaTitleColor;
+    metaTitleColorHex.textContent       = state.metaTitleColor.toUpperCase();
+    metaBodyColorInput.value            = state.metaBodyColor;
+    metaBodyColorSwatch.style.background  = state.metaBodyColor;
+    metaBodyColorHex.textContent        = state.metaBodyColor.toUpperCase();
+    // Reset logo selectors
+    syncLogoColorBtns();
+    syncLogoPosBtns();
+    // Show/hide panels
+    rdPanel.style.display   = 'none';
+    metaPanel.style.display = 'flex';
+  } else {
+    // Apply rutadorada defaults to state
+    state.titleColor     = tpl.titleColor;
+    state.titleLine2Color = tpl.titleLine2Color;
+    state.subtitleColor  = tpl.subtitleColor;
+    state.dividerColor   = tpl.dividerColor;
+    // Sync rutadorada color pickers
+    ['title', 'titleLine2', 'subtitle'].forEach(prefix => {
+      const key    = `${prefix}Color`;
+      const input  = document.getElementById(`${prefix}ColorInput`);
+      const swatch = document.getElementById(`${prefix}ColorSwatch`);
+      const hexEl  = document.getElementById(`${prefix}ColorHex`);
+      if (!input) return;
+      input.value = state[key];
+      swatch.style.background = state[key];
+      hexEl.textContent = state[key].toUpperCase();
+    });
+    // Show/hide panels
+    rdPanel.style.display   = 'flex';
+    metaPanel.style.display = 'none';
+  }
 
   // Update template button borders + badge
   document.querySelectorAll('.template-btn').forEach(btn => {
@@ -710,12 +861,71 @@ function applyTemplate(id) {
     if (badge) badge.classList.toggle('hidden', !isActive);
   });
 
+  // Update template label colors
+  document.querySelectorAll('[data-tpl-label]').forEach(label => {
+    const isActive = label.dataset.tplLabel === id;
+    label.classList.toggle('text-primary', isActive);
+    label.classList.toggle('text-on-surface-variant', !isActive);
+  });
+
   updatePreview();
+}
+
+function syncLogoColorBtns() {
+  document.querySelectorAll('.logo-color-btn').forEach(b => {
+    const active = b.dataset.color === state.logoColor;
+    b.classList.toggle('ring-2', active);
+    b.classList.toggle('ring-primary', active);
+    b.classList.toggle('ring-offset-1', active);
+    b.classList.toggle('ring-offset-surface-container-lowest', active);
+  });
+}
+
+function syncLogoPosBtns() {
+  document.querySelectorAll('.logo-pos-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.pos === state.logoPosition);
+  });
 }
 
 function setupTemplates() {
   document.querySelectorAll('.template-btn[data-template]').forEach(btn => {
     btn.addEventListener('click', () => applyTemplate(btn.dataset.template));
+  });
+}
+
+function setupMetaColorPicker(inputId, swatchId, hexId, stateKey) {
+  const input  = document.getElementById(inputId);
+  const swatch = document.getElementById(swatchId);
+  const hexEl  = document.getElementById(hexId);
+  input.addEventListener('input', () => {
+    const c = input.value;
+    swatch.style.background = c;
+    hexEl.textContent = c.toUpperCase();
+    state[stateKey] = c;
+    updatePreview();
+  });
+}
+
+function setupMetarelatoControls() {
+  metaTitleInput.addEventListener('input', () => { state.metaTitle = metaTitleInput.value; updatePreview(); resetGenerateBtn(); });
+  metaBodyInput.addEventListener('input',  () => { state.metaBody  = metaBodyInput.value;  updatePreview(); resetGenerateBtn(); });
+  setupMetaColorPicker('metaTitleColorInput', 'metaTitleColorSwatch', 'metaTitleColorHex', 'metaTitleColor');
+  setupMetaColorPicker('metaBodyColorInput',  'metaBodyColorSwatch',  'metaBodyColorHex',  'metaBodyColor');
+
+  document.querySelectorAll('.logo-color-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.logoColor = btn.dataset.color;
+      syncLogoColorBtns();
+      updatePreview();
+    });
+  });
+
+  document.querySelectorAll('.logo-pos-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      state.logoPosition = btn.dataset.pos;
+      syncLogoPosBtns();
+      updatePreview();
+    });
   });
 }
 
@@ -754,31 +964,44 @@ async function generateImage() {
     ctx.drawImage(state.image, cropImgX, cropImgY, cropImgW, cropImgH, 0, 0, 1080, 1920);
     ctx.filter = 'none';
 
-    // 2. Vignette — dark side follows text position
-    const vigTop = state.align.v === 'top';
-    const vig = ctx.createLinearGradient(0, vigTop ? 1920 : 0, 0, vigTop ? 0 : 1920);
-    vig.addColorStop(0.25, 'rgba(0,0,0,0)');
-    vig.addColorStop(0.50, 'rgba(0,0,0,0.15)');
-    vig.addColorStop(0.68, 'rgba(0,0,0,0.70)');
-    vig.addColorStop(0.84, 'rgba(0,0,0,0.93)');
-    vig.addColorStop(1.00, '#000000');
-    ctx.fillStyle = vig;
-    ctx.fillRect(0, 0, 1080, 1920);
+    // 2–4. Template-specific overlay
+    if (state.activeTemplate === 'metarrelato') {
+      const ov = ctx.createLinearGradient(1080, 0, 0, 1920);
+      ov.addColorStop(0,    'rgba(0,0,40,0.15)');
+      ov.addColorStop(0.30, 'rgba(0,0,40,0.05)');
+      ov.addColorStop(0.70, 'rgba(0,0,20,0.55)');
+      ov.addColorStop(1.00, 'rgba(0,0,10,0.75)');
+      ctx.fillStyle = ov;
+      ctx.fillRect(0, 0, 1080, 1920);
+    } else {
+      // RutaDorada: vignette + cinematic bleed + film grain
+      const vigTop = state.align.v === 'top';
+      const vig = ctx.createLinearGradient(0, vigTop ? 1920 : 0, 0, vigTop ? 0 : 1920);
+      vig.addColorStop(0.25, 'rgba(0,0,0,0)');
+      vig.addColorStop(0.50, 'rgba(0,0,0,0.15)');
+      vig.addColorStop(0.68, 'rgba(0,0,0,0.70)');
+      vig.addColorStop(0.84, 'rgba(0,0,0,0.93)');
+      vig.addColorStop(1.00, '#000000');
+      ctx.fillStyle = vig;
+      ctx.fillRect(0, 0, 1080, 1920);
 
-    // 3. Cinematic color bleed
-    const bleed = ctx.createRadialGradient(162, 768, 0, 162, 768, 594);
-    bleed.addColorStop(0, 'rgba(180,20,20,0.18)');
-    bleed.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.globalCompositeOperation = 'screen';
-    ctx.fillStyle = bleed;
-    ctx.fillRect(0, 0, 1080, 1920);
-    ctx.globalCompositeOperation = 'source-over';
+      const bleed = ctx.createRadialGradient(162, 768, 0, 162, 768, 594);
+      bleed.addColorStop(0, 'rgba(180,20,20,0.18)');
+      bleed.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.globalCompositeOperation = 'screen';
+      ctx.fillStyle = bleed;
+      ctx.fillRect(0, 0, 1080, 1920);
+      ctx.globalCompositeOperation = 'source-over';
 
-    // 4. Film grain
-    drawGrain(ctx);
+      drawGrain(ctx);
+    }
 
     // 5. Text
-    drawTextOnCtx(ctx, 1080, 1920);
+    if (state.activeTemplate === 'metarrelato') {
+      drawText_metarrelato(ctx, 1080, 1920);
+    } else {
+      drawText_rutadorada(ctx, 1080, 1920);
+    }
 
     // 6. Download
     canvas.toBlob((blob) => {
@@ -824,7 +1047,7 @@ function drawGrain(ctx) {
   ctx.globalAlpha = 1;
 }
 
-function drawTextOnCtx(ctx, W, H) {
+function drawText_rutadorada(ctx, W, H) {
   const { title, titleColor, titleLine2, titleLine2Color, subtitle, subtitleColor, align } = state;
   if (!title && !titleLine2 && !subtitle) return;
 
@@ -917,6 +1140,138 @@ function drawTextOnCtx(ctx, W, H) {
   try { ctx.letterSpacing = '0px'; } catch(e) {}
 }
 
+function wrapText(ctx, text, maxWidth, fontSize, weight, family) {
+  ctx.font = `${weight} ${fontSize}px "${family}"`;
+  const words = text.split(' ');
+  const lines = [];
+  let line = '';
+  for (const word of words) {
+    const test = line ? `${line} ${word}` : word;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+function wrapTextNoOrphan(ctx, text, maxWidth, fontSize, weight, family) {
+  const lines = wrapText(ctx, text, maxWidth, fontSize, weight, family);
+  // If last line is a single word and there's a previous line, absorb it
+  if (lines.length >= 2 && lines[lines.length - 1].split(' ').length === 1) {
+    const prevWords = lines[lines.length - 2].split(' ');
+    const orphan = prevWords.pop();
+    if (prevWords.length > 0) {
+      lines[lines.length - 2] = prevWords.join(' ');
+      lines[lines.length - 1] = orphan + ' ' + lines[lines.length - 1];
+    }
+  }
+  return lines;
+}
+
+function drawText_metarrelato(ctx, W, H) {
+  const { metaTitle, metaTitleColor, metaBody, metaBodyColor, align, logoColor, logoPosition } = state;
+  if (!metaTitle && !metaBody) return;
+
+  const isLeft   = align.h === 'left';
+  const isBottom = align.v === 'bottom';
+  const PAD_LEFT   = 80;
+  const PAD_RIGHT  = 120;
+  const PAD_BOTTOM = 160;
+  const PAD_TOP    = 50;
+  const MAX_W      = W - PAD_LEFT - PAD_RIGHT;
+  const TITLE_SIZE = 148;
+  const BODY_SIZE  = 44;
+  const BODY_LH    = BODY_SIZE * 1.53;
+  const GAP        = 16;
+  const LOGO_H     = 144;
+  const LOGO_PAD   = 80;
+
+  // Draw logo (colorized)
+  if (metarrelatoLogo) {
+    const ratio  = metarrelatoLogo.naturalWidth / metarrelatoLogo.naturalHeight;
+    const logoW  = Math.round(LOGO_H * ratio);
+    let logoX, logoY;
+    switch (logoPosition) {
+      case 'top-right':    logoX = W - LOGO_PAD - logoW; logoY = PAD_TOP;              break;
+      case 'bottom-left':  logoX = LOGO_PAD;              logoY = H - LOGO_PAD - LOGO_H; break;
+      case 'bottom-right': logoX = W - LOGO_PAD - logoW; logoY = H - LOGO_PAD - LOGO_H; break;
+      default:             logoX = LOGO_PAD;              logoY = PAD_TOP;              break; // top-left
+    }
+
+    if (logoColor === '#CCFF00') {
+      ctx.drawImage(metarrelatoLogo, logoX, logoY, logoW, LOGO_H);
+    } else {
+      const off = document.createElement('canvas');
+      off.width = logoW; off.height = LOGO_H;
+      const octx = off.getContext('2d');
+      octx.drawImage(metarrelatoLogo, 0, 0, logoW, LOGO_H);
+      octx.globalCompositeOperation = 'source-in';
+      octx.fillStyle = logoColor;
+      octx.fillRect(0, 0, logoW, LOGO_H);
+      ctx.drawImage(off, logoX, logoY, logoW, LOGO_H);
+    }
+  }
+
+  // Text alignment
+  const x = isLeft ? PAD_LEFT : (W - PAD_RIGHT);
+  ctx.textAlign = isLeft ? 'left' : 'right';
+
+  if (isBottom) {
+    ctx.textBaseline = 'bottom';
+    let y = H - PAD_BOTTOM;
+
+    if (metaBody) {
+      const lines = wrapTextNoOrphan(ctx, metaBody, MAX_W, BODY_SIZE, '400', 'Roboto');
+      ctx.font      = `400 ${BODY_SIZE}px "Roboto"`;
+      ctx.fillStyle = metaBodyColor;
+      try { ctx.letterSpacing = '0.5px'; } catch(e) {}
+      for (let i = lines.length - 1; i >= 0; i--) {
+        ctx.fillText(lines[i], x, y);
+        y -= BODY_LH;
+      }
+      y -= GAP;
+    }
+
+    if (metaTitle) {
+      ctx.font      = `900 ${TITLE_SIZE}px "Roboto"`;
+      ctx.fillStyle = metaTitleColor;
+      try { ctx.letterSpacing = '-2px'; } catch(e) {}
+      ctx.fillText(metaTitle.toLowerCase(), x, y);
+    }
+
+  } else {
+    // Top alignment: title → body
+    const logoOffset = (logoPosition === 'top-left' || logoPosition === 'top-right') ? PAD_TOP + LOGO_H + 24 : PAD_TOP;
+    ctx.textBaseline = 'top';
+    let y = logoOffset;
+
+    if (metaTitle) {
+      ctx.font      = `900 ${TITLE_SIZE}px "Roboto"`;
+      ctx.fillStyle = metaTitleColor;
+      try { ctx.letterSpacing = '-2px'; } catch(e) {}
+      ctx.fillText(metaTitle.toLowerCase(), x, y);
+      y += TITLE_SIZE * 0.92 + GAP;
+    }
+
+    if (metaBody) {
+      const lines = wrapTextNoOrphan(ctx, metaBody, MAX_W, BODY_SIZE, '400', 'Roboto');
+      ctx.font      = `400 ${BODY_SIZE}px "Roboto"`;
+      ctx.fillStyle = metaBodyColor;
+      try { ctx.letterSpacing = '0.5px'; } catch(e) {}
+      for (const line of lines) {
+        ctx.fillText(line, x, y);
+        y += BODY_LH;
+      }
+    }
+  }
+
+  try { ctx.letterSpacing = '0px'; } catch(e) {}
+}
+
 function drawDivider(ctx, y, isLeft, padX, h, W = 1080) {
   const divW  = W - 2 * padX;
   const x1    = isLeft ? padX : (W - padX);
@@ -940,15 +1295,18 @@ function resetGenerateBtn() {
 function init() {
   setupUpload();
   setupCropDrag();
+  // RutaDorada color pickers
   setupColorPicker('title');
   setupColorPicker('titleLine2');
   setupColorPicker('subtitle');
   setupAlignment();
   setupTemplates();
+  setupMetarelatoControls();
 
-  titleInput.addEventListener('input', () => { state.title = titleInput.value; updatePreview(); resetGenerateBtn(); });
-  titleLine2Input.addEventListener('input', () => { state.titleLine2 = titleLine2Input.value; updatePreview(); resetGenerateBtn(); });
-  subtitleInput.addEventListener('input', () => { state.subtitle = subtitleInput.value; updatePreview(); resetGenerateBtn(); });
+  // RutaDorada text inputs
+  titleInput.addEventListener('input',     () => { state.title    = titleInput.value;    updatePreview(); resetGenerateBtn(); });
+  titleLine2Input.addEventListener('input',() => { state.titleLine2 = titleLine2Input.value; updatePreview(); resetGenerateBtn(); });
+  subtitleInput.addEventListener('input',  () => { state.subtitle = subtitleInput.value; updatePreview(); resetGenerateBtn(); });
 
   generateBtn.addEventListener('click', generateImage);
 
@@ -956,6 +1314,14 @@ function init() {
     if (state.image) { setupCropRect(); updatePreview(); }
   });
 }
+
+// Preload metarrelato logo for canvas rendering
+let metarrelatoLogo = null;
+(function () {
+  const img = new Image();
+  img.onload = () => { metarrelatoLogo = img; };
+  img.src = '/lienzo/metarrelato-future.svg';
+}());
 
 init();
 </script>
