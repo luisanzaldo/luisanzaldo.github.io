@@ -37,13 +37,13 @@ tailwind.config = {
         "on-secondary-container": "#732102",
         "inverse-on-surface": "#f1f0f1",
         "surface-container-highest": "#e2e2e3",
-        "surface-tint": "#0062a1",
+        "surface-tint": "#F06071",
         "on-tertiary-fixed": "#1a1b25",
-        "primary-fixed-dim": "#9ccaff",
-        "on-primary-fixed-variant": "#00497a",
+        "primary-fixed-dim": "#f09aaa",
+        "on-primary-fixed-variant": "#8c0020",
         "secondary-fixed": "#ffdbd0",
         "on-secondary-fixed-variant": "#7f2a0a",
-        "primary": "#005f9d",
+        "primary": "#F06071",
         "secondary-fixed-dim": "#ffb59d",
         "outline": "#717881",
         "background": "#f9f9fa",
@@ -54,12 +54,12 @@ tailwind.config = {
         "on-secondary": "#ffffff",
         "surface-container-lowest": "#ffffff",
         "on-surface-variant": "#414750",
-        "primary-fixed": "#d0e4ff",
-        "on-primary-fixed": "#001d35",
-        "inverse-primary": "#9ccaff",
+        "primary-fixed": "#ffd0d6",
+        "on-primary-fixed": "#2d0010",
+        "inverse-primary": "#f09aaa",
         "tertiary-container": "#747380",
         "tertiary-fixed-dim": "#c7c5d3",
-        "primary-container": "#2678bc",
+        "primary-container": "#c93050",
         "surface-container-low": "#f4f3f4"
       },
       borderRadius: {
@@ -81,11 +81,11 @@ tailwind.config = {
   body { font-family: 'Manrope', sans-serif; }
   .font-serif { font-family: 'Noto Serif', serif; }
   .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
-  .bg-gradient-primary { background: linear-gradient(135deg, #005f9d 0%, #2678bc 100%); }
+  .bg-gradient-primary { background: linear-gradient(135deg, #F06071 0%, #c93050 100%); }
   .glass-header { background: rgba(249, 249, 250, 0.85); backdrop-filter: blur(24px); }
 
   #cropRect {
-    border: 2px dashed #005f9d;
+    border: 2px dashed #F06071;
     box-shadow: 0 0 0 9999px rgba(26, 28, 29, 0.5);
     cursor: grab;
     user-select: none;
@@ -101,9 +101,9 @@ tailwind.config = {
   }
 
   .align-btn.active {
-    background: rgba(0,95,157,0.1);
-    border-color: #005f9d;
-    color: #005f9d;
+    background: rgba(240,96,113,0.1);
+    border-color: #F06071;
+    color: #F06071;
   }
 
   .preview-title-main {
@@ -231,7 +231,7 @@ tailwind.config = {
           <div class="flex-shrink-0 flex flex-col gap-2">
             <button class="template-btn relative w-36 rounded-xl border-2 border-primary overflow-hidden text-left transition-all shadow-md" data-template="rutadorada">
               <img src="/fastart/_miniatura_sundance.png" alt="RutaDorada Films" class="w-full aspect-[9/16] object-cover block"/>
-              <div class="absolute top-2 left-2">
+              <div class="absolute top-2 left-2 tpl-badge">
                 <span class="font-sans uppercase tracking-widest text-[8px] font-bold text-white bg-primary px-2 py-0.5 rounded-full">Activa</span>
               </div>
             </button>
@@ -239,12 +239,13 @@ tailwind.config = {
           </div>
 
           <div class="flex-shrink-0 flex flex-col gap-2">
-            <button class="template-btn relative w-36 rounded-xl border-2 border-dashed border-outline-variant/40 overflow-hidden opacity-50 cursor-not-allowed" disabled title="Próximamente">
-              <div class="w-full aspect-[9/16] bg-surface-container flex flex-col items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-outline text-3xl">add</span>
+            <button class="template-btn relative w-36 rounded-xl border-2 border-outline-variant/30 overflow-hidden text-left transition-all" data-template="metarrelato">
+              <img src="/fastart/_miniatura_metarrelato.png" alt="metarrelato" class="w-full aspect-[9/16] object-cover block"/>
+              <div class="absolute top-2 left-2 tpl-badge hidden">
+                <span class="font-sans uppercase tracking-widest text-[8px] font-bold text-white bg-primary px-2 py-0.5 rounded-full">Activa</span>
               </div>
             </button>
-            <span class="font-sans text-[10px] font-semibold text-on-surface-variant text-center opacity-50">Nueva plantilla</span>
+            <span class="font-sans text-[10px] font-semibold text-on-surface-variant text-center">metarrelato</span>
           </div>
 
         </div>
@@ -345,12 +346,11 @@ tailwind.config = {
 </main>
 
 <footer class="w-full py-6 border-t border-slate-200/40 bg-surface mt-auto">
-  <div class="flex flex-col md:flex-row justify-between items-center px-8 w-full mx-auto max-w-[1920px]">
-    <p class="font-sans text-xs tracking-tight text-slate-400">©2026 FastArt. Diseñado por metarrelato studio</p>
-    <div class="flex gap-6 mt-3 md:mt-0">
-      <a class="font-sans text-xs tracking-tight text-slate-400 hover:text-slate-600 transition-all" href="#">Privacy Policy</a>
-      <a class="font-sans text-xs tracking-tight text-slate-400 hover:text-slate-600 transition-all" href="#">Terms of Service</a>
-    </div>
+  <div class="flex justify-end items-center px-8 w-full mx-auto max-w-[1920px]">
+    <p class="font-sans text-xs tracking-tight text-slate-400 flex items-center gap-1.5">
+      ©2026 FastArt. Creado por metarrelato
+      <img src="/logo.svg" alt="metarrelato" class="inline-block w-4 h-4 opacity-80"/>
+    </p>
   </div>
 </footer>
 
@@ -358,6 +358,11 @@ tailwind.config = {
 // ============================================================
 // STATE
 // ============================================================
+const TEMPLATES = {
+  rutadorada: { titleColor: '#E8B800', titleLine2Color: '#ffffff', subtitleColor: '#E8B800', dividerColor: '#E8B800' },
+  metarrelato: { titleColor: '#C7F801', titleLine2Color: '#ffffff', subtitleColor: '#C7F801', dividerColor: '#C7F801' },
+};
+
 const state = {
   image: null,
   imgW: 0,
@@ -365,12 +370,14 @@ const state = {
   cropOffsetX: 0,
   cropOffsetY: 0,
   align: { h: 'left', v: 'bottom' },
+  activeTemplate: 'rutadorada',
   title: '',
   titleColor: '#E8B800',
   titleLine2: '',
   titleLine2Color: '#ffffff',
   subtitle: '',
   subtitleColor: '#E8B800',
+  dividerColor: '#E8B800',
 };
 
 // ============================================================
@@ -444,7 +451,6 @@ function loadImage(file) {
     uploadState.classList.add('hidden');
     canvasState.classList.remove('hidden');
 
-    // Wait a frame for layout
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         setupCropRect();
@@ -584,7 +590,6 @@ function updatePreview() {
   const padX = 72 * scale;
   const padY = 180 * scale;
 
-  // Position text block
   const tb = previewTextBlock;
   tb.style.left      = isLeft   ? `${padX}px` : 'auto';
   tb.style.right     = isLeft   ? 'auto' : `${padX}px`;
@@ -599,7 +604,7 @@ function updatePreview() {
   let html = '';
 
   if (state.title) {
-    html += `<span class="preview-title-main" style="font-size:${196*scale}px;color:${state.titleColor}">${escapeHtml(state.title)}</span>`;
+    html += `<span class="preview-title-main" style="font-size:${196*scale}px;color:${state.titleColor};margin-bottom:${12*scale}px">${escapeHtml(state.title)}</span>`;
   }
 
   if (state.titleLine2) {
@@ -609,7 +614,9 @@ function updatePreview() {
   }
 
   if (hasAny) {
-    html += `<div style="height:${2*scale}px;background:linear-gradient(${divDir},#E8B800,rgba(232,184,0,0.2),transparent);margin-bottom:${24*scale}px"></div>`;
+    const dc = state.dividerColor;
+    const dcAlpha = hexToRgba(dc, 0.2);
+    html += `<div style="height:${2*scale}px;background:linear-gradient(${divDir},${dc},${dcAlpha},transparent);margin-bottom:${24*scale}px"></div>`;
   }
 
   if (state.subtitle) {
@@ -617,6 +624,15 @@ function updatePreview() {
   }
 
   tb.innerHTML = html;
+}
+
+// ============================================================
+// HELPERS
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1,3),16);
+  const g = parseInt(hex.slice(3,5),16);
+  const b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${alpha})`;
 }
 
 // ============================================================
@@ -657,6 +673,49 @@ function setupAlignment() {
 
       updatePreview();
     });
+  });
+}
+
+// ============================================================
+// TEMPLATE SWITCHING
+// ============================================================
+function applyTemplate(id) {
+  const tpl = TEMPLATES[id];
+  if (!tpl) return;
+  state.activeTemplate = id;
+  state.titleColor     = tpl.titleColor;
+  state.titleLine2Color = tpl.titleLine2Color;
+  state.subtitleColor  = tpl.subtitleColor;
+  state.dividerColor   = tpl.dividerColor;
+
+  // Sync color pickers UI
+  ['title', 'titleLine2', 'subtitle'].forEach(prefix => {
+    const key    = `${prefix}Color`;
+    const input  = document.getElementById(`${prefix}ColorInput`);
+    const swatch = document.getElementById(`${prefix}ColorSwatch`);
+    const hexEl  = document.getElementById(`${prefix}ColorHex`);
+    if (!input) return;
+    input.value = state[key];
+    swatch.style.background = state[key];
+    hexEl.textContent = state[key].toUpperCase();
+  });
+
+  // Update template button borders + badge
+  document.querySelectorAll('.template-btn').forEach(btn => {
+    const isActive = btn.dataset.template === id;
+    btn.classList.toggle('border-primary', isActive);
+    btn.classList.toggle('border-outline-variant/30', !isActive);
+    btn.classList.toggle('shadow-md', isActive);
+    const badge = btn.querySelector('.tpl-badge');
+    if (badge) badge.classList.toggle('hidden', !isActive);
+  });
+
+  updatePreview();
+}
+
+function setupTemplates() {
+  document.querySelectorAll('.template-btn[data-template]').forEach(btn => {
+    btn.addEventListener('click', () => applyTemplate(btn.dataset.template));
   });
 }
 
@@ -719,7 +778,7 @@ async function generateImage() {
     drawGrain(ctx);
 
     // 5. Text
-    drawPosterText(ctx);
+    drawTextOnCtx(ctx, 1080, 1920);
 
     // 6. Download
     canvas.toBlob((blob) => {
@@ -765,36 +824,36 @@ function drawGrain(ctx) {
   ctx.globalAlpha = 1;
 }
 
-function drawPosterText(ctx) {
+function drawTextOnCtx(ctx, W, H) {
   const { title, titleColor, titleLine2, titleLine2Color, subtitle, subtitleColor, align } = state;
   if (!title && !titleLine2 && !subtitle) return;
+
+  const s = W / 1080;
 
   const isLeft   = align.h === 'left';
   const isBottom = align.v === 'bottom';
 
-  const PAD_X   = 72;
-  const PAD_Y   = 180;
-  const T_SIZE  = 196;
-  const L2_SIZE = 96;
-  const S_SIZE  = 72;
+  const PAD_X   = 72  * s;
+  const PAD_Y   = 180 * s;
+  const T_SIZE  = 196 * s;
+  const L2_SIZE = 96  * s;
+  const S_SIZE  = 72  * s;
   const T_LH    = T_SIZE * 0.82;
+  const T2_GAP  = 6   * s;
   const L2_LH   = L2_SIZE * 0.9;
-  const L2_MB   = 28;  // margin-bottom between line2 and divider
-  const DIV_H   = 2;
-  const DIV_GAP = 24;  // gap after divider before subtitle
+  const L2_MB   = 28  * s;
+  const DIV_H   = 2   * s;
+  const DIV_GAP = 24  * s;
 
   ctx.textAlign = isLeft ? 'left' : 'right';
-  const x = isLeft ? PAD_X : (1080 - PAD_X);
+  const x = isLeft ? PAD_X : (W - PAD_X);
 
-  // Set letter spacing (modern browsers)
   const setLS = (px) => { try { ctx.letterSpacing = `${px}px`; } catch(e) {} };
 
   if (isBottom) {
-    // Build from bottom up
     ctx.textBaseline = 'bottom';
-    let y = 1920 - PAD_Y;
+    let y = H - PAD_Y;
 
-    // Subtitle
     if (subtitle) {
       ctx.font = `900 ${S_SIZE}px "Barlow Condensed"`;
       ctx.fillStyle = subtitleColor;
@@ -803,24 +862,19 @@ function drawPosterText(ctx) {
       y -= S_SIZE;
     }
 
-    // Gap + divider
     y -= DIV_GAP;
-    drawDivider(ctx, y, isLeft, PAD_X, DIV_H);
+    drawDivider(ctx, y, isLeft, PAD_X, DIV_H, W);
     y -= DIV_H;
-
-    // Margin before line2
     y -= L2_MB;
 
-    // Second title line
     if (titleLine2) {
       ctx.font = `800 ${L2_SIZE}px "Barlow Condensed"`;
       ctx.fillStyle = titleLine2Color;
       setLS(L2_SIZE * 0.02);
       ctx.fillText(titleLine2.toUpperCase(), x, y);
-      y -= L2_LH;
+      y -= L2_LH + T2_GAP;
     }
 
-    // Title
     if (title) {
       ctx.font = `900 ${T_SIZE}px "Barlow Condensed"`;
       ctx.fillStyle = titleColor;
@@ -829,20 +883,17 @@ function drawPosterText(ctx) {
     }
 
   } else {
-    // Build from top down
     ctx.textBaseline = 'top';
     let y = PAD_Y;
 
-    // Title
     if (title) {
       ctx.font = `900 ${T_SIZE}px "Barlow Condensed"`;
       ctx.fillStyle = titleColor;
       setLS(T_SIZE * -0.01);
       ctx.fillText(title.toUpperCase(), x, y);
-      y += T_LH;
+      y += T_LH + T2_GAP;
     }
 
-    // Second title line
     if (titleLine2) {
       ctx.font = `800 ${L2_SIZE}px "Barlow Condensed"`;
       ctx.fillStyle = titleLine2Color;
@@ -851,12 +902,10 @@ function drawPosterText(ctx) {
       y += L2_LH;
     }
 
-    // Margin + divider
     y += L2_MB;
-    drawDivider(ctx, y, isLeft, PAD_X, DIV_H);
+    drawDivider(ctx, y, isLeft, PAD_X, DIV_H, W);
     y += DIV_H + DIV_GAP;
 
-    // Subtitle
     if (subtitle) {
       ctx.font = `900 ${S_SIZE}px "Barlow Condensed"`;
       ctx.fillStyle = subtitleColor;
@@ -865,17 +914,17 @@ function drawPosterText(ctx) {
     }
   }
 
-  // Reset
   try { ctx.letterSpacing = '0px'; } catch(e) {}
 }
 
-function drawDivider(ctx, y, isLeft, padX, h) {
-  const divW  = 1080 - 2 * padX;
-  const x1    = isLeft ? padX : (1080 - padX);
+function drawDivider(ctx, y, isLeft, padX, h, W = 1080) {
+  const divW  = W - 2 * padX;
+  const x1    = isLeft ? padX : (W - padX);
   const x2    = isLeft ? (padX + divW) : padX;
+  const dc    = state.dividerColor;
   const grad  = ctx.createLinearGradient(x1, y, x2, y);
-  grad.addColorStop(0,   '#E8B800');
-  grad.addColorStop(0.5, 'rgba(232,184,0,0.2)');
+  grad.addColorStop(0,   dc);
+  grad.addColorStop(0.5, hexToRgba(dc, 0.2));
   grad.addColorStop(1,   'rgba(0,0,0,0)');
   ctx.fillStyle = grad;
   ctx.fillRect(padX, y, divW, h);
@@ -895,6 +944,7 @@ function init() {
   setupColorPicker('titleLine2');
   setupColorPicker('subtitle');
   setupAlignment();
+  setupTemplates();
 
   titleInput.addEventListener('input', () => { state.title = titleInput.value; updatePreview(); resetGenerateBtn(); });
   titleLine2Input.addEventListener('input', () => { state.titleLine2 = titleLine2Input.value; updatePreview(); resetGenerateBtn(); });
