@@ -26,7 +26,7 @@ export const ui = {
 		"hero.title.5": "AUTÓNOMOS",
 		"hero.title.6": "PROFESIONISTAS",
 		"hero.subtitle":
-			"Herramientas y soluciones digitales para facilitar y automatizar tu trabajo. Ingresa a 'Contacto' y solicita una videollamada para que platiquemos sobre tus necesidades y así darte una propuesta de solución digital que te ayudará día con día.",
+			"Herramientas y soluciones digitales para facilitar y automatizar tu trabajo. Ingresa a 'Contacto' y solicita una videollamada para que platiquemos sobre tus necesidades.",
 		"hero.scroll": "desliza para explorar más",
 		"websites.title": "Implementa tu <br /> sitio web",
 		"apps.title": "Automatiza",
