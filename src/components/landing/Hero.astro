@@ -11,7 +11,7 @@ const translatePath = useTranslatedPath(lang);
 	<div class="mx-auto flex h-full flex-col py-4 lg:py-10">
 		<div class="relative flex flex-1 flex-col justify-start lg:justify-center gap-8 lg:gap-12 rounded-lg pb-10 pt-20 lg:rounded-2xl lg:pt-20">
 			<div class="flex flex-col items-center justify-center">
-				<div id="hero-lottie" class="h-60 w-60 md:h-80 md:w-80" aria-hidden="true"></div>
+				<div id="hero-lottie" class="h-60 w-60 md:h-80 md:w-80"></div>
 				<h1 class="hero-title text-center font-display">
 					<span class="inline-block">{t("hero.title.main")}</span>
 					<span class="rotator relative inline-flex w-full justify-center">
@@ -67,6 +67,7 @@ const translatePath = useTranslatedPath(lang);
 	.hero h1 {
 		margin: 0;
 		position: relative;
+		visibility: hidden;
 	}
 	.hero h1 > div {
 		position: relative;
@@ -97,117 +98,88 @@ const translatePath = useTranslatedPath(lang);
 	.rotator > span:not(:nth-child(1)) {
 		opacity: 0;
 	}
-
-	/* Hero entrance — pure CSS, fires immediately, no JS dependency.
-	   We don't override `display` here: the spans already carry `inline-block`
-	   and `inline-flex` from the markup, both of which accept transforms. */
-	.hero h1 > span {
-		animation: hero-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
-		will-change: transform, opacity;
-	}
-	.hero h1 > span:nth-child(2) { animation-delay: 0.1s; }
-
-	@keyframes hero-rise {
-		from { transform: translateY(100%); opacity: 0; }
-		to   { transform: translateY(0);    opacity: 1; }
-	}
-
-	/* Lottie canvas: invisible until the player loads and animates it in */
-	#hero-lottie {
-		transform: scale(0);
-		transform-origin: center;
-		will-change: transform;
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.hero h1 > span { animation: none; }
-		#hero-lottie { transform: none; }
-	}
 </style>
 
 <script>
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
+	import lottie from "lottie-web/build/player/lottie_light_canvas";
+	// import { SplitText } from "gsap/SplitText";
 	import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-	gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+	gsap.registerPlugin(ScrollTrigger, /* SplitText, */ ScrollToPlugin);
 
-	const ENTRANCE_MS = 1300; // matches CSS hero-rise (1.2s) + last stagger (0.1s)
+	function init() {
+		const heroTl = gsap.timeline();
 
-	function startRotator() {
-		const words = document.querySelectorAll(".hero .rotator > span");
-		if (!words.length) return;
+		const lottieContainer = document.getElementById("hero-lottie");
+		if (lottieContainer) {
+			lottie.loadAnimation({
+				container: lottieContainer,
+				renderer: "canvas",
+				loop: true,
+				autoplay: true,
+				path: "/animation2-ia.json", // Load the lightweight JSON here
+			});
 
-		const rotatorTimeline = gsap.timeline({ repeat: -1 });
-		rotatorTimeline.timeScale(0.5);
-
-		for (let i = 0; i < words.length; i++) {
-			let delay = i - 1;
-			const wordTL = gsap.timeline();
-			if (i !== 0) {
-				gsap.set(words[i], { opacity: 1 });
-				wordTL.from(words[i], { duration: 1, yPercent: 100, opacity: 0, ease: "power4.out" });
-			} else {
-				delay += 1;
-				gsap.set(words[0], { opacity: 1, yPercent: 0 });
-			}
-			if (i !== words.length - 1) {
-				wordTL.to(words[i], { duration: 1, opacity: 0, ease: "power4.out" });
-			}
-			rotatorTimeline.add(wordTL, delay);
-		}
-	}
-
-	async function initLottie() {
-		const container = document.getElementById("hero-lottie");
-		if (!container) return;
-
-		// Code-split: lottie-web is fetched only when the browser is idle
-		const lottie = (await import("lottie-web/build/player/lottie_light")).default;
-
-		const player = lottie.loadAnimation({
-			container,
-			renderer: "svg", // vector → crisp at any DPR / any scale
-			loop: true,
-			autoplay: false,
-			path: "/animation2-ia.json",
-			rendererSettings: {
-				preserveAspectRatio: "xMidYMid meet",
-				progressiveLoad: true,
-			},
-		});
-
-		player.addEventListener("DOMLoaded", () => {
-			gsap.to(container, {
+			// Animation for Lottie illustration only
+			gsap.set(lottieContainer, { scale: 0 });
+			heroTl.to(lottieContainer, {
 				scale: 1,
 				duration: 1.5,
 				ease: "elastic.out(1, 0.75)",
-				onComplete: () => player.play(),
-			});
-		});
-	}
-
-	function init() {
-		// Words rotate as soon as the CSS entrance finishes — independent of Lottie
-		setTimeout(startRotator, ENTRANCE_MS);
-
-		// Lottie loads off the critical path (after first paint / when browser is idle)
-		const loadLottie = () => initLottie();
-		if ("requestIdleCallback" in window) {
-			(window as any).requestIdleCallback(loadLottie, { timeout: 800 });
-		} else {
-			setTimeout(loadLottie, 200);
+			}, 0);
 		}
 
-		const goProjectsButton = document.getElementById("go-projects-button");
-		goProjectsButton?.addEventListener("click", () => {
+		/* const childSplit = new SplitText(".hero h1", {
+			type: "lines",
+			linesClass: "split-child",
+		});
+		const parentSplit = new SplitText(".hero h1", {
+			linesClass: "split-parent",
+		}); */
+
+		heroTl.set(".hero h1", { visibility: "visible" }, 0)
+			.from(".hero h1 > span", {
+				duration: 1.5,
+				yPercent: 100,
+				ease: "power4",
+				stagger: 0.1,
+			}, 0)
+			.then(() => {
+				const words = document.querySelectorAll(".hero .rotator > span");
+
+				let rotatorTimeline = gsap.timeline({ repeat: -1 });
+				rotatorTimeline.timeScale(0.5);
+
+				for (let i = 0; i < words.length; i++) {
+					let delay = i - 1;
+					let wordTL = gsap.timeline();
+					if (i !== 0) {
+						gsap.set(words[i], { opacity: 1 });
+						wordTL.from(words[i], { duration: 1, yPercent: 100, opacity: 0, ease: "power4.out" });
+					} else {
+						// Handle the first one specially
+						delay += 1;
+						gsap.set(words[0], { opacity: 1, yPercent: 0 });
+					}
+
+					if (i !== words.length - 1) {
+						wordTL.to(words[i], { duration: 1, opacity: 0, ease: "power4.out" });
+					}
+					rotatorTimeline.add(wordTL, delay);
+				}
+			});
+
+		var goProjectsButton = document.getElementById("go-projects-button");
+		goProjectsButton?.addEventListener("click", function () {
 			gsap.to(window, { duration: 0.5, scrollTo: "#projects" });
 		});
 	}
 
 	if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", init);
+		document.addEventListener("DOMContentLoaded", () => setTimeout(() => requestAnimationFrame(init), 100));
 	} else {
-		init();
+		setTimeout(() => requestAnimationFrame(init), 100);
 	}
 </script>
