@@ -15,7 +15,7 @@ export const ui = {
 		services: "Servicios",
 		homepage: "Inicio",
 		tagline:
-			"Gracias a los avances en Inteligencia Artificial es posible democratizar las herramientas digitales para obtener mejores resultados, no importa si eres emprendedor, profesionista independiente o simplemente buscas mejorar el mundo. Será un placer ayudarte a lograr tus objetivos.",
+			"Gracias a los avances en Inteligencia Artificial es posible democratizar las herramientas digitales para obtener mejores resultados, no importa si eres emprendedor, profesionista o simplemente buscas mejorar el mundo. Será un placer ayudarte a lograr tus objetivos.",
 		"projects.yours": "Tu proyecto",
 		"projects.see": "Ver proyecto",
 		"hero.title.main": "IA PARA",
