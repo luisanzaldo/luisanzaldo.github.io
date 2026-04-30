@@ -115,7 +115,7 @@ const translatePath = useTranslatedPath(lang);
 			const controller = new AbortController();
 			const timeoutId = setTimeout(() => controller.abort(), 30000);
 			
-			const backendUrl = import.meta.env.PUBLIC_BACKEND_URL || 'https://metarrelato-chatbot-backend-luisanzaldo3578-r1lzkm7i.leapcell.dev';
+			const backendUrl = import.meta.env.PUBLIC_BACKEND_URL || 'https://metarrelato-chatbot-backend-metarrelato.hf.space';
 
 			const response = await fetch(`${backendUrl}/chat`, {
 				method: 'POST',
