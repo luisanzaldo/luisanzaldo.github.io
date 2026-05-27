@@ -681,12 +681,19 @@ function updatePreviewRutadorada(scale) {
 
   const divDir = isLeft ? 'to right' : 'to left';
   const hasAny = state.title || state.titleLine2 || state.subtitle;
+  const MAX_W_BASE = 1080 - 2 * 72;
+  const titleU = state.title ? state.title.toUpperCase() : '';
+  const l2U    = state.titleLine2 ? state.titleLine2.toUpperCase() : '';
+  const subU   = state.subtitle ? state.subtitle.toUpperCase() : '';
+  const fitT  = fitScaleFor(titleU, MAX_W_BASE, 196, '900', 'Barlow Condensed', -0.01);
+  const fitL2 = fitScaleFor(l2U,    MAX_W_BASE,  96, '800', 'Barlow Condensed',  0.02);
+  const fitS  = fitScaleFor(subU,   MAX_W_BASE,  72, '900', 'Barlow Condensed',  0.12);
   let html = '';
   if (state.title) {
-    html += `<span class="preview-title-main" style="font-size:${196*scale}px;color:${state.titleColor};margin-bottom:${12*scale}px">${escapeHtml(state.title)}</span>`;
+    html += `<span class="preview-title-main" style="font-size:${196*scale*fitT}px;color:${state.titleColor};margin-bottom:${12*scale}px">${escapeHtml(state.title)}</span>`;
   }
   if (state.titleLine2) {
-    html += `<span class="preview-title-sub" style="font-size:${96*scale}px;color:${state.titleLine2Color};margin-bottom:${28*scale}px;display:block">${escapeHtml(state.titleLine2)}</span>`;
+    html += `<span class="preview-title-sub" style="font-size:${96*scale*fitL2}px;color:${state.titleLine2Color};margin-bottom:${28*scale}px;display:block">${escapeHtml(state.titleLine2)}</span>`;
   } else if (state.title) {
     html += `<div style="height:${28*scale}px"></div>`;
   }
@@ -696,7 +703,7 @@ function updatePreviewRutadorada(scale) {
     html += `<div style="height:${2*scale}px;background:linear-gradient(${divDir},${dc},${dcAlpha},transparent);margin-bottom:${24*scale}px"></div>`;
   }
   if (state.subtitle) {
-    html += `<span class="preview-subtitle" style="font-size:${72*scale}px;color:${state.subtitleColor}">${escapeHtml(state.subtitle)}</span>`;
+    html += `<span class="preview-subtitle" style="font-size:${72*scale*fitS}px;color:${state.subtitleColor}">${escapeHtml(state.subtitle)}</span>`;
   }
   tb.innerHTML = html;
   previewLogoBlock.style.display = 'none';
@@ -722,10 +729,13 @@ function updatePreviewMetarrelato(scale, cropW, cropH) {
   const TITLE_SIZE = 148 * scale;
   const BODY_SIZE  = 44  * scale;
   const BODY_LH    = BODY_SIZE * 1.53;
+  const MAX_W_BASE = 1080 - 80 - 120;
+  const titleLower = state.metaTitle ? state.metaTitle.toLowerCase() : '';
+  const fitMT = fitScaleFor(titleLower, MAX_W_BASE, 148, '900', 'Roboto', -2 / 148);
 
   let html = '';
   if (state.metaTitle) {
-    html += `<div style="font-family:'Roboto',sans-serif;font-weight:900;font-size:${TITLE_SIZE}px;line-height:0.92;letter-spacing:-${2*scale}px;color:${state.metaTitleColor};text-transform:lowercase;margin-bottom:${16*scale}px">${escapeHtml(state.metaTitle)}</div>`;
+    html += `<div style="font-family:'Roboto',sans-serif;font-weight:900;font-size:${TITLE_SIZE*fitMT}px;line-height:0.92;letter-spacing:-${2*scale*fitMT}px;color:${state.metaTitleColor};text-transform:lowercase;margin-bottom:${16*scale}px">${escapeHtml(state.metaTitle)}</div>`;
   }
   if (state.metaBody) {
     html += `<div style="font-family:'Roboto',sans-serif;font-weight:400;font-size:${BODY_SIZE}px;line-height:${BODY_LH}px;letter-spacing:${0.5*scale}px;color:${state.metaBodyColor};word-break:break-word">${escapeHtml(state.metaBody)}</div>`;
@@ -756,6 +766,15 @@ function hexToRgba(hex, alpha) {
   const g = parseInt(hex.slice(3,5),16);
   const b = parseInt(hex.slice(5,7),16);
   return `rgba(${r},${g},${b},${alpha})`;
+}
+
+const _fitCtx = document.createElement('canvas').getContext('2d');
+function fitScaleFor(text, maxWidth, baseSize, weight, family, lsFactor) {
+  if (!text) return 1;
+  _fitCtx.font = `${weight} ${baseSize}px "${family}"`;
+  try { _fitCtx.letterSpacing = `${baseSize * lsFactor}px`; } catch(e) {}
+  const w = _fitCtx.measureText(text).width;
+  return w > maxWidth ? maxWidth / w : 1;
 }
 
 // ============================================================
@@ -1070,18 +1089,26 @@ function drawText_rutadorada(ctx, W, H) {
 
   ctx.textAlign = isLeft ? 'left' : 'right';
   const x = isLeft ? PAD_X : (W - PAD_X);
+  const MAX_W = W - 2 * PAD_X;
 
   const setLS = (px) => { try { ctx.letterSpacing = `${px}px`; } catch(e) {} };
+
+  const titleU = title ? title.toUpperCase() : '';
+  const l2U    = titleLine2 ? titleLine2.toUpperCase() : '';
+  const subU   = subtitle ? subtitle.toUpperCase() : '';
+  const fitT   = fitScaleFor(titleU, MAX_W, T_SIZE,  '900', 'Barlow Condensed', -0.01);
+  const fitL2  = fitScaleFor(l2U,    MAX_W, L2_SIZE, '800', 'Barlow Condensed',  0.02);
+  const fitS   = fitScaleFor(subU,   MAX_W, S_SIZE,  '900', 'Barlow Condensed',  0.12);
 
   if (isBottom) {
     ctx.textBaseline = 'bottom';
     let y = H - PAD_Y;
 
     if (subtitle) {
-      ctx.font = `900 ${S_SIZE}px "Barlow Condensed"`;
+      ctx.font = `900 ${S_SIZE * fitS}px "Barlow Condensed"`;
       ctx.fillStyle = subtitleColor;
-      setLS(S_SIZE * 0.12);
-      ctx.fillText(subtitle.toUpperCase(), x, y);
+      setLS(S_SIZE * fitS * 0.12);
+      ctx.fillText(subU, x, y);
       y -= S_SIZE;
     }
 
@@ -1091,18 +1118,18 @@ function drawText_rutadorada(ctx, W, H) {
     y -= L2_MB;
 
     if (titleLine2) {
-      ctx.font = `800 ${L2_SIZE}px "Barlow Condensed"`;
+      ctx.font = `800 ${L2_SIZE * fitL2}px "Barlow Condensed"`;
       ctx.fillStyle = titleLine2Color;
-      setLS(L2_SIZE * 0.02);
-      ctx.fillText(titleLine2.toUpperCase(), x, y);
+      setLS(L2_SIZE * fitL2 * 0.02);
+      ctx.fillText(l2U, x, y);
       y -= L2_LH + T2_GAP;
     }
 
     if (title) {
-      ctx.font = `900 ${T_SIZE}px "Barlow Condensed"`;
+      ctx.font = `900 ${T_SIZE * fitT}px "Barlow Condensed"`;
       ctx.fillStyle = titleColor;
-      setLS(T_SIZE * -0.01);
-      ctx.fillText(title.toUpperCase(), x, y);
+      setLS(T_SIZE * fitT * -0.01);
+      ctx.fillText(titleU, x, y);
     }
 
   } else {
@@ -1110,18 +1137,18 @@ function drawText_rutadorada(ctx, W, H) {
     let y = PAD_Y;
 
     if (title) {
-      ctx.font = `900 ${T_SIZE}px "Barlow Condensed"`;
+      ctx.font = `900 ${T_SIZE * fitT}px "Barlow Condensed"`;
       ctx.fillStyle = titleColor;
-      setLS(T_SIZE * -0.01);
-      ctx.fillText(title.toUpperCase(), x, y);
+      setLS(T_SIZE * fitT * -0.01);
+      ctx.fillText(titleU, x, y);
       y += T_LH + T2_GAP;
     }
 
     if (titleLine2) {
-      ctx.font = `800 ${L2_SIZE}px "Barlow Condensed"`;
+      ctx.font = `800 ${L2_SIZE * fitL2}px "Barlow Condensed"`;
       ctx.fillStyle = titleLine2Color;
-      setLS(L2_SIZE * 0.02);
-      ctx.fillText(titleLine2.toUpperCase(), x, y);
+      setLS(L2_SIZE * fitL2 * 0.02);
+      ctx.fillText(l2U, x, y);
       y += L2_LH;
     }
 
@@ -1130,10 +1157,10 @@ function drawText_rutadorada(ctx, W, H) {
     y += DIV_H + DIV_GAP;
 
     if (subtitle) {
-      ctx.font = `900 ${S_SIZE}px "Barlow Condensed"`;
+      ctx.font = `900 ${S_SIZE * fitS}px "Barlow Condensed"`;
       ctx.fillStyle = subtitleColor;
-      setLS(S_SIZE * 0.12);
-      ctx.fillText(subtitle.toUpperCase(), x, y);
+      setLS(S_SIZE * fitS * 0.12);
+      ctx.fillText(subU, x, y);
     }
   }
 
@@ -1220,6 +1247,9 @@ function drawText_metarrelato(ctx, W, H) {
   const x = isLeft ? PAD_LEFT : (W - PAD_RIGHT);
   ctx.textAlign = isLeft ? 'left' : 'right';
 
+  const titleLower = metaTitle ? metaTitle.toLowerCase() : '';
+  const fitMT = fitScaleFor(titleLower, MAX_W, TITLE_SIZE, '900', 'Roboto', -2 / TITLE_SIZE);
+
   if (isBottom) {
     ctx.textBaseline = 'bottom';
     let y = H - PAD_BOTTOM;
@@ -1237,10 +1267,10 @@ function drawText_metarrelato(ctx, W, H) {
     }
 
     if (metaTitle) {
-      ctx.font      = `900 ${TITLE_SIZE}px "Roboto"`;
+      ctx.font      = `900 ${TITLE_SIZE * fitMT}px "Roboto"`;
       ctx.fillStyle = metaTitleColor;
-      try { ctx.letterSpacing = '-2px'; } catch(e) {}
-      ctx.fillText(metaTitle.toLowerCase(), x, y);
+      try { ctx.letterSpacing = `${-2 * fitMT}px`; } catch(e) {}
+      ctx.fillText(titleLower, x, y);
     }
 
   } else {
@@ -1250,10 +1280,10 @@ function drawText_metarrelato(ctx, W, H) {
     let y = logoOffset;
 
     if (metaTitle) {
-      ctx.font      = `900 ${TITLE_SIZE}px "Roboto"`;
+      ctx.font      = `900 ${TITLE_SIZE * fitMT}px "Roboto"`;
       ctx.fillStyle = metaTitleColor;
-      try { ctx.letterSpacing = '-2px'; } catch(e) {}
-      ctx.fillText(metaTitle.toLowerCase(), x, y);
+      try { ctx.letterSpacing = `${-2 * fitMT}px`; } catch(e) {}
+      ctx.fillText(titleLower, x, y);
       y += TITLE_SIZE * 0.92 + GAP;
     }
 
