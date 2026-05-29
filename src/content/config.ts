@@ -25,7 +25,7 @@ const projectsCollection = defineCollection({
 			title: z.string(),
 			pubDate: z.date(),
 			description: z.string(),
-			link: z.string(),
+			link: z.string().optional(),
 			author: z.object({
 				name: z.string(),
 				link: z.string(),
