@@ -12,7 +12,7 @@ const { image, project, link, description, class: className } = Astro.props;
 <li class:list={["flex flex-col", className]}>
 	<a href={translatePath(link)} aria-label={`Project ${project}`}>
 		<Image 
-			class="h-auto w-full rounded-md object-contain lg:h-[25rem] lg:rounded-lg"
+			class="h-auto w-full rounded-md object-contain lg:rounded-lg"
 			src={image} 
 			alt={project} 
 			widths={[400, 800, 1200]}

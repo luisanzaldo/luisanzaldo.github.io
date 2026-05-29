@@ -30,7 +30,7 @@ const allProjects = (await getCollection("projects"))
 <section id="projects" class:list={["section work-preview-section home-dark-section py-12", className]}>
 	<div class="col-span-12 col-start-1 mx-auto max-w-7xl">
 		<h2 class="sr-only">{t("projects")}</h2>
-		<ol class="grid grid-cols-1 gap-24 md:grid-cols-2 lg:gap-44">
+		<ol class="grid grid-cols-1 gap-24 md:grid-cols-2 md:gap-x-10 lg:gap-x-16 lg:gap-y-44">
 			{
 				allProjects.map((project, index) => (
 					<WokCard
