@@ -49,13 +49,6 @@ const allProjects = (await getCollection("projects"))
 	</div>
 </section>
 
-<style is:global>
-	.work-preview-section ol li img {
-		--clip: 0%;
-		clip-path: inset(var(--clip) round 0.5rem);
-	}
-</style>
-
 <script>
 	import { gsap } from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -65,17 +58,24 @@ const allProjects = (await getCollection("projects"))
 	function init() {
 		const projects = gsap.utils.toArray(".work-preview-section ol li") as gsap.DOMTarget[];
 		const previews = gsap.utils.toArray(".work-preview-section ol li img") as gsap.DOMTarget[];
+		const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
 		previews.forEach((preview) => {
+			if (preview instanceof HTMLElement) {
+				preview.style.willChange = "transform, opacity";
+				preview.style.transform = "translateZ(0)";
+			}
 			gsap.from(preview, {
 				scrollTrigger: {
 					trigger: preview,
-					start: "top bottom",
-					end: "center center",
-					scrub: 1,
-					markers: false,
+					start: isMobile ? "top 80%" : "top 65%",
+					toggleActions: isMobile ? "play none none none" : "play none none reverse",
 				},
-				ease: "power3.out",
-				"--clip": "30%",
+				scale: isMobile ? 1 : 0.3,
+				y: isMobile ? 30 : 60,
+				autoAlpha: 0,
+				duration: isMobile ? 0.6 : 1.5,
+				ease: isMobile ? "power2.out" : "back.out(2)",
 			});
 		});
 
