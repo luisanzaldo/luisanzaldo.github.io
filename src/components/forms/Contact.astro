@@ -11,7 +11,7 @@ const translatePath = useTranslatedPath(lang);
 <section class="isolate px-6 py-24 sm:py-32 lg:px-8">
 	<div class="mx-auto">
 		<Title class="pb-10 pt-20 uppercase" title={t("contact.title")} subtitle={t("contact.subtitle")} />
-		
+
 		<!-- Chatbot Interface -->
 		<div class="mx-auto max-w-2xl pt-12 lg:pt-20">
 			<div class="bg-white/50 backdrop-blur-sm rounded-2xl shadow-[0_0_25px_rgba(0,0,0,0.1)] overflow-hidden border border-white/20">
@@ -19,13 +19,7 @@ const translatePath = useTranslatedPath(lang);
 				<div id="chat-history" class="h-[400px] overflow-y-auto p-6 space-y-4 bg-slate-50/50">
 					<div class="flex flex-col gap-2 w-full">
 						<div class="self-start bg-slate-200 rounded-lg rounded-tl-none px-4 py-2 max-w-[85%] text-slate-800 shadow-sm prose prose-slate prose-sm max-w-none break-words overflow-x-auto">
-							{lang === 'en' 
-								? (
-									<p>¡Hola! Si deseas agendar una videollamada con gusto puedo ayudarte. Solo compárteme tu nombre, correo electrónico, el día y hora en que deseas platicar con nosotros y el tema que te gustaría abordar.<br /><br />También puedo brindarte información sobre los servicios que <strong>metarrelato</strong> ofrece.</p>
-								)
-								: (
-									<p>Hello! If you'd like to schedule a video call, I'd be happy to help. Just share your name, email, the day and time you'd like to talk with us, and the topic you'd like to discuss.<br /><br />I can also provide information about the services <strong>metarrelato</strong> offers.</p>
-								)}
+							<p>¡Hola! Si deseas agendar una videollamada con gusto puedo ayudarte. Solo compárteme tu nombre, correo electrónico, el día y hora en que deseas platicar con nosotros y el tema que te gustaría abordar.<br /><br />También puedo brindarte información sobre los servicios que <strong>metarrelato</strong> ofrece.</p>
 						</div>
 					</div>
 				</div>
@@ -39,7 +33,7 @@ const translatePath = useTranslatedPath(lang);
 							placeholder={t("contact.message")}
 							rows="1"
 						></textarea>
-						<button 
+						<button
 							id="send-button"
 							class="bg-[#F06071] text-white p-3 rounded-xl hover:bg-[#F06071]/80 transition-colors flex items-center justify-center aspect-square shadow-lg hover:shadow-xl transform hover:scale-105 shrink-0"
 							aria-label={t("contact.send")}
@@ -73,22 +67,22 @@ const translatePath = useTranslatedPath(lang);
 
 	function addMessage(text: string, isUser: boolean) {
 		if (!chatHistory) return;
-		
+
 		const wrapper = document.createElement('div');
 		wrapper.className = `flex flex-col gap-2 w-full ${isUser ? 'items-end' : 'items-start'}`;
-		
+
 		const message = document.createElement('div');
 		// Apply prose class for bot messages to render markdown nicely
 		const proseClasses = isUser ? '' : 'prose prose-slate prose-sm max-w-none prose-p:leading-relaxed prose-pre:bg-slate-800 prose-pre:text-white break-words overflow-x-auto';
 		message.className = `px-4 py-2 max-w-[85%] rounded-lg ${isUser ? 'bg-zinc-900 text-white rounded-tr-none shadow-md' : 'bg-slate-200 text-slate-800 rounded-tl-none shadow-sm'} ${proseClasses}`;
-		
+
 		if (isUser) {
 			message.textContent = text;
 		} else {
 			// Parse markdown for bot messages
 			message.innerHTML = marked.parse(text) as string;
 		}
-		
+
 		wrapper.appendChild(message);
 		chatHistory.appendChild(wrapper);
 		chatHistory.scrollTop = chatHistory.scrollHeight;
@@ -97,24 +91,24 @@ const translatePath = useTranslatedPath(lang);
 
 	async function handleSend() {
 		if (!chatInput || !chatInput.value.trim() || isSending) return;
-		
+
 		const text = chatInput.value;
 		addMessage(text, true);
 		chatInput.value = '';
 		chatInput.style.height = 'auto'; // Reset height after send
-		
+
 		isSending = true;
 		if (sendButton) {
 			sendButton.setAttribute('disabled', 'true');
 			sendButton.style.opacity = '0.5';
 		}
-		
+
 		const typingIndicator = addMessage('Escribiendo...', false);
-		
+
 		try {
 			const controller = new AbortController();
 			const timeoutId = setTimeout(() => controller.abort(), 30000);
-			
+
 			const backendUrl = import.meta.env.PUBLIC_BACKEND_URL || 'https://metarrelato-chatbot-backend-metarrelato.hf.space';
 
 			const response = await fetch(`${backendUrl}/chat`, {
@@ -122,7 +116,7 @@ const translatePath = useTranslatedPath(lang);
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ 
+				body: JSON.stringify({
 					message: text,
 					history: conversationHistory
 				}),
@@ -136,11 +130,11 @@ const translatePath = useTranslatedPath(lang);
 
 			const data = await response.json();
 			const botMessage = data.reply || "Lo siento, no pude procesar la respuesta.";
-			
+
 			// Save in local history for subsequent requests
 			conversationHistory.push({ role: 'user', content: text });
 			conversationHistory.push({ role: 'assistant', content: botMessage });
-			
+
 			addMessage(botMessage, false);
 		} catch (error) {
 			console.error('Chat error:', error);
@@ -156,7 +150,7 @@ const translatePath = useTranslatedPath(lang);
 	}
 
 	sendButton?.addEventListener('click', handleSend);
-	
+
 	chatInput?.addEventListener('input', () => {
 		chatInput.style.height = 'auto';
 		chatInput.style.height = `${chatInput.scrollHeight}px`;

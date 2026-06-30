@@ -1,12 +1,11 @@
 export const languages = {
-	en: "Español",
-	it: "English",
+	es: "Español",
 };
 
-export const defaultLang = "en";
+export const defaultLang = "es";
 
 export const ui = {
-	en: {
+	es: {
 		or: "o",
 		contact: "Contacto",
 		contacts: "Contacto",
@@ -88,89 +87,6 @@ export const ui = {
 		"footer.newsletter": "Suscríbete a",
 		"footer.newsletter2": "nuestro boletín",
 		"footer.yourmail": "Tu e-mail",
-	},
-	it: {
-		or: "or",
-		contact: "Contact",
-		contacts: "Contacts",
-		contactus: "Contact us",
-		projects: "Projects",
-		services: "Services",
-		homepage: "Home",
-		tagline:
-			"Our goal is to make your website a key driver for sales and conversions, combining attractive design, easy navigation, and solid SEO. We focus on attracting visitors and guiding them effortlessly towards purchase, ensuring your products shine. Your success is our mission.",
-		"projects.yours": "Your project",
-		"projects.see": "See project",
-		"hero.title.main": "AI FOR",
-		"hero.title.1": "NONPROFITS",
-		"hero.title.2": "FOUNDATIONS",
-		"hero.title.3": "ENTREPRENEURS",
-		"hero.title.4": "SMEs",
-		"hero.title.5": "FREELANCERS",
-		"hero.title.6": "PROFESSIONALS",
-		"hero.subtitle":
-			"We help you create a website with specific Artificial Intelligence tools according to your needs. Contact us for a free video call.",
-		"hero.scroll": "scroll to explore more",
-		"websites.title": "Websites",
-		"apps.title": "Applications",
-		"uiux.title": "UI/UX Design",
-		"seo.title": "SEO",
-		"advertising.title": "Advertising",
-		"websites.content": "We provide you with an attractive website to offer services, products, or to help make a difference. We specialize in professional websites for entrepreneurs, SMEs, and non-profit organizations.",
-		"apps.content": "We offer top-notch application development services, focusing on creating intuitive, efficient, and engaging mobile apps. Whether for iOS, Android, or cross-platform, our apps are designed to enhance user experience and drive business growth.",
-		"uiux.content": "Our UI/UX design services focus on creating user-centered interfaces that are visually appealing and easy to navigate. We prioritize user experience, ensuring that every design element aligns with user needs and enhances overall interaction with your digital products.",
-		"seo.content": "Mintaka Studio's SEO services are designed to increase your website's visibility and attract organic traffic. We use a combination of the latest SEO strategies and techniques to improve your search engine rankings, focusing on both on-page and off-page optimization.",
-		"advertising.content": "Our advertising services aim to maximize your ROI through targeted and effective ad campaigns. We specialize in creating compelling ad content and strategies that resonate with your audience, using various platforms like Google Ads and social media to enhance your brand's reach and engagement.",
-		"privacy.wip": "Work in progress",
-		"privacy.wip.content": "This page will be updated soon",
-		"faqs.question1": "What is your favorite programming language?",
-		"faqs.answer1":
-			"We love TypeScript for its type safety and modern features, but we are also experts in Python, JavaScript, and Go.",
-		"faqs.question2": "Do you have a coffee machine in the office?",
-		"faqs.answer2":
-			"Yes, and it is probably the most important piece of equipment we have! We run on caffeine and creativity.",
-		"faqs.question3": "What is your approach to rubber duck debugging?",
-		"faqs.answer3":
-			"We have a collection of rubber ducks, each specialized in different programming languages. They are surprisingly effective at finding bugs!",
-		"faqs.question4": "How do you handle merge conflicts?",
-		"faqs.answer4":
-			"With patience, coffee, and sometimes a little panic. But mostly with good Git practices and clear communication among team members.",
-		"faqs.question5": "What is your stance on tabs vs spaces?",
-		"faqs.answer5":
-			"That's a trick question! We use EditorConfig to maintain consistency across the team. But secretly, we are #TeamSpaces.",
-		"faqs.question6": "How many monitors do your developers use?",
-		"faqs.answer6":
-			"The correct answer is n+1, where n is the current number of monitors. There is always room for one more screen!",
-		"faqs.question7": "What is your debugging strategy?",
-		"faqs.answer7":
-			"First we try console.log, then we try proper debugging tools, finally we stare at the code until it confesses its errors.",
-		"faqs.question8": "How do you celebrate successful deployments?",
-		"faqs.answer8":
-			"With a mix of relief, high fives, and occasionally pizza. Then we immediately start worrying about the next deployment.",
-		"faqs.question9": "What is your preferred IDE theme?",
-		"faqs.answer9":
-			"Dark theme during the day, darker theme at night. Our developers are like vampires: we avoid bright lights.",
-		"faqs.question10": "How do you name your variables?",
-		"faqs.answer10":
-			"We follow strict naming conventions, but sometimes end up with classics like 'finalFinalVersionForReal' and 'thisWillDefinitelyWork'.",
-		"faq.otherquestions": "Other questions?",
-		"thanks.subtitle": "Email sent successfully",
-		"thanks.title": "Thank you",
-		"thanks.content": "We will contact you as soon as possible",
-		"contact.title": "Contact",
-		"contact.subtitle": "Our virtual assistant will help you stay in touch with us",
-		"contact.name": "Name",
-		"contact.email": "Email",
-		"contact.message": "Message",
-		"contact.company": "Company",
-		"contact.agree": "By sending this, you agree to our",
-		"contact.send": "Send",
-		"blog.title": "Blog",
-		"blog.subtitle": "Technology, tips, and typos.",
-		"blog.gotoproject": "Go to project",
-		"footer.newsletter": "Subscribe to",
-		"footer.newsletter2": "our newsletter",
-		"footer.yourmail": "Your e-mail",
 	},
 } as const;
 
