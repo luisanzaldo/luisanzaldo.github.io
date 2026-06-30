@@ -18,8 +18,8 @@ export default defineConfig({
 	},
 	site: "https://metarrelato.com",
 	i18n: {
-		defaultLocale: "en",
-		locales: ["en", "it"],
+		defaultLocale: "es",
+		locales: ["es"],
 	},
 	markdown: {
 		drafts: true,

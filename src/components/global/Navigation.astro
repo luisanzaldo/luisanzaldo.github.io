@@ -88,8 +88,8 @@ const { pathname } = Astro.url;
 											href={translatePath(page.url)}
 											class={`inline-block cursor-pointer px-1 py-[0.33rem] ${
 												page.url === pathname ||
-												page.url === pathname.replace(/^\/it|\/$/, "") ||
-												(page.url === "/blog" && (pathname.startsWith("/blog") || pathname.startsWith("/it/blog")))
+												page.url === pathname.replace(/\/$/, "") ||
+												(page.url === "/blog" && pathname.startsWith("/blog"))
 													? "active"
 													: ""
 											}`}>
@@ -125,8 +125,8 @@ const { pathname } = Astro.url;
 					pages.map((page) => {
 						const isActive =
 							page.url === pathname ||
-							page.url === pathname.replace(/^\/it|\/$/, "") ||
-							(page.url === "/blog" && (pathname.startsWith("/blog") || pathname.startsWith("/it/blog")));
+							page.url === pathname.replace(/\/$/, "") ||
+							(page.url === "/blog" && pathname.startsWith("/blog"));
 						return (
 							<li>
 								<a
@@ -230,9 +230,9 @@ const { pathname } = Astro.url;
 					x: () => {
 						const pathName = window.location.pathname;
 
-						if (pathName === "/" || pathName === "/it/" || pathName.startsWith("/work") || pathName.startsWith("/it/work")) {
+						if (pathName === "/" || pathName.startsWith("/work")) {
 							return "7.5rem";
-						} else if (pathName.startsWith("/blog") || pathName.startsWith("/it/blog")) {
+						} else if (pathName.startsWith("/blog")) {
 							return "1.6rem";
 						}
 
@@ -243,7 +243,7 @@ const { pathname } = Astro.url;
 			);
 
 		const isTouchDevice = window.matchMedia("(hover: none)").matches;
-		const isContactPage = window.location.pathname.startsWith("/contact") || window.location.pathname.startsWith("/it/contact");
+		const isContactPage = window.location.pathname.startsWith("/contact");
 
 		function handleResize() {
 			if (window.innerWidth < 768 || isTouchDevice || isContactPage) {
