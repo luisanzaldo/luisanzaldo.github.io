@@ -15,9 +15,7 @@ const translatePath = useTranslatedPath(lang);
 				<h1 class="hero-title text-center font-display">
 					<span class="inline-block">{t("hero.title.main")}</span>
 					<span class="rotator relative inline-flex w-full justify-center">
-						<span>{t("hero.title.3")}</span><span>{t("hero.title.4")}</span><span>{t("hero.title.5")}</span><span>{t("hero.title.6")}</span><span>
-							{t("hero.title.1")}
-						</span><span>{t("hero.title.2")}</span><span>{t("hero.title.3")}</span>
+						<span>{t("hero.title.1")}</span><span>{t("hero.title.2")}</span><span>{t("hero.title.3")}</span><span>{t("hero.title.4")}</span><span>{t("hero.title.5")}</span><span>{t("hero.title.1")}</span>
 					</span>
 				</h1>
 			</div>
@@ -93,6 +91,7 @@ const translatePath = useTranslatedPath(lang);
 
 	.rotator > span {
 		position: absolute;
+		color: #87c159;
 	}
 
 	.rotator > span:not(:nth-child(1)) {
