@@ -111,7 +111,7 @@ html {
 }
 
 .prose-styles {
-	@apply prose mx-auto max-w-5xl text-slate-600 prose-headings:font-bold prose-headings:tracking-tighter prose-headings:text-black prose-headings:text-balance prose-headings:hyphens-manual prose-headings:text-center prose-a:text-slate-600 hover:prose-a:text-black prose-blockquote:border-l-slate-950 prose-blockquote:text-slate-600 prose-strong:text-[#4d7c2f] prose-code:text-black prose-pre:rounded-lg prose-li:marker:text-slate-500;
+	@apply prose mx-auto max-w-5xl text-slate-600 prose-headings:font-bold prose-headings:tracking-tighter prose-headings:text-black prose-headings:text-balance prose-headings:hyphens-manual prose-headings:text-center prose-a:text-slate-600 hover:prose-a:text-black prose-blockquote:border-l-slate-950 prose-blockquote:text-slate-600 prose-strong:text-[#356a12] prose-code:text-black prose-pre:rounded-lg prose-li:marker:text-slate-500;
 }
 
 .prose-styles img {
