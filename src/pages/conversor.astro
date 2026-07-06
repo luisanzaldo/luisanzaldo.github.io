@@ -376,7 +376,7 @@
     <div class="pill">MXN - Pesos mexicanos</div>
     <div class="picker">
       <button id="curBtn" class="pill" aria-haspopup="listbox" aria-expanded="false">
-        <span class="dot"></span>
+        <span class="dot" id="curDot"></span>
         <span class="lbl" id="curLbl"></span>
         <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
@@ -409,9 +409,9 @@
   var LS_CUR = 'conversor:currency';
 
   var CURRENCIES = {
-    USD: { label: 'USD - United States dollars', format: function (v) { return '$' + fmtNum(v); } },
-    EUR: { label: 'EUR - Euros', format: function (v) { return fmtNum(v) + ' €'; } },
-    BRL: { label: 'BRL - Reais brasileiros', format: function (v) { return 'R$' + fmtNum(v); } }
+    USD: { label: 'USD - United States dollars', color: '#2563EB', format: function (v) { return '$' + fmtNum(v); } },
+    EUR: { label: 'EUR - Euros', color: '#DFA400', format: function (v) { return fmtNum(v) + ' €'; } },
+    BRL: { label: 'BRL - Reais brasileiros', color: '#16A34A', format: function (v) { return 'R$' + fmtNum(v); } }
   };
   var CUR_ORDER = ['USD', 'EUR', 'BRL'];
 
@@ -515,6 +515,7 @@
       var check = document.createElement('span');
       check.className = 'check';
       check.textContent = '✓';
+      check.style.color = CURRENCIES[c].color;
       b.appendChild(name);
       b.appendChild(check);
       b.addEventListener('click', function () {
@@ -529,6 +530,7 @@
       menu.appendChild(b);
     });
     $('curLbl').textContent = CURRENCIES[currency].label;
+    $('curDot').style.background = CURRENCIES[currency].color;
   }
 
   function toggleMenu(open) {
