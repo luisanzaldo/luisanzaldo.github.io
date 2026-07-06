@@ -37,7 +37,7 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		sitemap({
-			filter: (page) => !page.includes("/conversor") && !page.includes("/lienzo"),
+			filter: (page) => !page.includes("/conversor") && !page.includes("/lienzo") && !page.includes("/webapps"),
 		}),
 		mdx(),
 		icon(),

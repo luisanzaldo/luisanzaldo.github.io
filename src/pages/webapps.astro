@@ -1,0 +1,51 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import type { AstroSeoProps } from "@astrolib/seo";
+import Title from "@components/global/Title.astro";
+import AppCard from "@components/webapps/AppCard.astro";
+import lienzoCover from "@assets/images/webapps/lienzo.svg";
+import conversorCover from "@assets/images/webapps/conversor.svg";
+
+const apps = [
+	{
+		url: "/lienzo",
+		title: "lienzo",
+		description:
+			"Crea miniaturas y composiciones visuales directamente en tu navegador. Diseña, ajusta y exporta sin instalar nada.",
+		image: lienzoCover,
+	},
+	{
+		url: "/conversor",
+		title: "conversor",
+		description:
+			"Apunta la cámara a un precio en pesos mexicanos y toca para ver al instante su equivalente en dólares, euros o reales.",
+		image: conversorCover,
+	},
+];
+
+const seo: AstroSeoProps = {
+	title: "Web Apps — Metarrelato",
+	description: "Herramientas y soluciones digitales de Metarrelato.",
+	canonical: "https://metarrelato.com/webapps",
+	noindex: true,
+	nofollow: true,
+};
+---
+
+<BaseLayout seo={seo}>
+	<section>
+		<div class="mx-auto flex flex-col gap-16 px-8 py-24 md:px-12 lg:pt-32 2xl:max-w-7xl">
+			<!-- svg: first layer -->
+			<svg class="hidden" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+				<filter id="article-noise-filter">
+					<feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"></feTurbulence>
+				</filter>
+			</svg>
+			<Title title="Web Apps" subtitle="Herramientas y soluciones digitales" class="pb-10 pt-20 uppercase" />
+
+			<div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
+				{apps.map((app) => <AppCard url={app.url} title={app.title} description={app.description} image={app.image} />)}
+			</div>
+		</div>
+	</section>
+</BaseLayout>
