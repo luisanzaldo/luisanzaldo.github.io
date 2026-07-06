@@ -614,6 +614,62 @@
     return out;
   }
 
+  function bboxContains(b, x, y, pad) {
+    pad = pad || 0;
+    return x >= b.x0 - pad && x <= b.x1 + pad && y >= b.y0 - pad && y <= b.y1 + pad;
+  }
+
+  function distToBBox(b, x, y) {
+    var dx = Math.max(b.x0 - x, 0, x - b.x1);
+    var dy = Math.max(b.y0 - y, 0, y - b.y1);
+    return Math.hypot(dx, dy);
+  }
+
+  // número bajo el dedo aunque el OCR haya pegado el precio al texto vecino ("pastdg210")
+  function digitWordAt(words, x, y) {
+    for (var i = 0; i < words.length; i++) {
+      var w = words[i];
+      if (!w || !w.bbox || !w.text || !bboxContains(w.bbox, x, y, 8)) continue;
+      var t = w.text.trim();
+      var runs = t.match(/\d[\d.,]*/g);
+      if (!runs) continue;
+      var run = runs[runs.length - 1];
+      var v = parseAmount(run);
+      if (v == null) continue;
+      var start = t.lastIndexOf(run);
+      var bw = w.bbox.x1 - w.bbox.x0;
+      return {
+        value: v,
+        bbox: {
+          x0: w.bbox.x0 + (start / t.length) * bw,
+          y0: w.bbox.y0,
+          x1: w.bbox.x0 + ((start + run.length) / t.length) * bw,
+          y1: w.bbox.y1
+        }
+      };
+    }
+    return null;
+  }
+
+  function findPriceAt(words, tx, ty) {
+    var prices = extractPrices(words);
+    // 1) precio con $ bajo el dedo
+    for (var i = 0; i < prices.length; i++) {
+      if (bboxContains(prices[i].bbox, tx, ty, 6)) return prices[i];
+    }
+    // 2) número bajo el dedo (token mutilado por el OCR)
+    var under = digitWordAt(words, tx, ty);
+    if (under) return under;
+    // 3) precio con $ muy cercano (dedo ligeramente fuera), nunca de otra fila lejana
+    var best = null, bd = Infinity;
+    prices.forEach(function (p) {
+      var d = distToBBox(p.bbox, tx, ty);
+      if (d < bd) { bd = d; best = p; }
+    });
+    if (best && bd <= 2.5 * (best.bbox.y1 - best.bbox.y0)) return best;
+    return null;
+  }
+
   /* ---------- Cámara ---------- */
 
   function openCamera() {
@@ -687,17 +743,8 @@
     var ty = (vy - sy) * up;
 
     worker.recognize(crop).then(function (res) {
-      var prices = extractPrices((res.data && res.data.words) || []);
-      var best = null, bestD = Infinity;
-      prices.forEach(function (p) {
-        var cx = (p.bbox.x0 + p.bbox.x1) / 2;
-        var cy = (p.bbox.y0 + p.bbox.y1) / 2;
-        var inside = tx >= p.bbox.x0 && tx <= p.bbox.x1 && ty >= p.bbox.y0 && ty <= p.bbox.y1;
-        var d = inside ? 0 : Math.hypot(cx - tx, cy - ty);
-        if (d < bestD) { bestD = d; best = p; }
-      });
-      var maxD = 0.35 * Math.hypot(crop.width, crop.height);
-      if (best && bestD <= maxD) {
+      var best = findPriceAt((res.data && res.data.words) || [], tx, ty);
+      if (best) {
         showResult(best, { sx: sx, sy: sy, up: up, map: m });
       } else {
         showToast('No leí un precio con $ ahí. Acércate e intenta de nuevo.');
