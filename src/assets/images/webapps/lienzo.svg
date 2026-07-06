@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1152 738" role="img" aria-label="Caballete con lienzo de manchas turquesa y amarillas, como el icono de lienzo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f6fcfd"/>
+      <stop offset="1" stop-color="#dbf0f3"/>
+    </linearGradient>
+    <linearGradient id="canvas" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f8f6f1"/>
+    </linearGradient>
+    <clipPath id="canvasclip">
+      <rect x="426" y="138" width="300" height="418" rx="2"/>
+    </clipPath>
+    <filter id="softblur" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+  </defs>
+
+  <!-- fondo -->
+  <rect width="1152" height="738" fill="url(#bg)"/>
+
+  <!-- sombra del caballete -->
+  <ellipse cx="576" cy="682" rx="280" ry="22" fill="#aed3d9" opacity="0.5" filter="url(#softblur)"/>
+
+  <!-- caballete: aro superior y patas -->
+  <g stroke="#c5cdd9" stroke-width="16" stroke-linecap="round" fill="none">
+    <path d="M 576 128 a 16 20 0 0 1 0 -38 a 16 20 0 0 1 0 38"/>
+    <line x1="520" y1="240" x2="424" y2="660"/>
+    <line x1="632" y1="240" x2="728" y2="660"/>
+    <line x1="576" y1="360" x2="576" y2="672"/>
+  </g>
+
+  <!-- lienzo -->
+  <rect x="418" y="130" width="316" height="434" rx="4" fill="#e2e9ec"/>
+  <rect x="426" y="138" width="300" height="418" rx="2" fill="url(#canvas)"/>
+
+  <!-- contenido del cuadro: manchas orgánicas del icono de lienzo -->
+  <g clip-path="url(#canvasclip)">
+    <!-- mancha turquesa superior izquierda -->
+    <path d="M 426 138 H 615
+             C 585 200, 625 245, 585 300
+             C 550 348, 505 370, 495 425
+             C 488 462, 500 490, 480 518
+             C 465 538, 445 542, 426 534 Z"
+          fill="#55c6d1"/>
+    <!-- mancha amarilla central -->
+    <path d="M 640 200
+             C 690 210, 715 250, 726 260
+             L 726 380
+             C 690 395, 660 430, 620 445
+             C 570 465, 540 430, 555 385
+             C 565 350, 600 330, 615 290
+             C 628 255, 620 220, 640 200 Z"
+          fill="#ede46a"/>
+    <!-- mancha turquesa inferior derecha -->
+    <path d="M 726 420
+             C 690 430, 660 460, 640 490
+             C 625 515, 630 540, 640 556
+             L 726 556 Z"
+          fill="#55c6d1"/>
+  </g>
+
+  <!-- repisa del caballete -->
+  <rect x="452" y="552" width="248" height="16" rx="8" fill="#c5cdd9"/>
+</svg>

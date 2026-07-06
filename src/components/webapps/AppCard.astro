@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+
+const { title, url, description, image, loading = "lazy" } = Astro.props;
+---
+
+<a href={url} title={title} class="group">
+	<article class="relative flex h-full flex-1 flex-col overflow-hidden rounded-lg">
+		<div class="article-overlay article-gradient-overlay relative block w-full overflow-hidden lg:col-span-2">
+			<Image class="relative aspect-[384/246] h-full w-full bg-center object-cover" src={image} alt={title} loading={loading} />
+		</div>
+		<div class="flex w-full flex-1 flex-col items-start justify-between text-black pt-4 md:p-2 md:pt-6">
+			<div class="w-full">
+				<div>
+					<p class="font-mono text-lg font-medium uppercase tracking-wide lg:text-xl">
+						{title}
+					</p>
+				</div>
+				<p class="mt-2 line-clamp-3 text-base text-slate-600">
+					{description}
+				</p>
+			</div>
+			<footer>
+				<div class="mt-6 inline-flex items-center space-x-1">
+					<p class="text-xs font-medium text-[#F06071]">Abrir app &rarr;</p>
+				</div>
+			</footer>
+		</div>
+	</article>
+</a>
+
+<style>
+	.article-overlay,
+	.article-overlay img {
+		border-radius: inherit;
+	}
+	.article-overlay.article-gradient-overlay {
+		background: linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 100%);
+	}
+	.article-overlay:before {
+		content: "";
+		border-radius: inherit;
+		filter: url(#article-noise-filter);
+		opacity: 0.5;
+		z-index: 10;
+		@apply absolute bottom-0 left-0 right-0 top-0 rounded-lg;
+	}
+</style>
