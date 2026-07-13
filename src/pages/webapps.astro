@@ -5,6 +5,7 @@ import Title from "@components/global/Title.astro";
 import AppCard from "@components/webapps/AppCard.astro";
 import lienzoCover from "@assets/images/webapps/lienzo.svg";
 import conversorCover from "@assets/images/webapps/conversor.svg";
+import metatetrisCover from "@assets/images/webapps/metatetris.svg";
 
 const apps = [
 	{
@@ -20,6 +21,13 @@ const apps = [
 		description:
 			"Apunta la cámara a un precio en pesos mexicanos y toca para ver al instante su equivalente en dólares, euros o reales.",
 		image: conversorCover,
+	},
+	{
+		url: "/metatetris",
+		title: "metatetris",
+		description:
+			"Un salvapantallas de tetris estilo 8 bits que juega solo. Mueve el mouse o toca una tecla para tomar el control y jugar la partida clásica.",
+		image: metatetrisCover,
 	},
 ];
 
