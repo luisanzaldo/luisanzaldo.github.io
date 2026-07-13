@@ -45,6 +45,54 @@
     background-image: repeating-linear-gradient(to bottom, rgba(0,0,0,0.9) 0px, rgba(0,0,0,0.9) 1px, transparent 1px, transparent 4px);
   }
 
+  /* ambient phrases floating behind the game */
+  #ambient {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden; z-index: 1; pointer-events: none;
+  }
+  #phrase {
+    position: absolute;
+    opacity: 0;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 2;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.65);
+    -webkit-transform: translateY(18px);
+    -ms-transform: translateY(18px);
+    transform: translateY(18px);
+    -webkit-transition: opacity 1.5s ease, -webkit-transform 1.5s ease;
+    transition: opacity 1.5s ease, transform 1.5s ease;
+  }
+  #phrase.in {
+    opacity: 0.8;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+    -webkit-transition-duration: 0.6s;
+    transition-duration: 0.6s;
+  }
+  #phrase.out {
+    opacity: 0;
+    -webkit-transform: translateY(-22px);
+    -ms-transform: translateY(-22px);
+    transform: translateY(-22px);
+    -webkit-transition-duration: 1.7s;
+    transition-duration: 1.7s;
+  }
+  #phCursor {
+    display: inline-block;
+    width: 0.55em; height: 0.9em;
+    margin-left: 0.15em;
+    background-color: currentColor;
+    vertical-align: -0.05em;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #phrase, #phrase.in, #phrase.out {
+      -webkit-transform: none; -ms-transform: none; transform: none;
+    }
+  }
+
   /* header */
   #hdr { position: absolute; top: 0; left: 0; right: 0; height: 64px; padding: 14px 16px; z-index: 5; }
   #cloudLogo { display: inline-block; vertical-align: middle; }
@@ -170,6 +218,9 @@
 </head>
 <body>
 <div id="app">
+  <div id="ambient">
+    <div id="phrase"><span id="phText"></span><span id="phCursor" class="blink" style="display:none"></span></div>
+  </div>
   <div id="hdr">
     <svg id="cloudLogo" viewBox="0 0 20 12" width="52" height="31" shape-rendering="crispEdges" aria-hidden="true"><rect x="11" y="0" width="5" height="1" fill="#f43f5e"/><rect x="10" y="1" width="7" height="1" fill="#f43f5e"/><rect x="3" y="2" width="3" height="1" fill="#f43f5e"/><rect x="9" y="2" width="9" height="1" fill="#f43f5e"/><rect x="2" y="3" width="16" height="1" fill="#f43f5e"/><rect x="1" y="4" width="18" height="1" fill="#f43f5e"/><rect x="0" y="5" width="20" height="1" fill="#f43f5e"/><rect x="0" y="6" width="20" height="1" fill="#f43f5e"/><rect x="0" y="7" width="20" height="1" fill="#f43f5e"/><rect x="0" y="8" width="20" height="1" fill="#f43f5e"/><rect x="0" y="9" width="20" height="1" fill="#f43f5e"/><rect x="1" y="10" width="18" height="1" fill="#f43f5e"/><rect x="2" y="11" width="16" height="1" fill="#c9284d"/><g id="eyesOpen"><rect x="3" y="5" width="2" height="1" fill="#ffffff"/><rect x="7" y="5" width="2" height="1" fill="#ffffff"/><rect x="3" y="6" width="1" height="1" fill="#ffffff"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/></g><g id="eyesClosed" style="display:none"><rect x="3" y="6" width="2" height="1" fill="#ffffff"/><rect x="7" y="6" width="2" height="1" fill="#ffffff"/></g></svg>
     <h1>METATETRIS</h1>
@@ -844,6 +895,107 @@
     else if (mode === 'pause' && idle > PAUSE_TIMEOUT) setMode('demo');
     else if (mode === 'over' && idle > OVER_TIMEOUT) setMode('demo');
   }, 1000);
+
+  /* ================= ambient phrases ================= */
+  var PHRASES = [
+    'Creatividad',
+    'Innovación',
+    'Arriesgarse a crear',
+    'Diseño',
+    'Entender el mundo',
+    'Diseñar el entorno',
+    'Mirar al futuro',
+    'Intentar para lograr',
+    'Provocar el cambio',
+    'Seguir creando',
+    'Ideas para solucionar'
+  ];
+  var PHRASE_COLORS = ['#2fd4e6', '#ffcf35', '#9d5cf0', '#43d34f', '#ff9426', '#3f7bf6', '#ff5c3c'];
+  var phEl = $('phrase'), phText = $('phText'), phCursor = $('phCursor');
+  var phQueue = [], phColorIdx = 0, phLastSide = 'right';
+  var frameEl = $('frame');
+
+  function nextPhraseText() {
+    if (!phQueue.length) {
+      var pool = PHRASES.slice(0), i, j, t;
+      for (i = pool.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+      }
+      phQueue = pool;
+    }
+    return phQueue.pop();
+  }
+
+  /* pick a spot in the empty strip beside the game; false if there is no room */
+  function placePhrase(text) {
+    var fr = frameEl.getBoundingClientRect();
+    var st = stage.getBoundingClientRect();
+    var winW = window.innerWidth;
+    var leftW = fr.left - 16, rightW = winW - fr.right - 16;
+    var side = null;
+    var MIN = 130;
+    if (leftW >= MIN && rightW >= MIN) side = (phLastSide === 'left') ? 'right' : 'left';
+    else if (leftW >= MIN) side = 'left';
+    else if (rightW >= MIN) side = 'right';
+    if (!side) return false;
+    phLastSide = side;
+    var stripX = (side === 'left') ? 8 : fr.right + 8;
+    var stripW = (side === 'left') ? leftW : rightW;
+    var width = Math.min(stripW, 400);
+    phEl.style.width = width + 'px';
+    phEl.style.fontSize = (width >= 300 ? 21 : (width >= 200 ? 16 : 13)) + 'px';
+    phEl.style.color = PHRASE_COLORS[phColorIdx];
+    phColorIdx = (phColorIdx + 1) % PHRASE_COLORS.length;
+    phEl.style.left = Math.round(stripX + Math.random() * (stripW - width)) + 'px';
+    /* measure with the full text so the vertical spot fits */
+    phText.innerHTML = text;
+    var h = phEl.offsetHeight;
+    var yMin = st.top + 14, yMax = st.top + st.height - h - 14;
+    if (yMax <= yMin) return false;
+    phEl.style.top = Math.round(yMin + Math.random() * (yMax - yMin)) + 'px';
+    return true;
+  }
+
+  function runPhrases() {
+    var wait = 2000 + Math.random() * 2800;
+    window.setTimeout(function () { showPhrase(runPhrases); }, wait);
+  }
+
+  function showPhrase(done) {
+    var text = nextPhraseText();
+    /* back to the resting state before repositioning; placePhrase's
+       offsetHeight read forces the reflow so the next .in starts clean */
+    phEl.className = '';
+    if (!placePhrase(text)) { done(); return; }
+    if (reducedMotion) {
+      /* no typewriter, no drift: plain cross-fade */
+      phEl.className = 'in';
+      window.setTimeout(function () {
+        phEl.className = 'out';
+        window.setTimeout(done, 1800);
+      }, 3600);
+      return;
+    }
+    phText.innerHTML = '';
+    phCursor.style.display = 'inline-block';
+    phEl.className = 'in';
+    var i = 0;
+    var typer = window.setInterval(function () {
+      i++;
+      phText.innerHTML = text.substring(0, i);
+      if (i >= text.length) {
+        window.clearInterval(typer);
+        window.setTimeout(function () {
+          phCursor.style.display = 'none';
+          phEl.className = 'out';
+          window.setTimeout(done, 1800);
+        }, 2400);
+      }
+    }, 60);
+  }
+
+  runPhrases();
 
   /* the cloud blinks */
   if (!reducedMotion) {
