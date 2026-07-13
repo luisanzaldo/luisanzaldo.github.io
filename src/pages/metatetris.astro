@@ -64,8 +64,8 @@
     -webkit-transition: opacity 1.5s ease, -webkit-transform 1.5s ease;
     transition: opacity 1.5s ease, transform 1.5s ease;
   }
+  /* opacity is driven inline from JS (varies with each phrase's size) */
   #phrase.in {
-    opacity: 0.8;
     -webkit-transform: translateY(0);
     -ms-transform: translateY(0);
     transform: translateY(0);
@@ -73,7 +73,6 @@
     transition-duration: 0.6s;
   }
   #phrase.out {
-    opacity: 0;
     -webkit-transform: translateY(-22px);
     -ms-transform: translateY(-22px);
     transform: translateY(-22px);
@@ -927,7 +926,10 @@
     return phQueue.pop();
   }
 
-  /* pick a spot in the empty strip beside the game; false if there is no room */
+  /* pick a spot in the empty strip beside the game; false if there is no room.
+     each phrase rolls a random size, from modest up to giant — the ceiling is
+     whatever lets the longest word fit across the strip */
+  var phOpTarget = '0.8';
   function placePhrase(text) {
     var fr = frameEl.getBoundingClientRect();
     var st = stage.getBoundingClientRect();
@@ -942,18 +944,35 @@
     phLastSide = side;
     var stripX = (side === 'left') ? 8 : fr.right + 8;
     var stripW = (side === 'left') ? leftW : rightW;
-    var width = Math.min(stripW, 400);
+    var width = Math.min(stripW, 560);
+
+    var words = text.split(' '), longest = 0, i;
+    for (i = 0; i < words.length; i++) if (words[i].length > longest) longest = words[i].length;
+    var maxFs = Math.floor(width / (longest + 1));
+    if (maxFs > 56) maxFs = 56;
+    var minFs = 14;
+    var fs = (maxFs <= minFs) ? maxFs : (minFs + Math.floor(Math.random() * (maxFs - minFs + 1)));
+    if (fs < 10) return false;
+
     phEl.style.width = width + 'px';
-    phEl.style.fontSize = (width >= 300 ? 21 : (width >= 200 ? 16 : 13)) + 'px';
     phEl.style.color = PHRASE_COLORS[phColorIdx];
     phColorIdx = (phColorIdx + 1) % PHRASE_COLORS.length;
     phEl.style.left = Math.round(stripX + Math.random() * (stripW - width)) + 'px';
-    /* measure with the full text so the vertical spot fits */
+
+    /* measure with the full text; shrink until it also fits vertically */
     phText.innerHTML = text;
-    var h = phEl.offsetHeight;
-    var yMin = st.top + 14, yMax = st.top + st.height - h - 14;
+    var yMin = st.top + 14, h, yMax;
+    while (true) {
+      phEl.style.fontSize = fs + 'px';
+      h = phEl.offsetHeight;
+      yMax = st.top + st.height - h - 14;
+      if (yMax > yMin || fs <= 10) break;
+      fs = Math.max(10, Math.floor(fs * 0.78));
+    }
     if (yMax <= yMin) return false;
     phEl.style.top = Math.round(yMin + Math.random() * (yMax - yMin)) + 'px';
+    /* depth cue: the bigger the phrase, the fainter it sits in the back */
+    phOpTarget = (0.92 - fs * 0.005).toFixed(2);
     return true;
   }
 
@@ -967,12 +986,15 @@
     /* back to the resting state before repositioning; placePhrase's
        offsetHeight read forces the reflow so the next .in starts clean */
     phEl.className = '';
+    phEl.style.opacity = '0';
     if (!placePhrase(text)) { done(); return; }
     if (reducedMotion) {
       /* no typewriter, no drift: plain cross-fade */
       phEl.className = 'in';
+      phEl.style.opacity = phOpTarget;
       window.setTimeout(function () {
         phEl.className = 'out';
+        phEl.style.opacity = '0';
         window.setTimeout(done, 1800);
       }, 3600);
       return;
@@ -980,6 +1002,7 @@
     phText.innerHTML = '';
     phCursor.style.display = 'inline-block';
     phEl.className = 'in';
+    phEl.style.opacity = phOpTarget;
     var i = 0;
     var typer = window.setInterval(function () {
       i++;
@@ -989,6 +1012,7 @@
         window.setTimeout(function () {
           phCursor.style.display = 'none';
           phEl.className = 'out';
+          phEl.style.opacity = '0';
           window.setTimeout(done, 1800);
         }, 2400);
       }
