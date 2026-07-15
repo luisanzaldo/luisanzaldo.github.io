@@ -45,52 +45,12 @@
     background-image: repeating-linear-gradient(to bottom, rgba(0,0,0,0.9) 0px, rgba(0,0,0,0.9) 1px, transparent 1px, transparent 4px);
   }
 
-  /* ambient phrases floating behind the game */
+  /* giant tetromino rain behind the game */
   #ambient {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
     overflow: hidden; z-index: 1; pointer-events: none;
   }
-  #phrase {
-    position: absolute;
-    opacity: 0;
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 2;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.65);
-    -webkit-transform: translateY(18px);
-    -ms-transform: translateY(18px);
-    transform: translateY(18px);
-    -webkit-transition: opacity 1.5s ease, -webkit-transform 1.5s ease;
-    transition: opacity 1.5s ease, transform 1.5s ease;
-  }
-  /* opacity is driven inline from JS (varies with each phrase's size) */
-  #phrase.in {
-    -webkit-transform: translateY(0);
-    -ms-transform: translateY(0);
-    transform: translateY(0);
-    -webkit-transition-duration: 0.6s;
-    transition-duration: 0.6s;
-  }
-  #phrase.out {
-    -webkit-transform: translateY(-22px);
-    -ms-transform: translateY(-22px);
-    transform: translateY(-22px);
-    -webkit-transition-duration: 1.7s;
-    transition-duration: 1.7s;
-  }
-  #phCursor {
-    display: inline-block;
-    width: 0.55em; height: 0.9em;
-    margin-left: 0.15em;
-    background-color: currentColor;
-    vertical-align: -0.05em;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    #phrase, #phrase.in, #phrase.out {
-      -webkit-transform: none; -ms-transform: none; transform: none;
-    }
-  }
+  #bg { display: block; width: 100%; height: 100%; }
 
   /* header */
   #hdr { position: absolute; top: 0; left: 0; right: 0; height: 64px; padding: 14px 16px; z-index: 5; }
@@ -218,10 +178,10 @@
 <body>
 <div id="app">
   <div id="ambient">
-    <div id="phrase"><span id="phText"></span><span id="phCursor" class="blink" style="display:none"></span></div>
+    <canvas id="bg" aria-hidden="true"></canvas>
   </div>
   <div id="hdr">
-    <svg id="cloudLogo" viewBox="0 0 20 12" width="52" height="31" shape-rendering="crispEdges" aria-hidden="true"><rect x="11" y="0" width="5" height="1" fill="#f43f5e"/><rect x="10" y="1" width="7" height="1" fill="#f43f5e"/><rect x="3" y="2" width="3" height="1" fill="#f43f5e"/><rect x="9" y="2" width="9" height="1" fill="#f43f5e"/><rect x="2" y="3" width="16" height="1" fill="#f43f5e"/><rect x="1" y="4" width="18" height="1" fill="#f43f5e"/><rect x="0" y="5" width="20" height="1" fill="#f43f5e"/><rect x="0" y="6" width="20" height="1" fill="#f43f5e"/><rect x="0" y="7" width="20" height="1" fill="#f43f5e"/><rect x="0" y="8" width="20" height="1" fill="#f43f5e"/><rect x="0" y="9" width="20" height="1" fill="#f43f5e"/><rect x="1" y="10" width="18" height="1" fill="#f43f5e"/><rect x="2" y="11" width="16" height="1" fill="#c9284d"/><g id="eyesOpen"><rect x="3" y="5" width="2" height="1" fill="#ffffff"/><rect x="7" y="5" width="2" height="1" fill="#ffffff"/><rect x="3" y="6" width="1" height="1" fill="#ffffff"/><rect x="7" y="6" width="1" height="1" fill="#ffffff"/></g><g id="eyesClosed" style="display:none"><rect x="3" y="6" width="2" height="1" fill="#ffffff"/><rect x="7" y="6" width="2" height="1" fill="#ffffff"/></g></svg>
+    <svg id="cloudLogo" viewBox="35 412 2063 1309" width="49" height="31" aria-hidden="true"><path fill="#f43f5e" d="M1833.95,1020.62l-0,-15.677c-0,-321.781 -260.856,-582.637 -582.637,-582.637l-0.002,-0c-207.296,-0 -388.831,108.582 -492.103,271.648c-94.522,-93.944 -240.701,-124.828 -368.992,-66.044l-0.002,0c-161.476,73.981 -234.075,262.107 -166.715,424.855c-106.298,60.658 -178.106,174.821 -178.106,305.971c0,194.561 157.725,352.287 352.288,352.287l1337.97,0c194.567,0 352.292,-157.726 352.292,-352.287c-0,-160.412 -107.312,-295.531 -253.99,-338.116Z"/><g id="eyesOpen" fill="#ffffff"><path d="M789.036,940.735l-0,-105.98l-46.163,0c-27.959,0 -53.317,3.901 -76.073,12.355c-23.407,8.451 -43.563,19.505 -60.468,33.808c-16.904,14.954 -29.909,31.86 -39.011,52.015c-9.753,20.157 -14.305,42.913 -14.305,66.971l-0,211.311l120.285,-0l-0,-204.16c-0,-19.506 6.502,-35.759 19.506,-48.114c13.005,-12.354 29.909,-18.206 50.066,-18.206l46.163,0Z"/><path d="M1066.67,940.735l-0,-105.98l-46.163,0c-27.959,0 -53.317,3.901 -76.073,12.355c-23.407,8.451 -43.563,19.505 -60.468,33.808c-16.904,14.954 -29.909,31.86 -39.011,52.015c-9.753,20.157 -14.305,42.913 -14.305,66.971l-0,211.311l120.287,-0l-0,-204.16c-0,-19.506 6.5,-35.759 19.505,-48.114c13.004,-12.354 29.908,-18.206 50.065,-18.206l46.163,0Z"/></g><g id="eyesClosed" style="display:none" fill="#ffffff"><rect x="553" y="1141" width="236" height="70" rx="35"/><rect x="831" y="1141" width="236" height="70" rx="35"/></g></svg>
     <h1>METATETRIS</h1>
   </div>
   <button id="fsBtn" type="button" aria-label="Pantalla completa">FULLSCREEN</button>
@@ -741,6 +701,7 @@
 
   /* ================= layout / render ================= */
   function relayout() {
+    resizeBg();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     /* the touch pad gets real room: raise the stage instead of overlapping it */
     stage.style.bottom = (isTouch && (mode === 'play' || mode === 'pause')) ? '116px' : '38px';
@@ -856,6 +817,7 @@
     var t = now(), dt = t - lastT;
     lastT = t;
     if (dt > 250) dt = 250;
+    stepBg(dt);
     var running = (mode === 'demo' || mode === 'ready' || mode === 'play');
 
     if (running && game) {
@@ -895,131 +857,57 @@
     else if (mode === 'over' && idle > OVER_TIMEOUT) setMode('demo');
   }, 1000);
 
-  /* ================= ambient phrases ================= */
-  var PHRASES = [
-    'Creatividad',
-    'Innovación',
-    'Arriesgarse a crear',
-    'Diseño',
-    'Entender el mundo',
-    'Diseñar el entorno',
-    'Mirar al futuro',
-    'Intentar para lograr',
-    'Provocar el cambio',
-    'Seguir creando',
-    'Ideas para solucionar'
-  ];
-  var PHRASE_COLORS = ['#2fd4e6', '#ffcf35', '#9d5cf0', '#43d34f', '#ff9426', '#3f7bf6', '#ff5c3c'];
-  var phEl = $('phrase'), phText = $('phText'), phCursor = $('phCursor');
-  var phQueue = [], phColorIdx = 0, phLastSide = 'right';
-  var frameEl = $('frame');
+  /* ================= giant background pieces ================= */
+  var bg = $('bg'), bgctx = bg.getContext('2d');
+  var bgW = 0, bgH = 0;
+  var floaters = [];
 
-  function nextPhraseText() {
-    if (!phQueue.length) {
-      var pool = PHRASES.slice(0), i, j, t;
-      for (i = pool.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        t = pool[i]; pool[i] = pool[j]; pool[j] = t;
+  function spawnFloater(f, anywhere) {
+    f.t = Math.floor(Math.random() * 7);
+    f.r = Math.floor(Math.random() * PIECES[f.t].length);
+    f.size = 36 + Math.floor(Math.random() * 81);       /* 36..116 px per block */
+    f.speed = f.size * (0.55 + Math.random() * 0.35);   /* bigger falls faster: depth */
+    f.alpha = 0.14 + ((f.size - 36) / 80) * 0.22;
+    f.x = Math.floor(Math.random() * Math.max(1, bgW - f.size * 4));
+    f.y = anywhere ? Math.random() * bgH : -(f.size * 4) - Math.random() * bgH * 0.4;
+    f.spinIn = 2200 + Math.random() * 3800;             /* ms until the next 90° step */
+    return f;
+  }
+
+  function resizeBg() {
+    bgW = window.innerWidth; bgH = window.innerHeight;
+    bg.width = bgW; bg.height = bgH; /* 1:1 pixels — chunky is the point */
+    var want = reducedMotion ? 0 : Math.max(3, Math.min(7, Math.floor(bgW / 260)));
+    while (floaters.length < want) floaters.push(spawnFloater({}, true));
+    floaters.length = want;
+  }
+
+  function stepBg(dt) {
+    if (!floaters.length) return;
+    var i, f, s, j;
+    for (i = 0; i < floaters.length; i++) {
+      f = floaters[i];
+      f.y += f.speed * dt / 1000;
+      f.spinIn -= dt;
+      if (f.spinIn <= 0) {
+        f.r = (f.r + 1) % PIECES[f.t].length;
+        f.spinIn = 2200 + Math.random() * 3800;
       }
-      phQueue = pool;
+      if (f.y > bgH + 20) spawnFloater(f, false);
     }
-    return phQueue.pop();
-  }
-
-  /* pick a spot in the empty strip beside the game; false if there is no room.
-     each phrase rolls a random size, from modest up to giant — the ceiling is
-     whatever lets the longest word fit across the strip */
-  var phOpTarget = '0.8';
-  function placePhrase(text) {
-    var fr = frameEl.getBoundingClientRect();
-    var st = stage.getBoundingClientRect();
-    var winW = window.innerWidth;
-    var leftW = fr.left - 16, rightW = winW - fr.right - 16;
-    var side = null;
-    var MIN = 130;
-    if (leftW >= MIN && rightW >= MIN) side = (phLastSide === 'left') ? 'right' : 'left';
-    else if (leftW >= MIN) side = 'left';
-    else if (rightW >= MIN) side = 'right';
-    if (!side) return false;
-    phLastSide = side;
-    var stripX = (side === 'left') ? 8 : fr.right + 8;
-    var stripW = (side === 'left') ? leftW : rightW;
-    var width = Math.min(stripW, 560);
-
-    var words = text.split(' '), longest = 0, i;
-    for (i = 0; i < words.length; i++) if (words[i].length > longest) longest = words[i].length;
-    var maxFs = Math.floor(width / (longest + 1));
-    if (maxFs > 56) maxFs = 56;
-    var minFs = 14;
-    var fs = (maxFs <= minFs) ? maxFs : (minFs + Math.floor(Math.random() * (maxFs - minFs + 1)));
-    if (fs < 10) return false;
-
-    phEl.style.width = width + 'px';
-    phEl.style.color = PHRASE_COLORS[phColorIdx];
-    phColorIdx = (phColorIdx + 1) % PHRASE_COLORS.length;
-    phEl.style.left = Math.round(stripX + Math.random() * (stripW - width)) + 'px';
-
-    /* measure with the full text; shrink until it also fits vertically */
-    phText.innerHTML = text;
-    var yMin = st.top + 14, h, yMax;
-    while (true) {
-      phEl.style.fontSize = fs + 'px';
-      h = phEl.offsetHeight;
-      yMax = st.top + st.height - h - 14;
-      if (yMax > yMin || fs <= 10) break;
-      fs = Math.max(10, Math.floor(fs * 0.78));
-    }
-    if (yMax <= yMin) return false;
-    phEl.style.top = Math.round(yMin + Math.random() * (yMax - yMin)) + 'px';
-    /* depth cue: the bigger the phrase, the fainter it sits in the back */
-    phOpTarget = (0.92 - fs * 0.005).toFixed(2);
-    return true;
-  }
-
-  function runPhrases() {
-    var wait = 2000 + Math.random() * 2800;
-    window.setTimeout(function () { showPhrase(runPhrases); }, wait);
-  }
-
-  function showPhrase(done) {
-    var text = nextPhraseText();
-    /* back to the resting state before repositioning; placePhrase's
-       offsetHeight read forces the reflow so the next .in starts clean */
-    phEl.className = '';
-    phEl.style.opacity = '0';
-    if (!placePhrase(text)) { done(); return; }
-    if (reducedMotion) {
-      /* no typewriter, no drift: plain cross-fade */
-      phEl.className = 'in';
-      phEl.style.opacity = phOpTarget;
-      window.setTimeout(function () {
-        phEl.className = 'out';
-        phEl.style.opacity = '0';
-        window.setTimeout(done, 1800);
-      }, 3600);
-      return;
-    }
-    phText.innerHTML = '';
-    phCursor.style.display = 'inline-block';
-    phEl.className = 'in';
-    phEl.style.opacity = phOpTarget;
-    var i = 0;
-    var typer = window.setInterval(function () {
-      i++;
-      phText.innerHTML = text.substring(0, i);
-      if (i >= text.length) {
-        window.clearInterval(typer);
-        window.setTimeout(function () {
-          phCursor.style.display = 'none';
-          phEl.className = 'out';
-          phEl.style.opacity = '0';
-          window.setTimeout(done, 1800);
-        }, 2400);
+    /* distant (small) pieces first so the closer ones pass over them */
+    floaters.sort(function (a, b) { return a.size - b.size; });
+    bgctx.clearRect(0, 0, bgW, bgH);
+    for (i = 0; i < floaters.length; i++) {
+      f = floaters[i];
+      s = PIECES[f.t][f.r];
+      bgctx.globalAlpha = f.alpha;
+      for (j = 0; j < 8; j += 2) {
+        drawCell(bgctx, f.x + s[j] * f.size, f.y + s[j + 1] * f.size, f.size, f.t + 1, false);
       }
-    }, 60);
+    }
+    bgctx.globalAlpha = 1;
   }
-
-  runPhrases();
 
   /* the cloud blinks */
   if (!reducedMotion) {
