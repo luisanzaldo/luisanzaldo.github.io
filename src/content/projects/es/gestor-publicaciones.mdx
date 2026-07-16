@@ -8,12 +8,12 @@ postTitle: "Videoteca: videoclips en segundos"
 description: "Desarrollo de aplicación para MacOs que permite la descarga de material videográfico desde diferentes redes sociales, como YouTube, Facebook, Instagram, X, entre otras."
 link:
 image:
-    source: "@assets/images/projects/gestion.png"
-    alt: "Optimiza la descarga de tus videos"
+    source: "@assets/images/projects/app_videos.png"
+    alt: "La aplicación abierta en una MacBook sobre un fondo rosa y naranja, con los campos para pegar la URL del video, elegir la carpeta de destino y seleccionar la calidad de descarga"
 ---
 
 import { Image } from "astro:assets";
-import appVideos from "@assets/images/projects/app_videos.png";
+import LottieFeature from "@components/blog/LottieFeature.astro";
 import bannerDescargas from "@assets/images/projects/banner_descargas.png";
 
 ## Videoteca: Descarga videos de múltiples redes sociales
@@ -22,6 +22,8 @@ import bannerDescargas from "@assets/images/projects/banner_descargas.png";
 
 En **metarrelato** desarrollamos una aplicación que te permite pegar la URL del video que necesitas y descargarlo en diferentes formatos y calidades. Es posible obtener videos de YouTube, Facebook, X, Instagram y decenas de redes sociales. Esta herramienta es adaptable y puede incluir funciones de acuerdo a los requerimientos de tu empresa, ya que todo es personalizable. De esta manera, no dependes de un servicio en línea, sino que puedes solicitar una herramienta específica para ti y tu equipo.
 
-<Image src={appVideos} alt="La aplicación abierta en una MacBook, con los campos para pegar la URL del video, elegir la carpeta de destino y seleccionar la calidad de descarga" widths={[400, 800, 1600]} sizes="(max-width: 1024px) 100vw, 1024px" format="avif" quality={85} class="no-reveal w-full rounded-2xl" />
-
 <Image src={bannerDescargas} alt="Banner con el texto Descarga desde y los logotipos de YouTube, Instagram, Facebook, X, Vimeo y más redes sociales" widths={[400, 800, 1600]} sizes="(max-width: 1024px) 100vw, 1024px" format="avif" quality={85} class="no-reveal w-full rounded-2xl" />
+
+<LottieFeature path="/animation-scroll-feed.json">
+	Busca <span style="color:#FC9717">videos</span>, selecciona la calidad y <span style="color:#D37776">descarga</span>
+</LottieFeature>

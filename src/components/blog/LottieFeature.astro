@@ -1,0 +1,38 @@
+---
+const { path } = Astro.props;
+---
+
+<div class="not-prose mt-20 mb-12 flex flex-col items-center md:mt-28">
+	<div class="w-full text-center font-display text-4xl font-extrabold leading-tight text-balance text-stone-900 md:text-5xl lg:text-6xl">
+		<slot />
+	</div>
+	<div class="lottie-feature mt-10 aspect-[1600/1121] w-full md:mt-14" data-lottie-path={path}></div>
+</div>
+
+<script>
+	import lottie from "lottie-web/build/player/lottie_light_canvas";
+
+	const initLottieFeatures = () => {
+		document.querySelectorAll<HTMLElement>(".lottie-feature[data-lottie-path]").forEach((el) => {
+			if (el.dataset.lottieLoaded) return;
+			el.dataset.lottieLoaded = "true";
+			const anim = lottie.loadAnimation({
+				container: el,
+				renderer: "canvas",
+				loop: true,
+				autoplay: true,
+				path: el.dataset.lottiePath,
+			});
+			// El canvas queda con las medidas del layout inicial; hay que
+			// re-sincronizarlo cuando el layout final está listo y al redimensionar.
+			window.addEventListener("load", () => anim.resize(), { once: true });
+			window.addEventListener("resize", () => anim.resize());
+		});
+	};
+
+	if (document.readyState === "loading") {
+		document.addEventListener("DOMContentLoaded", initLottieFeatures);
+	} else {
+		initLottieFeatures();
+	}
+</script>
