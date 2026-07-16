@@ -23,9 +23,14 @@ const projectsCollection = defineCollection({
 	schema: ({ image }) =>
 		z.object({
 			title: z.string(),
+			postTitle: z.string().optional(),
 			pubDate: z.date(),
 			description: z.string(),
-			link: z.string().optional(),
+			// Vacío, nulo o ausente: el proyecto se publica sin enlace externo.
+			link: z
+				.string()
+				.nullish()
+				.transform((value) => value?.trim() || undefined),
 			author: z.object({
 				name: z.string(),
 				link: z.string(),

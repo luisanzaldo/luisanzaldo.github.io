@@ -44,7 +44,7 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 		<div class="mx-auto max-w-7xl px-8 pt-12 pb-0 md:px-12 lg:px-16 lg:pt-32 lg:pb-0">
 			<div class="flex flex-col gap-6 pt-20">
 				<Title
-					title={frontmatter.title}
+					title={frontmatter.postTitle ?? frontmatter.title}
 					subtitle={`Escrito por ${frontmatter.author.name} - ${formattedDate}`}
 				/>
 
@@ -103,7 +103,7 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 	gsap.registerPlugin(ScrollTrigger);
 
 	const initImages = () => {
-		const internalImages = document.querySelectorAll(".prose-styles img");
+		const internalImages = document.querySelectorAll(".prose-styles img:not(.no-reveal)");
 		internalImages.forEach((img) => {
 			// Ensure image is ready
 			if (img.complete) {

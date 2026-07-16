@@ -116,6 +116,11 @@ html {
 
 .prose-styles img {
 	@apply rounded-2xl shadow-xl;
+}
+
+/* Estado inicial de la animación de entrada. Las imágenes con .no-reveal se
+   quedan fuera: se muestran siempre, sin escalado ni scroll trigger. */
+.prose-styles img:not(.no-reveal) {
 	transform: scale(0);
 	opacity: 0;
 	transition: opacity 0.5s ease-out;
