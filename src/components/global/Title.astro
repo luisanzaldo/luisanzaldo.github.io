@@ -1,8 +1,10 @@
 ---
 const { title, subtitle, class: className } = Astro.props;
-const sizeClass = title.length > 15 
-	? "text-3xl sm:text-5xl md:text-7xl lg:text-9xl" 
-	: "text-6xl sm:text-7xl md:text-8xl lg:text-9xl";
+const sizeClass = title.length > 40
+	? "text-3xl sm:text-5xl md:text-7xl lg:text-8xl"
+	: title.length > 15
+		? "text-3xl sm:text-5xl md:text-7xl lg:text-9xl"
+		: "text-6xl sm:text-7xl md:text-8xl lg:text-9xl";
 ---
 
 <div class:list={["flex w-full justify-center text-center", className]}>
