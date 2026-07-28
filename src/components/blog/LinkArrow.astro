@@ -1,0 +1,16 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+	href: string;
+}
+
+const { href } = Astro.props;
+---
+
+{/* Enlace de una sola palabra dentro del contenido: sin subrayado y con la
+    flechita de hipervínculo al lado, en el mismo color que la palabra. */}
+<a href={href} class="link-arrow">
+	<slot />
+	<Icon name="ic:baseline-arrow-outward" aria-hidden="true" />
+</a>
