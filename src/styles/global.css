@@ -118,6 +118,26 @@ html {
 	@apply rounded-2xl shadow-xl;
 }
 
+/* Enlaces de una sola palabra (<LinkArrow />): sin subrayado, en el rosa de las
+   negritas y con la flechita heredando ese mismo color. El inline-flex evita
+   que la palabra y el icono se separen en un salto de línea. */
+.prose-styles a.link-arrow,
+.prose-styles a.link-arrow:hover {
+	@apply inline-flex items-center gap-[0.1em] text-[#f43f5e] no-underline;
+}
+
+.prose-styles a.link-arrow strong {
+	@apply text-inherit;
+}
+
+.prose-styles a.link-arrow svg {
+	@apply h-[0.85em] w-[0.85em] transition-transform duration-200;
+}
+
+.prose-styles a.link-arrow:hover svg {
+	@apply -translate-y-[0.08em] translate-x-[0.08em];
+}
+
 /* Estado inicial de la animación de entrada. Las imágenes con .no-reveal se
    quedan fuera: se muestran siempre, sin escalado ni scroll trigger. */
 .prose-styles img:not(.no-reveal) {
