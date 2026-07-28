@@ -31,6 +31,9 @@ function getArticleReadingTime(body: string): number {
 
 const readingTime = getArticleReadingTime(body);
 
+// Une las dos últimas palabras con un espacio duro para que la última no quede huérfana en su línea.
+const description = frontmatter.description?.replace(/\s+(\S+)\s*$/, "\u00A0$1");
+
 const dateObj = new Date(frontmatter.pubDate);
 const formattedDate = new Intl.DateTimeFormat('es-ES', {
 	day: 'numeric',
@@ -48,8 +51,8 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 					subtitle={`Escrito por ${frontmatter.author.name} - ${formattedDate}`}
 				/>
 
-				<p class="max-w-2xl mx-auto text-center text-base text-slate-500">
-					<em>{frontmatter.description}</em>
+				<p class="max-w-2xl mx-auto text-center text-base text-pretty text-slate-500">
+					<em>{description}</em>
 				</p>
 
 				{
