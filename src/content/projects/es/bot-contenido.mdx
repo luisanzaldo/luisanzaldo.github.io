@@ -12,23 +12,25 @@ image:
 ---
 
 import { Image } from "astro:assets";
+import LinkArrow from "@components/blog/LinkArrow.astro";
 import bot1 from "@assets/images/projects/bot1.jpg";
 import bot2 from "@assets/images/projects/bot2.jpg";
 import bot3 from "@assets/images/projects/bot3.jpg";
 
-## Programa publicaciones de forma automática por medio de Telegram
+## Publica en tu web de forma rápida y eficaz por medio de Telegram
 
-¿Necesitas públicar de manera más rápida los artículos de tu página web? Puedes utilizar el bot de Telegram que he desarrollado para este propósito, el cual utiliza un flujo de trabajo automatizado que te ahorra muchas horas de gestión. Las partes de este bot se pueden resumir en:
+¿Necesitas publicar de manera rápida contenido en tu página web? Puedes utilizar este bot de Telegram para dicho propósito, el cual utiliza un flujo de trabajo automatizado que te ahorra muchas horas de gestión. Las partes de este bot se pueden resumir en:
 
 - Monitoreo de fuentes RSS y notificaciones de noticias en tiempo real.
-- Creación de versiones propias de artículos con ayuda de Inteligencia Artificial.
-- Personalización de etiquetas, descripciones, imagen de portada, autor, entre otros.
-- Publicación directa en el repositorio con el formato establecido.
+- Creación de versiones propias a partir de fuentes de tu preferencia.
+- Personalización de etiquetas, descripciones, imágenes de portada, entre otros.
+- Publicación de artículos en tu página web de manera instantánea
+- Modificación y corrección de posts desde tu aplicación de Telegram.
 
 <div class="not-prose flex flex-col md:flex-row items-center gap-8 my-8">
   <div class="md:w-3/5 space-y-4">
     <h2 class="text-2xl md:text-3xl font-bold tracking-tighter text-black text-balance">Monitoreo en tiempo real</h2>
-    <p class="text-slate-500">Si tu blog o sitio de noticias requiere información relevante y utiliza fuentes de otros sitios, el bot permite recibir notificaciones de las fuentes que determine tu equipo editorial. Así tienes la posibilidad de enterarte de todo lo que pasa en el momento preciso para no omitir ninguna noticia de último momento.</p>
+    <p class="text-slate-500">Si tu blog o sitio de noticias requiere información relevante y utiliza fuentes de otras páginas web, el bot permite recibir notificaciones de los portales que determine tu equipo editorial. Así tienes la posibilidad de enterarte de todo lo que pasa en el momento preciso para no omitir ninguna noticia de último momento.</p>
     <p class="text-slate-500">Después de revisar las notificaciones que llegan a tu chat de Telegram, puedes escoger las más relevantes y crear una versión del artículo con ayuda de un modelo de Inteligencia Artificial. De esta forma, tendrás la noticia redactada con tu estilo, pero respetando la veracidad y el rigor de un artículo periodístico.</p>
   </div>
   <div class="md:w-2/5 flex justify-center">
@@ -39,7 +41,7 @@ import bot3 from "@assets/images/projects/bot3.jpg";
 <div class="not-prose flex flex-col md:flex-row-reverse items-center gap-8 my-8">
   <div class="md:w-3/5 space-y-4">
     <h2 class="text-2xl md:text-3xl font-bold tracking-tighter text-black text-balance">Características y metadatos personalizados</h2>
-    <p class="text-slate-500">Una vez generado el artículo, podrás indicarle al bot las características de este. Por ejemplo, puedes establecer etiquetas, descripciones, imagen de portada, autor, entre otros. De esta forma, tendrás la noticia lista para publicar en tu sitio web.</p>
+    <p class="text-slate-500">Una vez generado el artículo, podrás indicarle al bot las características de este. Por ejemplo, puedes establecer etiquetas, descripciones, imágenes de portada, entre otros. De esta forma, tendrás la noticia lista para publicarse en tu sitio web con todos los metadatos.</p>
   </div>
   <div class="md:w-2/5 flex justify-center">
     <Image src={bot2} alt="Captura de pantalla del bot configurando metadatos del artículo" widths={[300, 600]} sizes="(max-width: 768px) 70vw, 280px" format="avif" quality={85} class="w-full max-w-[280px] rounded-2xl shadow-xl" />
@@ -49,18 +51,18 @@ import bot3 from "@assets/images/projects/bot3.jpg";
 <div class="not-prose flex flex-col md:flex-row items-center gap-8 my-8">
   <div class="md:w-3/5 space-y-4">
     <h2 class="text-2xl md:text-3xl font-bold tracking-tighter text-black text-balance">Conexión directa con tu sitio web</h2>
-    <p class="text-slate-500">Una vez que tu noticia esté lista, puedes revisarla y publicarla en tu página web directamente desde Telegram. Únicamente necesitas confirmar que todo está correcto, seleccionar "Publicar" y tras unos minutos la noticia ya estará visible en tu sitio web.</p>
+    <p class="text-slate-500">Una vez que tu noticia esté lista, puedes revisarla y publicarla en tu página web directamente desde Telegram. Únicamente necesitas confirmar que todo esté correcto, seleccionar “Publicar” y tras unos minutos la noticia se encontrará visible en tu portal.</p>
   </div>
   <div class="md:w-2/5 flex justify-center">
     <Image src={bot3} alt="Captura de pantalla del bot publicando directamente en el sitio web" widths={[300, 600]} sizes="(max-width: 768px) 70vw, 280px" format="avif" quality={85} class="w-full max-w-[280px] rounded-2xl shadow-xl" />
   </div>
 </div>
 
-Con esta solución digital consigues automatizar procesos manuales que requieren mucho tiempo y atención, dejando de lado tareas repetitivas y dedicando tu energía a lo verdaderamente importante: la creación de contenido de valor para tu audiencia. 
+Con esta solución digital consigues automatizar procesos manuales que requieren mucho tiempo y atención, así dejas de lado tareas repetitivas y dedicas tu energía a lo verdaderamente importante: la creación de contenido de valor para tu audiencia. 
 
 ## ¿Cómo puedes empezar a implementar este proceso?
 
-Solo necesitas contacarme y con gusto te ayudaré a implementar este flujo para tu sitio de noticias. Puedes solicitar una videollamada por medio de la sección **Contacto** para platicar sobre tu proyecto.
+Esta herramienta, así como todos los productos desarrollados por **metarrelato**, son desarrollados bajo un modelo de petición y personalización. Es decir, cada herramienta es única de acuerdo a las necesidades de cada cliente. Puedes solicitar una videollamada gratuita en la sección de <LinkArrow href="/contact/">**Contacto**</LinkArrow> y con gusto podemos platicar sobre tu proyecto para brindarte toda la ayuda necesaria.
 
 ---
 
