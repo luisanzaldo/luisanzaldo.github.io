@@ -37,6 +37,8 @@ const projectsCollection = defineCollection({
 			}),
 			image: z.object({
 				source: image(),
+				// Portada del post. Ausente: se usa `source` también dentro del post.
+				postSource: image().optional(),
 				alt: z.string(),
 			}),
 		}),
