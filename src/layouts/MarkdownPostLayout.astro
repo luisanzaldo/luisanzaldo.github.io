@@ -68,7 +68,7 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 			<div class="mt-12 w-full justify-center">
 				<Image 
 					class="mt-12 w-full rounded-lg object-cover" 
-					src={frontmatter.image.source} 
+					src={frontmatter.image.postSource ?? frontmatter.image.source}
 					alt={frontmatter.image.alt} 
 					widths={[400, 800, 1600]}
 					sizes="(max-width: 1024px) 100vw, 1200px"
