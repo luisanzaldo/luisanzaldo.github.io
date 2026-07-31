@@ -89,6 +89,47 @@ const translatePath = useTranslatedPath(lang);
 		return wrapper;
 	}
 
+	// El backend vive en un Space de Hugging Face con hardware gratuito, que se
+	// reinicia solo cada cierto tiempo. Durante esos 30-60 segundos el proxy
+	// responde 502/503 y antes le mostrábamos el error a quien estuviera
+	// escribiendo. Estas esperas suman ~89s, de sobra para cubrir el reinicio.
+	const RETRY_DELAYS_MS = [2000, 4000, 8000, 15000, 25000, 35000];
+
+	// Códigos que emite el proxy cuando el Space está caído o arrancando: la
+	// petición no llegó a la aplicación, así que repetirla no duplica nada.
+	const RETRIABLE_STATUS = [429, 502, 503, 504];
+
+	const REQUEST_TIMEOUT_MS = 30000;
+
+	const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+	function setStatusText(wrapper: HTMLElement | undefined, text: string) {
+		const bubble = wrapper?.firstElementChild;
+		if (bubble) bubble.textContent = text;
+	}
+
+	async function postChat(text: string): Promise<Response> {
+		const backendUrl = import.meta.env.PUBLIC_BACKEND_URL || 'https://metarrelato-chatbot-backend-metarrelato.hf.space';
+		const controller = new AbortController();
+		const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+		try {
+			return await fetch(`${backendUrl}/chat`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					message: text,
+					history: conversationHistory
+				}),
+				signal: controller.signal
+			});
+		} finally {
+			clearTimeout(timeoutId);
+		}
+	}
+
 	async function handleSend() {
 		if (!chatInput || !chatInput.value.trim() || isSending) return;
 
@@ -103,33 +144,43 @@ const translatePath = useTranslatedPath(lang);
 			sendButton.style.opacity = '0.5';
 		}
 
-		const typingIndicator = addMessage('Escribiendo...', false);
+		const statusIndicator = addMessage('Escribiendo...', false);
 
 		try {
-			const controller = new AbortController();
-			const timeoutId = setTimeout(() => controller.abort(), 30000);
+			let data: { reply?: string } | null = null;
 
-			const backendUrl = import.meta.env.PUBLIC_BACKEND_URL || 'https://metarrelato-chatbot-backend-metarrelato.hf.space';
+			for (let attempt = 0; ; attempt++) {
+				const canRetry = attempt < RETRY_DELAYS_MS.length;
+				let response: Response;
 
-			const response = await fetch(`${backendUrl}/chat`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					message: text,
-					history: conversationHistory
-				}),
-				signal: controller.signal
-			});
+				try {
+					response = await postChat(text);
+				} catch (error) {
+					// AbortError significa que expiró nuestro propio timeout, no que
+					// el backend esté caído: pudo haber procesado el mensaje y hasta
+					// agendado la cita. Reintentar ahí duplicaría el evento en el
+					// calendario, así que se deja fallar.
+					if ((error as Error).name === 'AbortError' || !canRetry) throw error;
+					setStatusText(statusIndicator, 'Reconectando...');
+					await sleep(RETRY_DELAYS_MS[attempt]);
+					continue;
+				}
 
-			clearTimeout(timeoutId);
-			if (typingIndicator) typingIndicator.remove();
+				if (RETRIABLE_STATUS.includes(response.status) && canRetry) {
+					setStatusText(statusIndicator, 'Reconectando...');
+					await sleep(RETRY_DELAYS_MS[attempt]);
+					continue;
+				}
 
-			if (!response.ok) throw new Error('Failed to get response');
+				if (!response.ok) throw new Error(`El backend respondió ${response.status}`);
 
-			const data = await response.json();
-			const botMessage = data.reply || "Lo siento, no pude procesar la respuesta.";
+				data = await response.json();
+				break;
+			}
+
+			if (statusIndicator) statusIndicator.remove();
+
+			const botMessage = data?.reply || "Lo siento, no pude procesar la respuesta.";
 
 			// Save in local history for subsequent requests
 			conversationHistory.push({ role: 'user', content: text });
@@ -138,8 +189,15 @@ const translatePath = useTranslatedPath(lang);
 			addMessage(botMessage, false);
 		} catch (error) {
 			console.error('Chat error:', error);
-			if (typingIndicator) typingIndicator.remove();
+			if (statusIndicator) statusIndicator.remove();
 			addMessage("Hubo un problema al conectar. Por favor intenta de nuevo en un momento.", false);
+
+			// Devolvemos el texto al recuadro para que no haya que reescribirlo.
+			if (chatInput && !chatInput.value.trim()) {
+				chatInput.value = text;
+				chatInput.style.height = 'auto';
+				chatInput.style.height = `${chatInput.scrollHeight}px`;
+			}
 		} finally {
 			isSending = false;
 			if (sendButton) {
