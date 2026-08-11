@@ -109,12 +109,20 @@ const seo: AstroSeoProps = {
 				}
 			</div>
 
-			<div class="flex flex-col items-center gap-8 px-8 py-16 text-center md:px-16">
+			{/* Sin padding horizontal propio: los márgenes de página ya los pone el contenedor
+			    de arriba y ese px extra estrechaba la frase hasta ~18 caracteres por línea. */}
+			<div class="flex flex-col items-center gap-8 py-16 text-center">
 				<Icon name="ic:baseline-lightbulb" class="h-10 w-10 text-[#d4eb28]" />
 				{/* leading-tight: con el line-height 1 que Tailwind aplica en text-5xl, los
 				    descendentes de la Midnight (y, p, g) se cortan contra la línea siguiente. */}
+				{/* Cortes fijos desde md: a este cuerpo la frase ocupa 4 líneas y el reparto
+				    automático las partía en "…y no / sabes…" y "…es justo / la parte…". Abajo
+				    de md no caben en el ancho disponible y se deja que text-balance reparta. */}
 				<p class="max-w-4xl font-display text-3xl font-extrabold leading-tight text-balance text-black md:text-4xl lg:text-5xl">
-					Si tienes una idea y no sabes por dónde empezar, esa conversación es justo la parte que más disfruto.
+					Si tienes una idea y no sabes<br class="hidden md:inline" />
+					por dónde empezar,<br class="hidden md:inline" />
+					esa conversación es justo<br class="hidden md:inline" />
+					la parte que más disfruto.
 				</p>
 				<div class="squircle-bg rounded-lg !bg-[#f43f5e]" data-cursor-hover data-cursor-parallax>
 					<a
