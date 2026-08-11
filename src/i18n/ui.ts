@@ -69,6 +69,12 @@ export const ui = {
 		"faqs.answer10":
 			"Seguimos convenciones de nomenclatura estrictas, pero a veces terminamos con clásicos como 'versionFinalFinalDeVerdad' y 'estoDefinitivamenteFuncionara'.",
 		"faq.otherquestions": "¿Otras preguntas?",
+		"tags.title": "Temas",
+		"tags.subtitle": "Explora los artículos por tema",
+		"tag.subtitle": "tema",
+		"authors.title": "Autores",
+		"authors.subtitle": "Quién escribe en Metarrelato",
+		"author.subtitle": "autor",
 		"404.title": "Página no encontrada",
 		"404.content": "No encontramos la página que buscas. Puede que haya cambiado de dirección.",
 		"404.support": "Escríbenos",
