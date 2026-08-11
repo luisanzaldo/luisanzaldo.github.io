@@ -20,15 +20,15 @@ const lang = getLangFromUrl(Astro.url);
 const shareImage = new URL("/images/meta/mintaka_share.gif", Astro.site).toString();
 
 const defaultSeo: AstroSeoProps = {
-	title: "Metarrelato - Soluciones de IA para tu emprendimiento",
+	title: "Metarrelato - Herramientas digitales para tu negocio, emprendimiento o causa social",
 	description:
-		"Metarrelato excels in creating fast, user-friendly websites with a focus on aesthetic design and SEO optimization, ensuring a standout online presence",
+		"Desarrollo de sitios web, automatizaciones e integraciones digitales para emprendedores, pymes y causas sociales. Herramientas a la medida de tu proyecto.",
 	canonical: "https://metarrelato.com",
 	openGraph: {
 		url: "https://metarrelato.com",
-		title: "Metarrelato - Soluciones de IA para tu emprendimiento",
+		title: "Metarrelato - Herramientas digitales para tu negocio, emprendimiento o causa social",
 		description:
-			"Metarrelato excels in creating fast, user-friendly websites with a focus on aesthetic design and SEO optimization, ensuring a standout online presence",
+			"Desarrollo de sitios web, automatizaciones e integraciones digitales para emprendedores, pymes y causas sociales. Herramientas a la medida de tu proyecto.",
 		images: [
 			{
 				url: shareImage,
@@ -60,9 +60,25 @@ const defaultSeo: AstroSeoProps = {
 	],
 };
 
-const seo = {
+const mergedSeo = {
 	...defaultSeo,
 	...seoProp,
+};
+
+// El spread es superficial: una página que define `seo` sin `openGraph` heredaría
+// entero el bloque de la home. Lo combinamos y hacemos que el título, la descripción
+// y la url de Open Graph sigan a los de la página cuando no se declaran aparte.
+const seo: AstroSeoProps = {
+	...mergedSeo,
+	openGraph: {
+		...defaultSeo.openGraph,
+		...seoProp?.openGraph,
+		title: seoProp?.openGraph?.title ?? mergedSeo.title,
+		description: seoProp?.openGraph?.description ?? mergedSeo.description,
+		// og:url debe ser absoluta y coincidir con la canónica: es la llave con la
+		// que Meta/WhatsApp agrupan el caché de previews.
+		url: new URL(mergedSeo.canonical ?? "/", Astro.site).toString(),
+	},
 };
 
 function cursorFollowerActive() {
