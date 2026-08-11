@@ -13,25 +13,25 @@ const points = [
 		icon: "ic:baseline-mic",
 		title: "De la comunicación al código",
 		content:
-			"Vengo de la comunicación y el periodismo. Antes de escribir software me dediqué a escuchar, preguntar y contar historias, y esa forma de trabajar sigue siendo la base de cómo entiendo un proyecto antes de construirlo.",
+			"Vengo de la comunicación y el periodismo. Antes de escribir software me dediqué a escuchar, preguntar y contar historias, esta forma de trabajar sigue siendo la base de cómo entiendo un proyecto antes de construirlo.",
 	},
 	{
 		icon: "ic:baseline-psychology",
-		title: "Investigación sobre inteligencia artificial",
+		title: "Investigación sobre Inteligencia Artificial",
 		content:
-			"Investigo cómo la inteligencia artificial está cambiando la manera en que trabajamos, creamos y nos informamos. Me interesa menos la promesa publicitaria y más lo que ocurre cuando la tecnología aterriza en el día a día de la gente.",
+			"Investigo cómo la Inteligencia Artificial está cambiando la manera en que trabajamos, creamos y nos informamos. Me interesa menos la promesa publicitaria y más lo que ocurre cuando la tecnología aterriza en el día a día de la gente.",
 	},
 	{
 		icon: "ic:baseline-balance",
 		title: "Usos éticos de la tecnología",
 		content:
-			"Toda herramienta carga con decisiones sobre quién se beneficia y quién queda fuera. Trabajo con esa pregunta al frente: qué datos se usan, con qué permiso, y a quién responde el sistema cuando se equivoca.",
+			"Toda herramienta carga con decisiones sobre quién se beneficia y quién queda fuera. Trabajo con esa pregunta al frente: qué datos se usan, con qué permiso y a quién responde el sistema cuando se equivoca.",
 	},
 	{
 		icon: "ic:baseline-shield",
 		title: "Los límites que hacen falta",
 		content:
-			"Creo que la conversación sobre inteligencia artificial necesita hablar de restricciones con la misma seriedad con la que habla de capacidades. Hay usos que conviene acotar, y decirlo también es parte del trabajo técnico.",
+			"Creo que la conversación sobre Inteligencia Artificial necesita hablar de restricciones con la misma seriedad con la que habla de capacidades. Hay usos que conviene acotar y decirlo también es parte del trabajo técnico.",
 	},
 	{
 		icon: "ic:baseline-volunteer-activism",
@@ -81,17 +81,17 @@ const seo: AstroSeoProps = {
 				</div>
 			</header>
 
-			<div class="flex flex-col gap-6 md:max-w-3xl">
-				<p class="text-xl leading-relaxed text-zinc-800 md:text-2xl">
-					Soy <strong class="font-semibold">Luis Anzaldo</strong> y detrás de Metarrelato hay una idea sencilla: las herramientas
-					digitales que hoy dan ventaja a las empresas grandes deberían estar al alcance de cualquiera que tenga algo que construir.
+			<div class="flex flex-col gap-6">
+				<p class="text-lg leading-relaxed text-zinc-800">
+					Mi nombre es Luis Anzaldo y estoy al frente de este proyecto. <strong class="font-semibold">Metarrelato</strong> nació de una
+					idea sencilla: las herramientas digitales que hoy dan ventaja a grandes empresas deberían estar al alcance de cualquier
+					persona que tenga algo que construir.
 				</p>
-				<p class="text-lg leading-relaxed text-slate-600">
-					Empecé en la comunicación y el periodismo, y de ahí me quedó la costumbre de investigar antes de opinar. Esa curiosidad
-					terminó llevándome al desarrollo de sitios web, automatizaciones e integraciones digitales para profesionistas,
-					emprendedores, pymes, negocios y causas sociales. Hoy combino las dos cosas: escribo sobre el impacto social de la
-					inteligencia artificial y construyo las herramientas que la ponen a trabajar para quien normalmente no tendría acceso a
-					ella.
+				<p class="text-lg leading-relaxed text-zinc-800">
+					Empecé en la comunicación y el periodismo, por esta razón disfruto de investigar antes de opinar. Esta curiosidad terminó
+					llevándome al desarrollo de sitios web, automatizaciones e integraciones digitales para profesionistas, emprendedores,
+					pymes, negocios y causas sociales. Hoy combino las dos cosas: escribo sobre el impacto social de la Inteligencia Artificial
+					y construyo las herramientas que la ponen a trabajar para quien normalmente no tendría acceso a ella.
 				</p>
 			</div>
 
@@ -109,9 +109,11 @@ const seo: AstroSeoProps = {
 				}
 			</div>
 
-			<div class="flex flex-col items-center gap-8 rounded-lg bg-zinc-900 px-8 py-16 text-center md:px-16">
+			<div class="flex flex-col items-center gap-8 px-8 py-16 text-center md:px-16">
 				<Icon name="ic:baseline-lightbulb" class="h-10 w-10 text-[#d4eb28]" />
-				<p class="max-w-3xl font-display text-3xl font-extrabold text-balance text-white md:text-4xl lg:text-5xl">
+				{/* leading-tight: con el line-height 1 que Tailwind aplica en text-5xl, los
+				    descendentes de la Midnight (y, p, g) se cortan contra la línea siguiente. */}
+				<p class="max-w-4xl font-display text-3xl font-extrabold leading-tight text-balance text-black md:text-4xl lg:text-5xl">
 					Si tienes una idea y no sabes por dónde empezar, esa conversación es justo la parte que más disfruto.
 				</p>
 				<div class="squircle-bg rounded-lg !bg-[#f43f5e]" data-cursor-hover data-cursor-parallax>
