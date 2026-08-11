@@ -37,8 +37,13 @@ export default defineConfig({
 			applyBaseStyles: false,
 		}),
 		sitemap({
+			// Las páginas noindex no deben anunciarse en el sitemap.
 			filter: (page) =>
-				!page.includes("/conversor") && !page.includes("/lienzo") && !page.includes("/webapps") && !page.includes("/metatetris"),
+				!page.includes("/conversor") &&
+				!page.includes("/lienzo") &&
+				!page.includes("/webapps") &&
+				!page.includes("/metatetris") &&
+				!page.includes("/about-me"),
 		}),
 		mdx(),
 		icon(),

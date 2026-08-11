@@ -44,20 +44,7 @@ const projectsCollection = defineCollection({
 		}),
 });
 
-const authorsCollection = defineCollection({
-	schema: ({ image }) =>
-		z.object({
-			name: z.string(),
-			description: z.string(),
-			image: z.object({
-				source: image(),
-				alt: z.string(),
-			}),
-		}),
-});
-
 export const collections = {
 	posts: postsCollection,
 	projects: projectsCollection,
-	authors: authorsCollection,
 };
