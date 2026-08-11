@@ -69,6 +69,9 @@ export const ui = {
 		"faqs.answer10":
 			"Seguimos convenciones de nomenclatura estrictas, pero a veces terminamos con clásicos como 'versionFinalFinalDeVerdad' y 'estoDefinitivamenteFuncionara'.",
 		"faq.otherquestions": "¿Otras preguntas?",
+		"404.title": "Página no encontrada",
+		"404.content": "No encontramos la página que buscas. Puede que haya cambiado de dirección.",
+		"404.support": "Escríbenos",
 		"thanks.subtitle": "Correo enviado con éxito",
 		"thanks.title": "Gracias",
 		"thanks.content": "Nos pondremos en contacto con usted lo antes posible",

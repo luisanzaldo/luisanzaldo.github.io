@@ -30,31 +30,9 @@ const { page } = Astro.props;
 const seo: AstroSeoProps = {
 	title: "Metarrelato Blog: Análisis de Inteligencia Artificial y su impacto en la sociedad",
 	description:
-		"Explore the Metarrelato Blog for the latest trends, tips, and insights in web design, web dev and SEO. Stay updated with our innovative digital solutions.",
+		"Artículos sobre inteligencia artificial, herramientas digitales y su impacto en la sociedad, desde la mirada de Metarrelato.",
 	canonical: "https://metarrelato.com/blog/",
-	openGraph: {
-		url: "https://metarrelato.com/blog",
-		title: "Metarrelato Blog: Análisis de Inteligencia Artificial y su impacto en la sociedad",
-		description:
-			"Stay informed with the latest in web design and SEO on the Metarrelato Blog. Expert advice, tips, and industry insights await you.",
-		images: [
-			{
-				url: "/images/meta/mintaka_share.gif",
-				width: 1200,
-				height: 630,
-				alt: "Social open graph image of Metarrelato Blog",
-				type: "image/gif",
-			},
-			{
-				url: "/images/meta/mintaka_share.gif",
-				width: 4096,
-				height: 4096,
-				alt: "Twitter open graph image of Metarrelato Blog",
-				type: "image/gif",
-			},
-		],
-		site_name: "Metarrelato",
-	},
+	// og:title, og:description, og:url y la imagen de compartir los deriva BaseLayout.
 	twitter: {
 		handle: "@metarrelato",
 		site: "@metarrelato",
