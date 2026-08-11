@@ -2,6 +2,7 @@
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { AstroSeoProps } from "@astrolib/seo";
 import Articles from "@components/blog/Articles.astro";
+import Cta from "@components/blog/Cta.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths({ paginate }) {
@@ -64,4 +65,5 @@ const seo: AstroSeoProps = {
 
 <BaseLayout seo={seo}>
 	<Articles page={page} />
+	<Cta />
 </BaseLayout>
