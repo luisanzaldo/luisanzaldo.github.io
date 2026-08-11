@@ -1,8 +1,12 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro";
 import type { AstroSeoProps } from "@astrolib/seo";
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import { getLangFromUrl, useTranslations, useTranslatedPath } from "@i18n/utils";
+// Recorte cuadrado cerrado sobre el rostro. El original 4:3 sigue en la carpeta
+// como maestro: en un marco cuadrado dejaba mucho aire sobre la cabeza.
+import perfil from "@assets/images/authors/perfil-metarrelato-avatar.jpg";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -64,9 +68,18 @@ const seo: AstroSeoProps = {
 					<div class="absolute -inset-4 rounded-full bg-[#f43f5e]/10"></div>
 					<div
 						class="relative flex h-40 w-40 items-center justify-center overflow-hidden rounded-full bg-zinc-900 ring-4 ring-[#f43f5e] md:h-52 md:w-52">
-						{/* Provisional: sustituir por la foto de perfil manteniendo el círculo.
-						    <img src="/images/luis-anzaldo.jpg" alt="Luis Anzaldo" class="h-full w-full object-cover" /> */}
-						<img src="/logo.svg" alt="Logotipo de Metarrelato" class="h-24 w-24 md:h-32 md:w-32" />
+						{/* 480px: el círculo mide 208px desde md (416 a 2x) y 160 en móvil (480 a 3x).
+						    La fuente ya es cuadrada, así que object-cover no recorta nada. */}
+						{/* eager: está en el encabezado, con lazy entraba después del primer pintado. */}
+						<Image
+							src={perfil}
+							alt="Luis Anzaldo"
+							width={480}
+							format="avif"
+							quality={85}
+							loading="eager"
+							class="h-full w-full object-cover"
+						/>
 					</div>
 				</div>
 
