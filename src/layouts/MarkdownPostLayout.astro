@@ -2,7 +2,6 @@
 import { Image } from "astro:assets";
 import Cta from "@/components/blog/Cta.astro";
 import type { AstroSeoProps } from "@astrolib/seo";
-import Comments from "@components/blog/Comments.astro";
 import Title from "@components/global/Title.astro";
 import { getLangFromUrl, useTranslatedPath, useTranslations } from "@i18n/utils";
 import { Icon } from "astro-icon/components";
@@ -93,7 +92,6 @@ const formattedDate = new Intl.DateTimeFormat('es-ES', {
 
 				<div class="prose-styles mt-12"><slot /></div>
 			</div>
-			<Comments />
 		</div>
 	</section>
 	<Cta />

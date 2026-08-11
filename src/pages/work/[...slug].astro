@@ -28,9 +28,10 @@ const ogImage = await getImage({
 const ogImageUrl = new URL(ogImage.src, Astro.site).toString();
 
 const seo: AstroSeoProps = {
-	title: `Project ${entry.data.title} - Metarrelato`,
+	title: `${entry.data.title} — Metarrelato`,
 	description: entry.data.description,
-	canonical: `https://metarrelato.com/work/${entry.slug}/`,
+	// entry.slug incluye el prefijo de idioma ("es/..."), que no existe como ruta.
+	canonical: `https://metarrelato.com/work/${Astro.params.slug}/`,
 	openGraph: {
 		title: entry.data.title,
 		description: entry.data.description,

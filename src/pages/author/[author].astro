@@ -20,7 +20,8 @@ const author = Astro.props;
 const seo: AstroSeoProps = {
 	title: author.data.name,
 	description: author.data.description,
-	canonical: `https://metarrelato.com/author/${author.slug}/`,
+	// author.slug incluye el prefijo de idioma ("es/..."), que no existe como ruta.
+	canonical: `https://metarrelato.com/author/${Astro.params.author}/`,
 };
 ---
 

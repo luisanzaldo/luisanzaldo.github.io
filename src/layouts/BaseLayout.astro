@@ -17,7 +17,7 @@ const { seo: seoProp } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 
-const shareImage = new URL("/images/meta/mintaka_share.gif", Astro.site).toString();
+const shareImage = new URL("/images/meta/metarrelato_share.png", Astro.site).toString();
 
 const defaultSeo: AstroSeoProps = {
 	title: "Metarrelato - Herramientas digitales para tu negocio, emprendimiento o causa social",
@@ -34,15 +34,8 @@ const defaultSeo: AstroSeoProps = {
 				url: shareImage,
 				width: 1200,
 				height: 630,
-				alt: "Social open graph",
-				type: "image/gif",
-			},
-			{
-				url: shareImage,
-				width: 4096,
-				height: 4096,
-				alt: "Twitter open graph",
-				type: "image/gif",
+				alt: "Logotipo de Metarrelato",
+				type: "image/png",
 			},
 		],
 		site_name: "Metarrelato",
