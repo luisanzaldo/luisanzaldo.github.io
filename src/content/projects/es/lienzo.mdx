@@ -12,12 +12,37 @@ image:
     alt: "La aplicación Lienzo abierta en un iMac sobre un fondo azul, con la vista previa de una miniatura y los campos para el título, el subtítulo y la alineación del texto"
 ---
 
+import { Image } from "astro:assets";
 import LinkArrow from "@components/blog/LinkArrow.astro";
+import capturaLienzo from "@assets/images/projects/captura-lienzo.png";
+import ejemploLienzo from "@assets/images/projects/ejemplo-lienzo.png";
+import capturaLienzo2 from "@assets/images/projects/captura-lienzo-2.png";
+import ejemploLienzo2 from "@assets/images/projects/ejemplo-lienzo-2.png";
 
 ## Software de diseño con herramientas específicas para tu negocio
 
 Actualmente existen múltiples aplicaciones para editar imágenes miniaturas para redes sociales, como Canva, Adobe Photoshop, Adobe Illustrator, la suite de Affinity y más. Sin embargo, en ocasiones estos programas resultan incómodos por la gran cantidad de herramientas y funciones que están dentro de la interfaz. Por esta razón, actualmente existen opciones de “software a demanda” donde se pueden crear programas a la medida del usuario, con opciones específicas de creación de contenido.
 
+{/* Las dos imágenes comparten altura: cada columna crece en proporción a la
+    relación de aspecto de su imagen (ancho ÷ alto × 10000). */}
+<div class="not-prose my-8 flex items-start gap-4">
+  <div class="[flex:15979_1_0%]">
+    <Image src={capturaLienzo} alt="La interfaz de Lienzo con la vista previa de una miniatura de Akira Kurosawa, los campos para el título, el subtítulo y los colores, los botones de alineación del texto y las plantillas disponibles" widths={[400, 800, 1600]} sizes="(max-width: 1024px) 74vw, 760px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
+  </div>
+  <div class="[flex:5625_1_0%]">
+    <Image src={ejemploLienzo} alt="La miniatura vertical generada con Lienzo: el retrato en blanco y negro de Akira Kurosawa con el título en amarillo y la palabra Filmografía" widths={[300, 600]} sizes="(max-width: 1024px) 26vw, 270px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
+  </div>
+</div>
+
 Lienzo es una webapp diseñada para que el usuario genere con facilidad las portadas de sus miniaturas. Esta herramienta utiliza plantillas con campos rellenables para incluir de manera sencilla e intuitiva el título, la descripción y los logotipos. Todo es personalizable de acuerdo a las necesidades del cliente.
+
+<div class="not-prose my-8 flex items-start gap-4">
+  <div class="[flex:5625_1_0%]">
+    <Image src={ejemploLienzo2} alt="La miniatura vertical generada con Lienzo: un fondo azul con un globo terráqueo digital, el título software a medida y la descripción en verde limón" widths={[300, 600]} sizes="(max-width: 1024px) 26vw, 270px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
+  </div>
+  <div class="[flex:16100_1_0%]">
+    <Image src={capturaLienzo2} alt="Otra plantilla de Lienzo con la vista previa de una miniatura azul, el campo de contenido con la descripción y los selectores de color del logotipo" widths={[400, 800, 1600]} sizes="(max-width: 1024px) 74vw, 760px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
+  </div>
+</div>
 
 Atrás ha quedado la época en que sólo era posible utilizar programas de edición de imagen desarrollados por grandes empresas, ahora puedes solicitar software personalizable a costos accesibles y con tiempos de producción de pocas semanas. Únicamente es necesario que ingreses a <LinkArrow href="/contact/">**Contacto**</LinkArrow> para que agendes una videollamada gratuita, en esta sesión escucharemos tus necesidades para ayudarte a programar el software que impulse tu negocio, emprendimiento o proyecto.
