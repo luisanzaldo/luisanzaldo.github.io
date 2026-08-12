@@ -6,18 +6,21 @@ interface Props {
 	iconHover?: string;
 	/** Tamaño del icono en píxeles */
 	size?: number;
+	/** Clases aplicadas al <svg> de cada icono: sirven para dar un tamaño fluido que
+	    sobrescriba a `size` (p. ej. "w-[min(3.5rem,12vw)] h-[min(3.5rem,12vw)]") */
+	iconClass?: string;
 	/** Incluir el icono de correo junto a las redes sociales */
 	showEmail?: boolean;
 	class?: string;
 }
 
-const { iconColor = "", iconHover = "", size = 40, showEmail = true, class: className = "flex gap-6" } = Astro.props;
+const { iconColor = "", iconHover = "", size = 40, iconClass = "", showEmail = true, class: className = "flex gap-6" } = Astro.props;
 ---
 
 <div class={className}>
 	<!-- Instagram -->
 	<a href="https://www.instagram.com/metarrelato" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class:list={["transition-colors duration-300", iconColor, iconHover]}>
-		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover]}>
+		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover, iconClass]}>
 			<g transform="matrix(1.81119,0,0,1.81119,-2022.75,-565.067)">
 				<path d="M1426.14,585.175C1426.14,605.011 1410.04,621.111 1390.2,621.111L1289.58,621.111C1269.75,621.111 1253.65,605.011 1253.65,585.175L1253.65,484.555C1253.65,464.719 1269.75,448.62 1289.58,448.62L1390.2,448.62C1410.04,448.62 1426.14,464.719 1426.14,484.555L1426.14,585.175ZM1393.8,430.652L1285.99,430.652C1258.21,430.652 1235.68,453.183 1235.68,480.962L1235.68,588.769C1235.68,616.547 1258.21,639.078 1285.99,639.078L1393.8,639.078C1421.57,639.078 1444.11,616.547 1444.11,588.769L1444.11,480.962C1444.11,453.183 1421.57,430.652 1393.8,430.652Z" fill="currentColor"/>
 			</g>
@@ -34,7 +37,7 @@ const { iconColor = "", iconHover = "", size = 40, showEmail = true, class: clas
 	</a>
 	<!-- BlueSky -->
 	<a href="https://bsky.app/profile/metarrelato.bsky.social" target="_blank" rel="noopener noreferrer" aria-label="BlueSky" class:list={["transition-colors duration-300", iconColor, iconHover]}>
-		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover]}>
+		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover, iconClass]}>
 			<g transform="matrix(1.79325,0,0,1.79325,-282.013,-559.148)">
 				<path d="M566.229,692.18C566.229,707.944 553.4,720.772 537.636,720.772L223.01,720.772C207.246,720.772 194.417,707.944 194.417,692.18L194.417,377.553C194.417,361.789 207.246,348.961 223.01,348.961L537.636,348.961C553.4,348.961 566.229,361.789 566.229,377.553L566.229,692.18ZM537.636,329.899L223.01,329.899C196.695,329.899 175.355,351.239 175.355,377.553L175.355,692.18C175.355,718.495 196.695,739.834 223.01,739.834L537.636,739.834C563.951,739.834 585.291,718.495 585.291,692.18L585.291,377.553C585.291,351.239 563.951,329.899 537.636,329.899Z" fill="currentColor"/>
 			</g>
@@ -45,7 +48,7 @@ const { iconColor = "", iconHover = "", size = 40, showEmail = true, class: clas
 	</a>
 	<!-- X -->
 	<a href="https://www.x.com/metarrelato" target="_blank" rel="noopener noreferrer" aria-label="X" class:list={["transition-colors duration-300", iconColor, iconHover]}>
-		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover]}>
+		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover, iconClass]}>
 			<g transform="matrix(1.79325,0,0,1.79325,-282.013,-559.148)">
 				<path d="M566.229,692.18C566.229,707.944 553.4,720.772 537.636,720.772L223.01,720.772C207.246,720.772 194.417,707.944 194.417,692.18L194.417,377.553C194.417,361.789 207.246,348.961 223.01,348.961L537.636,348.961C553.4,348.961 566.229,361.789 566.229,377.553L566.229,692.18ZM537.636,329.899L223.01,329.899C196.695,329.899 175.355,351.239 175.355,377.553L175.355,692.18C175.355,718.495 196.695,739.834 223.01,739.834L537.636,739.834C563.951,739.834 585.291,718.495 585.291,692.18L585.291,377.553C585.291,351.239 563.951,329.899 537.636,329.899Z" fill="currentColor"/>
 			</g>
@@ -56,7 +59,7 @@ const { iconColor = "", iconHover = "", size = 40, showEmail = true, class: clas
 	</a>
 	<!-- LinkedIn -->
 	<a href="https://www.linkedin.com/in/metarrelato" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class:list={["transition-colors duration-300", iconColor, iconHover]}>
-		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover]}>
+		<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover, iconClass]}>
 			<g transform="matrix(1.82126,0,0,1.82126,-2032.56,-1597.65)">
 				<path d="M1295.11,1027.5C1295.11,1041.63 1283.66,1053.09 1269.52,1053.09C1255.39,1053.09 1243.93,1041.63 1243.93,1027.5C1243.93,1013.37 1255.39,1001.91 1269.52,1001.91C1283.66,1001.91 1295.11,1013.37 1295.11,1027.5Z" fill="currentColor"/>
 				<path d="M1288.94,1198.09L1250.1,1198.09C1249.05,1198.09 1248.2,1197.24 1248.2,1196.18L1248.2,1072.05C1248.2,1071 1249.05,1070.15 1250.1,1070.15L1288.94,1070.15C1289.99,1070.15 1290.85,1071 1290.85,1072.05L1290.85,1196.18C1290.85,1197.24 1289.99,1198.09 1288.94,1198.09Z" fill="currentColor"/>
@@ -68,7 +71,7 @@ const { iconColor = "", iconHover = "", size = 40, showEmail = true, class: clas
 	{
 		showEmail && (
 			<a href="mailto:hola@metarrelato.com" aria-label="Email" class:list={["transition-colors duration-300", iconColor, iconHover]}>
-				<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover]}>
+				<svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 800 800" fill="none" class:list={[iconColor, iconHover, iconClass]}>
 					<g transform="matrix(1.79325,0,0,1.79325,-282.013,-559.148)">
 						<path d="M566.229,692.18C566.229,707.944 553.4,720.772 537.636,720.772L223.01,720.772C207.246,720.772 194.417,707.944 194.417,692.18L194.417,377.553C194.417,361.789 207.246,348.961 223.01,348.961L537.636,348.961C553.4,348.961 566.229,361.789 566.229,377.553L566.229,692.18ZM537.636,329.899L223.01,329.899C196.695,329.899 175.355,351.239 175.355,377.553L175.355,692.18C175.355,718.495 196.695,739.834 223.01,739.834L537.636,739.834C563.951,739.834 585.291,718.495 585.291,692.18L585.291,377.553C585.291,351.239 563.951,329.899 537.636,329.899Z" fill="currentColor"/>
 					</g>

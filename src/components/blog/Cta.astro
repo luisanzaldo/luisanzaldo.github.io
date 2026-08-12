@@ -5,16 +5,21 @@ import SocialIcons from "@components/global/SocialIcons.astro";
 <section class="bg-zinc-900">
 	<div class="mx-auto max-w-7xl px-8 py-6 md:px-12 lg:px-16 lg:py-12">
 		<div class="flex flex-col items-center justify-center gap-10 py-8 text-center lg:py-16">
-			{/* El <br> fija el corte en dos líneas desde md; abajo de esa medida el
-			    título no cabe en dos líneas sin quedar diminuto y se deja fluir. */}
-			<p class="mt-8 font-display text-[2.56rem] font-semibold text-white md:text-[3.25rem] lg:text-[4.375rem] xl:text-[5.625rem] leading-[0.9] text-balance">
-				Síguenos en nuestras<br class="hidden md:inline" /> redes sociales
+			{/* El <br> fija el corte en dos líneas en todas las medidas. Abajo de md el
+			    cuerpo se calcula a partir del ancho disponible (100vw menos el px-8 de
+			    los costados) dividido entre los ~12.2em que mide la línea más larga,
+			    "Síguenos en nuestras", con holgura para el negrita sintética. */}
+			<p class="mt-8 font-display text-[length:min(2.56rem,calc((100vw_-_4rem)/13))] font-semibold text-white md:text-[3.25rem] lg:text-[4.375rem] xl:text-[5.625rem] leading-[0.9] text-balance">
+				Síguenos en nuestras<br /> redes sociales
 			</p>
+			{/* Los cinco iconos van siempre en una sola línea: tamaño y separación se
+			    encogen con el ancho de pantalla hasta topar en los 56px/2rem del diseño. */}
 			<SocialIcons
 				iconColor="text-[#d4eb28]"
 				iconHover="hover:text-white"
 				size={56}
-				class="flex flex-wrap items-center justify-center gap-8"
+				iconClass="h-[min(3.5rem,12vw)] w-[min(3.5rem,12vw)]"
+				class="flex flex-nowrap items-center justify-center gap-[min(2rem,4.2vw)]"
 			/>
 		</div>
 	</div>

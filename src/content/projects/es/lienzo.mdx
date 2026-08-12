@@ -23,25 +23,28 @@ import ejemploLienzo2 from "@assets/images/projects/ejemplo-lienzo-2.png";
 
 Actualmente existen múltiples aplicaciones para editar imágenes miniaturas para redes sociales, como Canva, Adobe Photoshop, Adobe Illustrator, la suite de Affinity y más. Sin embargo, en ocasiones estos programas resultan incómodos por la gran cantidad de herramientas y funciones que están dentro de la interfaz. Por esta razón, actualmente existen opciones de “software a demanda” donde se pueden crear programas a la medida del usuario, con opciones específicas de creación de contenido.
 
-{/* Las dos imágenes comparten altura: cada columna crece en proporción a la
-    relación de aspecto de su imagen (ancho ÷ alto × 10000). */}
-<div class="not-prose my-12 flex items-start gap-4 md:my-16">
-  <div class="[flex:15979_1_0%]">
-    <Image src={capturaLienzo} alt="La interfaz de Lienzo con la vista previa de una miniatura de Akira Kurosawa, los campos para el título, el subtítulo y los colores, los botones de alineación del texto y las plantillas disponibles" widths={[400, 800, 1600]} sizes="(max-width: 1024px) 74vw, 760px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
+{/* Desde md las dos imágenes comparten altura: cada columna crece en proporción a
+    la relación de aspecto de su imagen (ancho ÷ alto × 10000). Abajo de md se
+    apilan a ancho completo, porque en pareja quedaban diminutas en el celular.
+    Las miniaturas verticales se quedan en 600px de ancho máximo: tienen grano y
+    el archivo AVIF de 1000px pesa medio mega para ganar nitidez que no se nota. */}
+<div class="not-prose my-12 flex flex-col gap-8 md:my-16 md:flex-row md:items-start md:gap-4">
+  <div class="w-full md:w-auto md:[flex:15979_1_0%]">
+    <Image src={capturaLienzo} alt="La interfaz de Lienzo con la vista previa de una miniatura de Akira Kurosawa, los campos para el título, el subtítulo y los colores, los botones de alineación del texto y las plantillas disponibles" widths={[400, 800, 1600]} sizes="(max-width: 767px) calc(100vw - 4rem), (max-width: 1024px) 74vw, 760px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
   </div>
-  <div class="[flex:5625_1_0%]">
-    <Image src={ejemploLienzo} alt="La miniatura vertical generada con Lienzo: el retrato en blanco y negro de Akira Kurosawa con el título en amarillo y la palabra Filmografía" widths={[300, 600]} sizes="(max-width: 1024px) 26vw, 270px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
+  <div class="w-full md:w-auto md:[flex:5625_1_0%]">
+    <Image src={ejemploLienzo} alt="La miniatura vertical generada con Lienzo: el retrato en blanco y negro de Akira Kurosawa con el título en amarillo y la palabra Filmografía" widths={[300, 600]} sizes="(max-width: 767px) calc(100vw - 4rem), (max-width: 1024px) 26vw, 270px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
   </div>
 </div>
 
 Lienzo es una webapp diseñada para que el usuario genere con facilidad las portadas de sus miniaturas. Esta herramienta utiliza plantillas con campos rellenables para incluir de manera sencilla e intuitiva el título, la descripción y los logotipos. Todo es personalizable de acuerdo a las necesidades del cliente.
 
-<div class="not-prose my-12 flex items-start gap-4 md:my-16">
-  <div class="[flex:5625_1_0%]">
-    <Image src={ejemploLienzo2} alt="La miniatura vertical generada con Lienzo: un fondo azul con un globo terráqueo digital, el título software a medida y la descripción en verde limón" widths={[300, 600]} sizes="(max-width: 1024px) 26vw, 270px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
+<div class="not-prose my-12 flex flex-col gap-8 md:my-16 md:flex-row md:items-start md:gap-4">
+  <div class="w-full md:w-auto md:[flex:5625_1_0%]">
+    <Image src={ejemploLienzo2} alt="La miniatura vertical generada con Lienzo: un fondo azul con un globo terráqueo digital, el título software a medida y la descripción en verde limón" widths={[300, 600]} sizes="(max-width: 767px) calc(100vw - 4rem), (max-width: 1024px) 26vw, 270px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
   </div>
-  <div class="[flex:16100_1_0%]">
-    <Image src={capturaLienzo2} alt="Otra plantilla de Lienzo con la vista previa de una miniatura azul, el campo de contenido con la descripción y los selectores de color del logotipo" widths={[400, 800, 1600]} sizes="(max-width: 1024px) 74vw, 760px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
+  <div class="w-full md:w-auto md:[flex:16100_1_0%]">
+    <Image src={capturaLienzo2} alt="Otra plantilla de Lienzo con la vista previa de una miniatura azul, el campo de contenido con la descripción y los selectores de color del logotipo" widths={[400, 800, 1600]} sizes="(max-width: 767px) calc(100vw - 4rem), (max-width: 1024px) 74vw, 760px" format="avif" quality={85} class="h-auto w-full rounded-2xl shadow-xl" />
   </div>
 </div>
 

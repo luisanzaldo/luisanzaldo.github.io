@@ -88,7 +88,12 @@ const seo: AstroSeoProps = {
 						<div class="hidden h-1 w-20 bg-black md:block"></div>
 						<span class="font-mono text-xs font-semibold uppercase tracking-wide">Luis Anzaldo</span>
 					</div>
-					<h1 class="font-display text-6xl font-extrabold text-balance hyphens-manual sm:text-7xl md:text-8xl lg:text-9xl">
+					{/* Abajo de md el título va en una sola línea: el cuerpo sale del ancho
+					    disponible (100vw menos el px-8 de los costados) dividido entre los
+					    ~7.6em que mide "Acerca de mí", con holgura para la negrita sintética.
+					    Topa en 4.5rem, el text-7xl que tenía a partir de sm. */}
+					<h1
+						class="font-display text-[length:min(4.5rem,calc((100vw_-_4rem)/8.1))] font-extrabold leading-none text-balance hyphens-manual md:text-8xl lg:text-9xl">
 						Acerca de mí
 					</h1>
 				</div>
