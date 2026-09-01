@@ -1,12 +1,12 @@
 ---
 import { Image } from "astro:assets";
 
-const { title, url, description, image, loading = "lazy" } = Astro.props;
+const { title, url, description, image, loading = "lazy", overlay = true } = Astro.props;
 ---
 
 <a href={url} title={title} class="group">
 	<article class="relative flex h-full flex-1 flex-col overflow-hidden rounded-lg">
-		<div class="article-overlay article-gradient-overlay relative block w-full overflow-hidden lg:col-span-2">
+		<div class:list={["relative block w-full overflow-hidden lg:col-span-2", overlay && "article-overlay article-gradient-overlay"]}>
 			<Image class="relative aspect-[384/246] h-full w-full bg-center object-cover" src={image} alt={title} loading={loading} />
 		</div>
 		<div class="flex w-full flex-1 flex-col items-start justify-between text-black pt-4 md:p-2 md:pt-6">

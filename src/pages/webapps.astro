@@ -14,6 +14,7 @@ const apps = [
 		description:
 			"Crea miniaturas y composiciones visuales directamente en tu navegador. Diseña, ajusta y exporta sin instalar nada.",
 		image: lienzoCover,
+		overlay: false,
 	},
 	{
 		url: "/conversor",
@@ -52,7 +53,7 @@ const seo: AstroSeoProps = {
 			<Title title="Web Apps" subtitle="Herramientas y soluciones digitales" class="pb-10 pt-20 uppercase" />
 
 			<div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-				{apps.map((app) => <AppCard url={app.url} title={app.title} description={app.description} image={app.image} />)}
+				{apps.map((app) => <AppCard url={app.url} title={app.title} description={app.description} image={app.image} overlay={app.overlay ?? true} />)}
 			</div>
 		</div>
 	</section>
