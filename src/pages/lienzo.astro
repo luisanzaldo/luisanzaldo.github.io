@@ -254,6 +254,16 @@ tailwind.config = {
           </div>
 
           <div class="flex-shrink-0 flex flex-col gap-2">
+            <button class="template-btn relative w-36 rounded-xl border-2 border-outline-variant/30 overflow-hidden text-left transition-all" data-template="rutamaldita">
+              <img src="/lienzo/_miniatura_rutamaldita.png" alt="RutaMaldita Films" class="w-full aspect-[9/16] object-cover block"/>
+              <div class="absolute top-2 left-2 tpl-badge hidden">
+                <span class="font-sans uppercase tracking-widest text-[8px] font-bold text-white bg-primary px-2 py-0.5 rounded-full">Activa</span>
+              </div>
+            </button>
+            <span class="font-sans text-[10px] font-semibold text-on-surface-variant text-center" data-tpl-label="rutamaldita">RutaMaldita Films</span>
+          </div>
+
+          <div class="flex-shrink-0 flex flex-col gap-2">
             <button class="template-btn relative w-36 rounded-xl border-2 border-outline-variant/30 overflow-hidden text-left transition-all" data-template="metarrelato">
               <img src="/lienzo/_miniatura_metarrelato.png" alt="metarrelato" class="w-full aspect-[9/16] object-cover block"/>
               <div class="absolute top-2 left-2 tpl-badge hidden">
@@ -417,6 +427,7 @@ tailwind.config = {
 // ============================================================
 const TEMPLATES = {
   rutadorada:  { titleColor: '#E8B800', titleLine2Color: '#ffffff', subtitleColor: '#E8B800', dividerColor: '#E8B800' },
+  rutamaldita: { titleColor: '#FF0000', titleLine2Color: '#ffffff', subtitleColor: '#FF0000', dividerColor: '#FF0000' },
   metarrelato: { metaTitleColor: '#CCFF00', metaBodyColor: '#CCFF00', logoColor: '#CCFF00', logoPosition: 'top-left' },
 };
 
@@ -849,7 +860,7 @@ function applyTemplate(id) {
     rdPanel.style.display   = 'none';
     metaPanel.style.display = 'flex';
   } else {
-    // Apply rutadorada defaults to state
+    // Apply rutadorada / rutamaldita defaults to state
     state.titleColor     = tpl.titleColor;
     state.titleLine2Color = tpl.titleLine2Color;
     state.subtitleColor  = tpl.subtitleColor;
