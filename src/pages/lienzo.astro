@@ -426,9 +426,8 @@ tailwind.config = {
 // STATE
 // ============================================================
 const TEMPLATES = {
-  rutadorada:  { titleColor: '#E8B800', titleLine2Color: '#ffffff', subtitleColor: '#E8B800', dividerColor: '#E8B800', dividerH: 2, dividerSolid: false },
-  // Pure red is much darker than gold on black: the faded 2px divider disappears, so draw it solid and thicker
-  rutamaldita: { titleColor: '#FF0000', titleLine2Color: '#ffffff', subtitleColor: '#FF0000', dividerColor: '#FF0000', dividerH: 4, dividerSolid: true },
+  rutadorada:  { titleColor: '#E8B800', titleLine2Color: '#ffffff', subtitleColor: '#E8B800', dividerColor: '#E8B800' },
+  rutamaldita: { titleColor: '#FF0000', titleLine2Color: '#ffffff', subtitleColor: '#FF0000', dividerColor: '#FF0000' },
   metarrelato: { metaTitleColor: '#CCFF00', metaBodyColor: '#CCFF00', logoColor: '#CCFF00', logoPosition: 'top-left' },
 };
 
@@ -447,8 +446,6 @@ const state = {
   subtitle: '',
   subtitleColor: '#E8B800',
   dividerColor: '#E8B800',
-  dividerH: 2,
-  dividerSolid: false,
   // metarrelato-specific
   metaTitle: '',
   metaTitleColor: '#CCFF00',
@@ -714,8 +711,7 @@ function updatePreviewRutadorada(scale) {
   if (hasAny) {
     const dc = state.dividerColor;
     const dcAlpha = hexToRgba(dc, 0.2);
-    const divBg = state.dividerSolid ? dc : `linear-gradient(${divDir},${dc},${dcAlpha},transparent)`;
-    html += `<div style="height:${state.dividerH*scale}px;background:${divBg};margin-bottom:${24*scale}px"></div>`;
+    html += `<div style="height:${2*scale}px;background:linear-gradient(${divDir},${dc},${dcAlpha},transparent);margin-bottom:${24*scale}px"></div>`;
   }
   if (state.subtitle) {
     html += `<span class="preview-subtitle" style="font-size:${72*scale*fitS}px;color:${state.subtitleColor}">${escapeHtml(state.subtitle)}</span>`;
@@ -869,8 +865,6 @@ function applyTemplate(id) {
     state.titleLine2Color = tpl.titleLine2Color;
     state.subtitleColor  = tpl.subtitleColor;
     state.dividerColor   = tpl.dividerColor;
-    state.dividerH       = tpl.dividerH;
-    state.dividerSolid   = tpl.dividerSolid;
     // Sync rutadorada color pickers
     ['title', 'titleLine2', 'subtitle'].forEach(prefix => {
       const key    = `${prefix}Color`;
@@ -1101,7 +1095,7 @@ function drawText_rutadorada(ctx, W, H) {
   const T2_GAP  = 6   * s;
   const L2_LH   = L2_SIZE * 0.9;
   const L2_MB   = 28  * s;
-  const DIV_H   = state.dividerH * s;
+  const DIV_H   = 2   * s;
   const DIV_GAP = 24  * s;
 
   ctx.textAlign = isLeft ? 'left' : 'right';
@@ -1324,15 +1318,11 @@ function drawDivider(ctx, y, isLeft, padX, h, W = 1080) {
   const x1    = isLeft ? padX : (W - padX);
   const x2    = isLeft ? (padX + divW) : padX;
   const dc    = state.dividerColor;
-  if (state.dividerSolid) {
-    ctx.fillStyle = dc;
-  } else {
-    const grad = ctx.createLinearGradient(x1, y, x2, y);
-    grad.addColorStop(0,   dc);
-    grad.addColorStop(0.5, hexToRgba(dc, 0.2));
-    grad.addColorStop(1,   'rgba(0,0,0,0)');
-    ctx.fillStyle = grad;
-  }
+  const grad  = ctx.createLinearGradient(x1, y, x2, y);
+  grad.addColorStop(0,   dc);
+  grad.addColorStop(0.5, hexToRgba(dc, 0.2));
+  grad.addColorStop(1,   'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
   ctx.fillRect(padX, y, divW, h);
 }
 
